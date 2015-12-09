@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+	<dict>
+		<key>scopeName</key>
+		<string>text.log</string>
+
+		<key>fileTypes</key>
+		<array>
+			<string>log</string>
+		</array>
+
+		<key>name</key>
+		<string>Log file</string>
+
+		<key>patterns</key>
+		<array>
+			<dict>
+				<key>match</key>
+				<string>\d{4}-\d{2}-\d{2}( \d{2}:\d{2}(:\d{2}(,\d{3})?)?)?</string>
+				<key>name</key>
+				<string>comment</string>
+			</dict>
+
+            <dict>
+                <key>match</key>
+                <string>\b(DEBUG)\b</string>
+                <key>name</key>
+
+                <string>debug-token</string>
+            </dict>
+            <dict>
+                <key>match</key>
+                <string>\b(HINT|INFO|INFORMATION)\b</string>
+                <key>name</key>
+
+                <string>info-token</string>
+            </dict>                
+            <dict>
+                <key>match</key>
+                <string>\b(WARNING|WARN)\b</string>
+                <key>name</key>
+                <string>warn-token</string>
+            </dict>
+            <dict>
+                <key>match</key>
+                <string>\b(ERROR|FAILURE|FAIL)\b</string>
+                <key>name</key>
+                <string>error-token</string>
+            </dict>
+
+            <dict>
+                <key>match</key>
+                <string>\b([a-zA-Z.]*Exception)\b</string>
+                <key>name</key>
+                <string>error-token</string>
+            </dict>
+
+
+            <dict>
+                <key>match</key>
+                <string>\b([0-9]+)\b</string>
+                <key>name</key>
+                <string>constant</string>
+            </dict>
+
+            <!-- Colorize rows of exception call stacks -->
+            <dict>
+                <key>begin</key>
+                <string>^[\t ]*at</string>
+                <key>end</key>
+                <string>$</string>
+                <key>name</key>
+                <!-- <string>keyword</string> -->
+                <string>identifier.method</string>
+            </dict>
+
+		</array>
+	    
+	    <key>uuid</key>
+    	<string>E81BB6AB-CAC7-4C27-9A79-4137A4693EBD</string>
+	</dict>
+</plist>
