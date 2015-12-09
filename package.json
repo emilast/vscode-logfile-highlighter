@@ -1,5 +1,7 @@
 {
-	"name": "LogFile",
+	"name": "LogFileHighlighter",
+	"displayName": "Log File Highlighter",
+	"description": "Adds color highlighting to log files to make it easier to follow the flow of log events and detect problems.",
 	"version": "0.5.2",
 	"engines": {
 		"vscode": ">=0.9.0-pre.1"

@@ -1,2 +1,2 @@
-# vscode-logfile
-A Visual Studio Code extension for color highlighting log files
+# Log File Highlighter
+A Visual Studio Code extension for adding color highlighting log files.
