@@ -37,9 +37,13 @@ The extension associates with `.log` files and applies coloring to the following
 
 
 
-** Change log **
+## Change log
 
-*** 0.5.9, 15 Dec 2015 ***
+### 0.5.10, 16 Dec 2015
+
+* Fixed bug that dates were colored the same way as constants.
+
+### 0.5.9, 15 Dec 2015
 
 * Added coloring of **string constants** enclosed with single or double quotes.
 * Added new constants `null`, `true` and `false`, colored the same way as numeric constants.

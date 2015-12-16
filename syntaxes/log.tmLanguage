@@ -44,6 +44,14 @@
 				<string>error-token</string>
 			</dict>
 
+			<!-- Dates -->
+			<dict>
+				<key>match</key>
+				<string>\d{4}-\d{2}-\d{2}( \d{2}:\d{2}(:\d{2}(,\d{3})?)?)?</string>
+				<key>name</key>
+				<string>comment</string>
+			</dict>
+
 			<!-- Constants -->
 			<dict>
 				<key>match</key>
@@ -65,14 +73,6 @@
 				<string>'[^']*'</string>
 				<key>name</key>
 				<string>string</string>
-			</dict>
-
-			<!-- Dates -->
-			<dict>
-				<key>match</key>
-				<string>\d{4}-\d{2}-\d{2}( \d{2}:\d{2}(:\d{2}(,\d{3})?)?)?</string>
-				<key>name</key>
-				<string>comment</string>
 			</dict>
 
 			<!-- Exception type names -->
