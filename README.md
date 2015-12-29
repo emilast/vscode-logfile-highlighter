@@ -39,6 +39,10 @@ The extension associates with `.log` files and applies coloring to the following
 
 ## Change log
 
+### 0.5.11, 29 Dec 2015
+
+* A recent VS Code update caused exception call stacks to be uncolored for some reason. Changed so that they use the same color as the exception name.
+
 ### 0.5.10, 16 Dec 2015
 
 * Fixed bug that dates were colored the same way as constants.

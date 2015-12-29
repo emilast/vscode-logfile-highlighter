@@ -90,8 +90,7 @@
 				<key>end</key>
 				<string>$</string>
 				<key>name</key>
-				<!-- <string>keyword</string> -->
-				<string>identifier.method</string>
+				<string>error-token</string>
 			</dict>
 
 		</array>
