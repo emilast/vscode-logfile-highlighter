@@ -41,8 +41,12 @@ The extension associates with `.log` files and applies coloring to the following
 
 
 ## Change log
-### 0.5.12
+
+
+### 0.6.0
 #### 22 Feb 2016
+
+* Added icon to Marketplace manifest.
 
 * Added coloring of Url:s and namespaces.
 
