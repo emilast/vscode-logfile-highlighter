@@ -90,9 +90,27 @@
 				<key>end</key>
 				<string>$</string>
 				<key>name</key>
-				<string>error-token</string>
+				<string>string.key</string>
 			</dict>
 
+			<!-- Match Urls -->
+			<dict>
+				<key>match</key>
+				<string>\b(http|https|ftp|file)://\S+\b</string>
+				<key>name</key>
+
+				<string>constant</string>
+			</dict>
+
+
+			<!-- Match character and . sequences (such as namespaces) -->
+			<dict>
+				<key>match</key>
+				<string>\b([\w]+\.)+(\w)+\b</string>
+				<key>name</key>
+
+				<string>constant</string>
+			</dict>
 		</array>
 		
 		<key>uuid</key>
