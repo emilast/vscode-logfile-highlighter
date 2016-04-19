@@ -42,6 +42,10 @@ The extension associates with `.log` files and applies coloring to the following
 
 ## Change log
 
+### 0.7.0
+#### 19 Apr 2016
+
+* Adjusted the coloring for DEBUG, INFO, WARN, ERROR, constants, exceptions and stack traces to remain compatible with Visual Studio Code 1.0.
 
 ### 0.6.0
 #### 22 Feb 2016
