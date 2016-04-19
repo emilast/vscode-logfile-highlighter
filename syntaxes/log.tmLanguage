@@ -22,26 +22,26 @@
 				<string>\b(DEBUG)\b</string>
 				<key>name</key>
 
-				<string>debug-token</string>
+				<string>markup.changed</string>
 			</dict>
 			<dict>
 				<key>match</key>
 				<string>\b(HINT|INFO|INFORMATION)\b</string>
 				<key>name</key>
 
-				<string>info-token</string>
+				<string>markup.inserted</string>
 			</dict>
 			<dict>
 				<key>match</key>
 				<string>\b(WARNING|WARN)\b</string>
 				<key>name</key>
-				<string>warn-token</string>
+				<string>markup.deleted</string>
 			</dict>
 			<dict>
 				<key>match</key>
 				<string>\b(ERROR|FAILURE|FAIL)\b</string>
 				<key>name</key>
-				<string>error-token</string>
+				<string>string.regexp, strong</string>
 			</dict>
 
 			<!-- Dates -->
@@ -57,7 +57,7 @@
 				<key>match</key>
 				<string>\b([0-9]+|true|false|null)\b</string>
 				<key>name</key>
-				<string>constant</string>
+				<string>constant.language</string>
 			</dict>
 
 			<!-- String constants -->
@@ -80,7 +80,7 @@
 				<key>match</key>
 				<string>\b([a-zA-Z.]*Exception)\b</string>
 				<key>name</key>
-				<string>error-token</string>
+				<string>string.regexp, emphasis</string>
 			</dict>
 			
 			<!-- Colorize rows of exception call stacks -->
@@ -90,7 +90,7 @@
 				<key>end</key>
 				<string>$</string>
 				<key>name</key>
-				<string>string.key</string>
+				<string>string.key, emphasis</string>
 			</dict>
 
 			<!-- Match Urls -->
@@ -99,7 +99,7 @@
 				<string>\b(http|https|ftp|file)://\S+\b</string>
 				<key>name</key>
 
-				<string>constant</string>
+				<string>constant.language</string>
 			</dict>
 
 
@@ -109,7 +109,7 @@
 				<string>\b([\w]+\.)+(\w)+\b</string>
 				<key>name</key>
 
-				<string>constant</string>
+				<string>constant.language</string>
 			</dict>
 		</array>
 		
