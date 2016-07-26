@@ -75,6 +75,14 @@
 				<string>string</string>
 			</dict>
 
+			<!-- Guids -->
+			<dict>
+				<key>match</key>
+				<string>[0-9A-F]{8}[-]?([0-9A-F]{4}[-]?){3}[0-9A-F]{12}</string>
+				<key>name</key>
+				<string>constant.language</string>
+			</dict>
+
 			<!-- Exception type names -->
 			<dict>
 				<key>match</key>
