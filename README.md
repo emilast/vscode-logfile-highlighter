@@ -25,6 +25,8 @@ The extension associates with `.log` files and applies coloring to the following
 * String constants, enclosed in single or double quotes. Examples:
 	* `"lorem ipsum"`
 	* `'lorem ipsum'`
+* GUIDs. Example:
+	* `859A4209-A82D-4CA1-8468-C2606A3501EE`
 * .Net exception type names, i.e. word ending with `Exception`, such as
 	* `ArgumentNullException`
 	* `HttpException`
@@ -41,6 +43,12 @@ The extension associates with `.log` files and applies coloring to the following
 
 
 ## Change log
+
+### 0.8.0
+#### 26 Jul 2016
+
+* Added highlighting of time zone parts in dates (fixes issue #5).
+* Added highlighting of GUIDs (fixes issue #6).
 
 ### 0.7.0
 #### 19 Apr 2016
