@@ -60,6 +60,14 @@
 				<string>comment</string>
 			</dict>
 
+			<!-- Guids -->
+			<dict>
+				<key>match</key>
+				<string>[0-9a-fA-F]{8}[-]?([0-9a-fA-F]{4}[-]?){3}[0-9a-fA-F]{12}</string>
+				<key>name</key>
+				<string>constant.language</string>
+			</dict>
+
 			<!-- Constants -->
 			<dict>
 				<key>match</key>
@@ -81,14 +89,6 @@
 				<string>'[^']*'</string>
 				<key>name</key>
 				<string>string</string>
-			</dict>
-
-			<!-- Guids -->
-			<dict>
-				<key>match</key>
-				<string>[0-9a-fA-F]{8}[-]?([0-9a-fA-F]{4}[-]?){3}[0-9a-fA-F]{12}</string>
-				<key>name</key>
-				<string>constant.language</string>
 			</dict>
 
 			<!-- Exception type names -->
