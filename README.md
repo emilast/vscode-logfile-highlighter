@@ -50,6 +50,13 @@ The extension associates with `.log` files and applies coloring to the following
 
 ## Change log
 
+### 1.0.0 (11 Sep 2016)
+
+* Fixed bug that GUIDs that start with a pure numerical digit sequences were not colored correctly. 
+
+* Changed the Visual Studio Code version requirement to be at least `1.0.0` (rather than having an old pre-release requirement),
+  which should fix some incompatibility problems with VS Code 1.6. 
+
 ### 0.9.0 (23 Aug 2016)
 
 * Added highlighting of culture specific dates (fixes issue #8).
