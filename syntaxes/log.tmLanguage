@@ -15,31 +15,31 @@
 
 		<key>patterns</key>
 		<array>
-		
+
 			<!-- Log levels -->
 			<dict>
 				<key>match</key>
-				<string>\b(DEBUG)\b</string>
+				<string>\b(DEBUG|Level: Verbose)\b</string>
 				<key>name</key>
 
 				<string>markup.changed</string>
 			</dict>
 			<dict>
 				<key>match</key>
-				<string>\b(HINT|INFO|INFORMATION)\b</string>
+				<string>\b(HINT|INFO|INFORMATION|Level: Info)\b</string>
 				<key>name</key>
 
 				<string>markup.inserted</string>
 			</dict>
 			<dict>
 				<key>match</key>
-				<string>\b(WARNING|WARN)\b</string>
+				<string>\b(WARNING|WARN|Level: Warning)\b</string>
 				<key>name</key>
 				<string>markup.deleted</string>
 			</dict>
 			<dict>
 				<key>match</key>
-				<string>\b(ERROR|FAILURE|FAIL)\b</string>
+				<string>\b(ERROR|FAILURE|FAIL|Level: Error)\b</string>
 				<key>name</key>
 				<string>string.regexp, strong</string>
 			</dict>
@@ -47,7 +47,7 @@
 			<!-- ISO dates ("2016-08-23" and optional time part) -->
 			<dict>
 				<key>match</key>
-				<string>\b\d{4}-\d{2}-\d{2}([ T]\d{2}:\d{2}(:\d{2}(,\d{3})?)?)?(Z|([+-]\d{2}:\d{2})|)\b</string>
+				<string>\b\d{4}-\d{2}-\d{2}([ T]\d{2}:\d{2}(:\d{2}(,\d{3}|\.\d{3})?)?)?(Z|([+-]\d{2}:\d{2})|)\b</string>
 				<key>name</key>
 				<string>comment</string>
 			</dict>
@@ -55,7 +55,7 @@
 			<!-- Culture specific dates ("23/08/2016", "23.08.2016", and optional time part) -->
 			<dict>
 				<key>match</key>
-				<string>\b\d{2}[^\w\s]\d{2}[^\w\s]\d{4}([ T]\d{2}:\d{2}(:\d{2}(,\d{3})?)?)?(Z|([+-]\d{2}:\d{2})|)\b</string>
+				<string>\b\d{2}[^\w\s]\d{2}[^\w\s]\d{4}([ T]\d{2}:\d{2}(:\d{2}(,\d{3}|\.\d{3})?)?)?(Z|([+-]\d{2}:\d{2})|)\b</string>
 				<key>name</key>
 				<string>comment</string>
 			</dict>
@@ -83,7 +83,7 @@
 				<key>name</key>
 				<string>string</string>
 			</dict>
-	
+
 			<dict>
 				<key>match</key>
 				<string>'[^']*'</string>
@@ -98,7 +98,7 @@
 				<key>name</key>
 				<string>string.regexp, emphasis</string>
 			</dict>
-			
+
 			<!-- Colorize rows of exception call stacks -->
 			<dict>
 				<key>begin</key>
@@ -128,7 +128,7 @@
 				<string>constant.language</string>
 			</dict>
 		</array>
-		
+
 		<key>uuid</key>
 		<string>E81BB6AB-CAC7-4C27-9A79-4137A4693EBD</string>
 	</dict>
