@@ -3,7 +3,8 @@
 	"displayName": "Log File Highlighter",
 	"icon":"content/appicon.png",
 	"description": "Adds color highlighting to log files to make it easier to follow the flow of log events and identify problems.",
-	"version": "1.0.0",
+	"categories": ["Formatters"],
+	"version": "1.0.1",
 	"bugs": {
 		"url": "https://github.com/emilast/vscode-logfile-highlighter/issues"
 	},
