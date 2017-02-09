@@ -17,13 +17,26 @@
 		<array>
 		
 			<!-- Log levels -->
+
+			<!-- DEBUG -->
 			<dict>
 				<key>match</key>
 				<string>\b(DEBUG)\b</string>
-				<key>name</key>
 
+				<key>name</key>
 				<string>markup.changed</string>
 			</dict>
+
+			<!-- Serilog DEBUG -->
+			<dict>
+				<key>match</key>
+				<string>(?i)\[(debug|dbug|dbg|de|d)\]</string>
+
+				<key>name</key>
+				<string>markup.changed</string>
+			</dict>
+
+			<!-- INFO -->
 			<dict>
 				<key>match</key>
 				<string>\b(HINT|INFO|INFORMATION)\b</string>
@@ -31,15 +44,48 @@
 
 				<string>markup.inserted</string>
 			</dict>
+
+
+			<!-- Serilog INFO -->
+			<dict>
+				<key>match</key>
+				<string>(?i)\[(information|info|inf|in|i)\]</string>
+
+				<key>name</key>
+				<string>markup.inserted</string>
+			</dict>
+
+			<!-- WARN -->
 			<dict>
 				<key>match</key>
 				<string>\b(WARNING|WARN)\b</string>
 				<key>name</key>
 				<string>markup.deleted</string>
 			</dict>
+
+			<!-- Serilog WARN -->
 			<dict>
 				<key>match</key>
-				<string>\b(ERROR|EROR|FAILURE|FAIL)\b</string>
+				<string>(?i)\[(warning|warn|wrn|wn|w)\]</string>
+
+				<key>name</key>
+				<string>markup.deleted</string>
+			</dict>
+
+			<!-- ERROR -->
+			<dict>
+				<key>match</key>
+				<string>\b(ERROR|FAILURE|FAIL)\b</string>
+
+				<key>name</key>
+				<string>string.regexp, strong</string>
+			</dict>
+
+			<!-- Serilog ERROR -->
+			<dict>
+				<key>match</key>
+				<string>(?i)\[(error|eror|err|er|e|fatal|fatl|ftl|fa|f)\]</string>
+
 				<key>name</key>
 				<string>string.regexp, strong</string>
 			</dict>
