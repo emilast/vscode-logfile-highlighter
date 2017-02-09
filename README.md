@@ -6,7 +6,7 @@
 
 A Visual Studio Code extension for adding color highlighting to log files. It is based on standard conventions for log4net log files but hopefully it's general enough to be useful for other variations of log files as well. 
 
-The extension associates with `.log` files and applies coloring to the following elements in the file:
+The extension associates with `.log` files and applies coloring to the different elements in the file, for example:
 
 * Dates and times in ISO format, such as
 	* `2015-12-09`
@@ -51,6 +51,17 @@ The extension associates with `.log` files and applies coloring to the following
 
 
 ## Change log
+
+## 1.1.0 (10 Feb 2017)
+
+* Added the Serilog log level abbreviations to the matched patterns. This means that `[eror]`, `[wrn]` etc are now correctly colored. (initiated and assisted by @Leon99).
+
+* Added a few patterns that seem common in the Javascript world, such as `error:` and `warning:`.
+
+* Adjusted the patterns for dates so that we highlight dates and clock times separately as suggested by @Leon99.
+
+* Moved the extension back into the [Other section](https://marketplace.visualstudio.com/search?target=VSCode&category=Other) of the marketplace which seems to be the proper category after all...
+
 
 ### 1.0.1 (1 Dec 2016)
 
