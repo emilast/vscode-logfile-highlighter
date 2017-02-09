@@ -90,18 +90,26 @@
 				<string>string.regexp, strong</string>
 			</dict>
 
-			<!-- ISO dates ("2016-08-23" and optional time part) -->
+			<!-- ISO dates ("2016-08-23") -->
 			<dict>
 				<key>match</key>
-				<string>\b\d{4}-\d{2}-\d{2}([ T]\d{2}:\d{2}(:\d{2}([.,]\d{3})?)?)?(Z|([+-]\d{2}:\d{2})|)\b</string>
+				<string>\b\d{4}-\d{2}-\d{2}\b</string>
 				<key>name</key>
 				<string>comment</string>
 			</dict>
 
-			<!-- Culture specific dates ("23/08/2016", "23.08.2016", and optional time part) -->
+			<!-- Culture specific dates ("23/08/2016", "23.08.2016") -->
 			<dict>
 				<key>match</key>
-				<string>\b\d{2}[^\w\s]\d{2}[^\w\s]\d{4}([ T]\d{2}:\d{2}(:\d{2}([.,]\d{3})?)?)?(Z|([+-]\d{2}:\d{2})|)\b</string>
+				<string>\b\d{2}[^\w\s]\d{2}[^\w\s]\d{4}\b</string>
+				<key>name</key>
+				<string>comment</string>
+			</dict>
+
+			<!-- Clock times with optional timezone ("09:13:16", "09:13:16.323", "09:13:16+01:00") -->
+			<dict>
+				<key>match</key>
+				<string>\b\d{2}:\d{2}:\d{2}([.,]\d{3})?(Z| ?[+-]\d{2}:\d{2})?\b</string>
 				<key>name</key>
 				<string>comment</string>
 			</dict>
