@@ -39,7 +39,7 @@
 			</dict>
 			<dict>
 				<key>match</key>
-				<string>\b(ERROR|FAILURE|FAIL)\b</string>
+				<string>\b(ERROR|EROR|FAILURE|FAIL)\b</string>
 				<key>name</key>
 				<string>string.regexp, strong</string>
 			</dict>
