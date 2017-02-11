@@ -1,0 +1,86 @@
+Log levels
+-------------------
+ERROR, FAIL, FAILURE
+WARN, WARNING
+INFO, INFORMATION
+DEBUG
+
+error:
+warning:
+debug:
+information:
+
+[ERROR]
+[eror]
+[err]
+[er]
+[e]
+
+[WARNING]
+[warn]
+[wrn]
+[wn]
+[w]
+
+[INFORMATION]
+[info]
+[inf]
+[in]
+[i]
+
+
+[DEBUG]
+[dbug]
+[dbg]
+[de]
+[d]
+
+Dates and times:
+-------------------
+2015-12-09
+2015-12-09 09:29
+2015-12-09 09:29:02,258
+12/09/2016
+12.09.2016
+12-09-2016
+12-09-2015 09:29
+12-09-2015 09:29:02,258
+2017-01-11T15:26:11.803Z
+2017-01-11T15:26:11.803+01:00
+2017-02-09 23:28:37.785 +01:00
+09:29
+09:29:02
+09:29:02,258
+
+Constants
+----------------------
+1
+234
+null
+true
+false
+859A4209-A82D-4CA1-8468-C2606A3501EE
+859a4209-a82d-4ca1-8468-c2606a3501ee
+
+String constants
+----------------------
+"lorem ipsum"
+'lorem ipsum'
+
+
+.Net exceptions
+----------------------
+ArgumentNullException
+HttpException
+
+  System.NullReferenceException: Object reference not set to an instance of an object.
+      at MyClass.DoSomethingElse(string foo)
+      at MyClass.DoSomething()
+
+Url:s
+----------------------
+http://www.meadow.se/wordpress/
+
+Namespaces
+----------------------
+MyApp.MyNameSpace.MyClass
