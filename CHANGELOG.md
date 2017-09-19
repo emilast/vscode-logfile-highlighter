@@ -1,5 +1,7 @@
 # Change Log
 
+### 1.2.0 - 19 Sep 2017
+
 * New feature: Customization of colors that overrides the default (which is to reuse theme colors). Fixes issues #24 and #27.
 
 ### 1.1.1 - 11 Feb 2017
