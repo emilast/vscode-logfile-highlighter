@@ -24,7 +24,7 @@
 				<string>\b(DEBUG)\b|(?i)\b(debug)\:</string>
 
 				<key>name</key>
-				<string>markup.changed</string>
+				<string>markup.changed log.debug</string>
 			</dict>
 
 			<!-- Serilog DEBUG -->
@@ -33,7 +33,7 @@
 				<string>(?i)\[(debug|dbug|dbg|de|d)\]</string>
 
 				<key>name</key>
-				<string>markup.changed</string>
+				<string>markup.changed log.debug</string>
 			</dict>
 
 			<!-- INFO -->
@@ -42,7 +42,7 @@
 				<string>\b(HINT|INFO|INFORMATION)\b|(?i)\b(info|information)\:</string>
 				<key>name</key>
 
-				<string>markup.inserted</string>
+				<string>markup.inserted log.info</string>
 			</dict>
 
 
@@ -52,7 +52,7 @@
 				<string>(?i)\[(information|info|inf|in|i)\]</string>
 
 				<key>name</key>
-				<string>markup.inserted</string>
+				<string>markup.inserted log.info</string>
 			</dict>
 
 			<!-- WARN -->
@@ -60,7 +60,7 @@
 				<key>match</key>
 				<string>\b(WARNING|WARN)\b|(?i)\b(warning)\:</string>
 				<key>name</key>
-				<string>markup.deleted</string>
+				<string>markup.deleted log.warning</string>
 			</dict>
 
 			<!-- Serilog WARN -->
@@ -69,7 +69,7 @@
 				<string>(?i)\[(warning|warn|wrn|wn|w)\]</string>
 
 				<key>name</key>
-				<string>markup.deleted</string>
+				<string>markup.deleted log.warning</string>
 			</dict>
 
 			<!-- ERROR -->
@@ -78,7 +78,7 @@
 				<string>\b(ERROR|FAILURE|FAIL)\b|(?i)\b(error)\:</string>
 
 				<key>name</key>
-				<string>string.regexp, strong</string>
+				<string>string.regexp, strong log.error</string>
 			</dict>
 
 			<!-- Serilog ERROR -->
@@ -87,7 +87,7 @@
 				<string>(?i)\[(error|eror|err|er|e|fatal|fatl|ftl|fa|f)\]</string>
 
 				<key>name</key>
-				<string>string.regexp, strong</string>
+				<string>string.regexp, strong log.error</string>
 			</dict>
 
 			<!-- ISO dates ("2016-08-23") -->
@@ -95,7 +95,7 @@
 				<key>match</key>
 				<string>\b\d{4}-\d{2}-\d{2}(T|\b)</string>
 				<key>name</key>
-				<string>comment</string>
+				<string>comment log.date</string>
 			</dict>
 
 			<!-- Culture specific dates ("23/08/2016", "23.08.2016") -->
@@ -103,7 +103,7 @@
 				<key>match</key>
 				<string>\b\d{2}[^\w\s]\d{2}[^\w\s]\d{4}\b</string>
 				<key>name</key>
-				<string>comment</string>
+				<string>comment log.date</string>
 			</dict>
 
 			<!-- Clock times with optional timezone ("09:13:16", "09:13:16.323", "09:13:16+01:00") -->
@@ -111,7 +111,7 @@
 				<key>match</key>
 				<string>\d{2}:\d{2}(:\d{2}([.,]\d{3})?)?(Z| ?[+-]\d{2}:\d{2})?\b</string>
 				<key>name</key>
-				<string>comment</string>
+				<string>comment log.date</string>
 			</dict>
 
 			<!-- Guids -->
@@ -119,7 +119,7 @@
 				<key>match</key>
 				<string>[0-9a-fA-F]{8}[-]?([0-9a-fA-F]{4}[-]?){3}[0-9a-fA-F]{12}</string>
 				<key>name</key>
-				<string>constant.language</string>
+				<string>constant.language log.constant</string>
 			</dict>
 
 			<!-- Constants -->
@@ -127,7 +127,7 @@
 				<key>match</key>
 				<string>\b([0-9]+|true|false|null)\b</string>
 				<key>name</key>
-				<string>constant.language</string>
+				<string>constant.language log.constant</string>
 			</dict>
 
 			<!-- String constants -->
@@ -135,14 +135,14 @@
 				<key>match</key>
 				<string>"[^"]*"</string>
 				<key>name</key>
-				<string>string</string>
+				<string>string log.string</string>
 			</dict>
 	
 			<dict>
 				<key>match</key>
 				<string>'[^']*'</string>
 				<key>name</key>
-				<string>string</string>
+				<string>string log.string</string>
 			</dict>
 
 			<!-- Exception type names -->
@@ -150,7 +150,7 @@
 				<key>match</key>
 				<string>\b([a-zA-Z.]*Exception)\b</string>
 				<key>name</key>
-				<string>string.regexp, emphasis</string>
+				<string>string.regexp, emphasis log.type</string>
 			</dict>
 			
 			<!-- Colorize rows of exception call stacks -->
@@ -160,7 +160,7 @@
 				<key>end</key>
 				<string>$</string>
 				<key>name</key>
-				<string>string.key, emphasis</string>
+				<string>string.key, emphasis log.exception</string>
 			</dict>
 
 			<!-- Match Urls -->
@@ -169,7 +169,7 @@
 				<string>\b(http|https|ftp|file)://\S+\b</string>
 				<key>name</key>
 
-				<string>constant.language</string>
+				<string>constant.language log.constant</string>
 			</dict>
 
 
@@ -179,7 +179,7 @@
 				<string>\b([\w]+\.)+(\w)+\b</string>
 				<key>name</key>
 
-				<string>constant.language</string>
+				<string>constant.language log.constant</string>
 			</dict>
 		</array>
 		

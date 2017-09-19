@@ -1,5 +1,7 @@
 # Change Log
 
+* New feature: Customization of colors that overrides the default (which is to reuse theme colors). Fixes issues #24 and #27.
+
 ### 1.1.1 - 11 Feb 2017
 
 * Fixed bug that concatenated dates and times stopped being highlighted in version 1.1.0.
