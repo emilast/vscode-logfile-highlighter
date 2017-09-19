@@ -109,7 +109,7 @@
 			<!-- Clock times with optional timezone ("09:13:16", "09:13:16.323", "09:13:16+01:00") -->
 			<dict>
 				<key>match</key>
-				<string>\d{2}:\d{2}(:\d{2}([.,]\d{3})?)?(Z| ?[+-]\d{2}:\d{2})?\b</string>
+				<string>\d{2}:\d{2}(:\d{2}([.,]\d{3,6})?)?(Z| ?[+-]\d{2}:\d{2})?\b</string>
 				<key>name</key>
 				<string>comment log.date</string>
 			</dict>
@@ -166,7 +166,7 @@
 			<!-- Match Urls -->
 			<dict>
 				<key>match</key>
-				<string>\b(http|https|ftp|file)://\S+\b</string>
+				<string>\b(http|https|ftp|file)://\S+\b/?</string>
 				<key>name</key>
 
 				<string>constant.language log.constant</string>
