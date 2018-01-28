@@ -1,6 +1,5 @@
 'use strict';
-// The module 'vscode' contains the VS Code extensibility API
-// Import the module and reference it with the alias vscode in your code below
+
 import * as vscode from 'vscode';
 import TimePeriodCalculator = require('./TimePeriodCalculator');
 
@@ -13,7 +12,7 @@ class TimePeriodController {
         this._timeCalculator = timeCalculator;
 
         // subscribe to selection change and editor activation events
-        let subscriptions: vscode.Disposable[] = [];
+        const subscriptions: vscode.Disposable[] = [];
         vscode.window.onDidChangeTextEditorSelection(this._onEvent, this, subscriptions);
         vscode.window.onDidChangeActiveTextEditor(this._onEvent, this, subscriptions);
 
@@ -24,7 +23,7 @@ class TimePeriodController {
         this._disposable = vscode.Disposable.from(...subscriptions);
     }
 
-    dispose() {
+    public dispose() {
         this._disposable.dispose();
     }
 
