@@ -1,5 +1,6 @@
 'use strict';
 
+import * as moment from 'moment';
 import * as vscode from 'vscode';
 
 class TimePeriodCalculator {
@@ -24,28 +25,15 @@ class TimePeriodCalculator {
 
         // Only update status if an log file
         if (doc.languageId === 'log') {
+
             const timePeriod = this._getTimePeriod(doc.getText(editor.selection));
 
-            if (timePeriod.getMilliseconds() !== 0) {
-                let text = timePeriod.getMilliseconds() + 'ms';
-
-                if (timePeriod.getSeconds() !== 0) {
-                    text = timePeriod.getSeconds() + 's, ' + text;
-
-                    if (timePeriod.getMinutes() !== 0) {
-                        text = timePeriod.getMinutes() + 'min, ' + text;
-
-                        if (timePeriod.getHours() !== 0) {
-                            text = timePeriod.getHours() + 'h, ' + text;
-                        }
-                    }
-                }
-
-                text = 'Selected: ' + text;
+            if (timePeriod !== undefined) {
 
                 // Update the status bar
-                this._statusBarItem.text = text;
+                this._statusBarItem.text = this._buildStatusBarText(timePeriod);
                 this._statusBarItem.show();
+
             } else {
                 this._statusBarItem.hide();
             }
@@ -55,7 +43,43 @@ class TimePeriodCalculator {
         }
     }
 
-    public _getTimePeriod(data: string): Date {
+    public dispose() {
+        this._statusBarItem.dispose();
+    }
+
+    private _buildStatusBarText(selectedDuration: moment.Duration): string {
+        let text = '';
+
+        if (selectedDuration.asDays() >= 1) {
+            text += Math.floor(selectedDuration.asDays()) + 'd';
+        }
+        if (text !== '') {
+            text += ', ' + selectedDuration.hours() + 'h';
+        } else if (selectedDuration.hours() !== 0) {
+            text += selectedDuration.hours() + 'h';
+        }
+        if (text !== '') {
+            text += ', ' + selectedDuration.minutes() + 'min';
+        } else if (selectedDuration.minutes() !== 0) {
+            text += selectedDuration.minutes() + 'min';
+        }
+        if (text !== '') {
+            text += ', ' + selectedDuration.seconds() + 's';
+        } else if (selectedDuration.seconds() !== 0) {
+            text += selectedDuration.seconds() + 's';
+        }
+        if (text !== '') {
+            text += ', ' + selectedDuration.milliseconds() + 'ms';
+        } else {
+            text += selectedDuration.milliseconds() + 'ms';
+        }
+
+        text = 'Selected: ' + text;
+
+        return text;
+    }
+
+    private _getTimePeriod(data: string): moment.Duration {
 
         const selContent = data;
 
@@ -68,7 +92,7 @@ class TimePeriodCalculator {
         // Culture specific dates ("23/08/2016", "23.08.2016")
         const cultureDatesPattern = '\\b\\d{2}[^\\w\\s]\\d{2}[^\\w\\s]\\d{4}\\b';
 
-        const pattern = '((?:' + isoDatePattern + '|' + cultureDatesPattern + '){1}(?:' + clocksPattern + '){1})';
+        const pattern = '((?:' + isoDatePattern + '|' + cultureDatesPattern + '){1} ?(?:' + clocksPattern + '){1})';
 
         const timeRegEx = new RegExp(pattern, 'g');
 
@@ -76,25 +100,40 @@ class TimePeriodCalculator {
         let match = timeRegEx.exec(selContent);
 
         while (match) {
-            matches.push(match[0]);
+            matches.push(this._convertToIso(match[0]));
             match = timeRegEx.exec(selContent);
         }
 
-        let timePeriod;
-        if (matches != null && matches.length >= 2) {
+        let timePeriod: moment.Duration;
+        if (matches.length >= 2) {
             const firstDate = new Date(matches[0]);
-            const secondDate = new Date(matches[matches.length - 1]);
+            const lastDate = new Date(matches[matches.length - 1]);
 
-            timePeriod = new Date(secondDate.valueOf() - firstDate.valueOf());
+            timePeriod = moment.duration(lastDate.valueOf() - firstDate.valueOf());
         } else {
-            timePeriod = new Date(0);
+            timePeriod = undefined;
         }
 
         return timePeriod;
     }
 
-    public dispose() {
-        this._statusBarItem.dispose();
+    // Converts a given date string to an iso string.
+    private _convertToIso(dateString: string): string {
+
+        // 01.29.2018 or 01/29/2018 => 2018-01-29
+        let result = dateString.replace(
+            /\b((?:0[1-9])|(?:1[0-2]))[\./-]((?:0[1-9])|(?:[1-2][0-9])|(?:3[0-1]))[\./-](\d{4})/g,
+            '$3-$1-$2');
+
+        // 29.01.2018 or 29/01/2018 => 2018-01-29
+        result = dateString.replace(
+            /\b((?:0[1-9])|(?:[1-2][0-9])|(?:3[0-1]))[\./-]((?:0[1-9])|(?:1[0-2]))[\./-](\d{4})/g,
+            '$3-$2-$1');
+
+        // 09:29:02,258 => 09:29:02.258
+        result = result.replace(',', '.');
+
+        return result;
     }
 }
 
