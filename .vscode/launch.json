@@ -48,7 +48,7 @@
             "runtimeExecutable": "${execPath}",
             "args": [
                 "--extensionDevelopmentPath=${workspaceRoot}",
-                "--extensionTestsPath=${workspaceRoot}/out/test/integrationtest"
+                "--extensionTestsPath=${workspaceRoot}/out/test/integrationtest/"
             ],
             "stopOnEntry": false,
             "sourceMaps": true,
