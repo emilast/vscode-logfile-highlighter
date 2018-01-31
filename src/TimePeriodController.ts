@@ -18,13 +18,18 @@ class TimePeriodController {
         vscode.window.onDidChangeActiveTextEditor(this._onEvent, this, subscriptions);
 
         // update the counter for the current file
-        this.updateTimePeriod();
+        this._updateTimePeriod();
 
         // create a combined disposable from both event subscriptions
         this._disposable = vscode.Disposable.from(...subscriptions);
     }
 
-    public updateTimePeriod() {
+    public dispose() {
+        this._statusBarItem.dispose();
+        this._disposable.dispose();
+    }
+
+    private _updateTimePeriod() {
 
         // Create as needed
         if (!this._statusBarItem) {
@@ -60,13 +65,8 @@ class TimePeriodController {
         }
     }
 
-    public dispose() {
-        this._statusBarItem.dispose();
-        this._disposable.dispose();
-    }
-
     private _onEvent() {
-        this.updateTimePeriod();
+        this._updateTimePeriod();
     }
 }
 
