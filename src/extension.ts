@@ -13,7 +13,6 @@ export function activate(context: vscode.ExtensionContext) {
 
     // Add to a list of disposables which are disposed when this extension is deactivated.
     context.subscriptions.push(controller);
-    context.subscriptions.push(timeCalculator);
 }
 
 // this method is called when your extension is deactivated

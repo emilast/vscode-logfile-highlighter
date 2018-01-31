@@ -1,3 +1,5 @@
+'use strict';
+
 import jasmine = require('jasmine');
 import * as path from 'path';
 import * as util from 'util';

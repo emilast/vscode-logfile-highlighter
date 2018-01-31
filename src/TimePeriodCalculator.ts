@@ -1,53 +1,11 @@
 'use strict';
 
 import * as moment from 'moment';
-import * as vscode from 'vscode';
 
 class TimePeriodCalculator {
 
-    private _statusBarItem: vscode.StatusBarItem;
-
-    public updateTimePeriod() {
-
-        // Create as needed
-        if (!this._statusBarItem) {
-            this._statusBarItem = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Left);
-        }
-
-        // Get the current text editor
-        const editor = vscode.window.activeTextEditor;
-        if (!editor) {
-            this._statusBarItem.hide();
-            return;
-        }
-
-        const doc = editor.document;
-
-        // Only update status if an log file
-        if (doc.languageId === 'log') {
-
-            const timePeriod = this._getTimePeriod(doc.getText(editor.selection));
-
-            if (timePeriod !== undefined) {
-
-                // Update the status bar
-                this._statusBarItem.text = this._buildStatusBarText(timePeriod);
-                this._statusBarItem.show();
-
-            } else {
-                this._statusBarItem.hide();
-            }
-
-        } else {
-            this._statusBarItem.hide();
-        }
-    }
-
-    public dispose() {
-        this._statusBarItem.dispose();
-    }
-
-    private _buildStatusBarText(selectedDuration: moment.Duration): string {
+    // Converts a given moment.Duration to a string that can be displayed.
+    public convertToDisplayString(selectedDuration: moment.Duration): string {
         let text = '';
 
         if (selectedDuration.asDays() >= 1) {
@@ -79,7 +37,7 @@ class TimePeriodCalculator {
         return text;
     }
 
-    private _getTimePeriod(data: string): moment.Duration {
+    public getTimePeriod(data: string): moment.Duration {
 
         const selContent = data;
 
