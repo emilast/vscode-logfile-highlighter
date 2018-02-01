@@ -39,7 +39,7 @@
                 "-c",
                 "${workspaceRoot}/jasmine.unittest.json"
             ],
-            "preLaunchTask": "npm: compile"
+            "preLaunchTask": "npm: watch"
         },
         {
             "name": "Integration Tests",

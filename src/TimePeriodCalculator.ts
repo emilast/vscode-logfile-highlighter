@@ -1,6 +1,7 @@
 'use strict';
 
 import * as moment from 'moment';
+import { duration } from 'moment';
 
 class TimePeriodCalculator {
 
@@ -42,7 +43,7 @@ class TimePeriodCalculator {
         const selContent = data;
 
         // Clock times with optional timezone ("09:13:16", "09:13:16.323", "09:13:16+01:00")
-        const clocksPattern = '\\d{2}:\\d{2}(?::\\d{2}(?:[.,]\\d{3,})?)?(?:Z| ?[+-]\\d{2}:\\d{2})?\\b';
+        const clockPattern = '\\d{2}:\\d{2}(?::\\d{2}(?:[.,]\\d{3,})?)?(?:Z| ?[+-]\\d{2}:\\d{2})?\\b';
 
         // ISO dates ("2016-08-23")
         const isoDatePattern = '\\b\\d{4}-\\d{2}-\\d{2}(?:T|\\b)';
@@ -50,26 +51,55 @@ class TimePeriodCalculator {
         // Culture specific dates ("23/08/2016", "23.08.2016")
         const cultureDatesPattern = '\\b\\d{2}[^\\w\\s]\\d{2}[^\\w\\s]\\d{4}\\b';
 
-        const pattern = '((?:' + isoDatePattern + '|' + cultureDatesPattern + '){1} ?(?:' + clocksPattern + '){1})';
+        // Match '2016-08-23 09:13:16.323' as well as '29.01.2018 09:13:34,001'
+        const dateTimePattern = '((?:' + isoDatePattern + '|' + cultureDatesPattern + '){1} ?' +
+            '(?:' + clockPattern + '){1})';
 
-        const timeRegEx = new RegExp(pattern, 'g');
+        // Match 2017-09-29 as well as 29/01/2019
+        const datesPattern = '(' + isoDatePattern + '|' + cultureDatesPattern + '){1}';
 
+        // E.g.: The dateTimePattern ('2016-08-23 09:13:16.323') is preferred
+        // over the datesPattern ('2017-09-29 and 29/01/2019')
+        const rankedPattern = [dateTimePattern, clockPattern, datesPattern];
         const matches: string[] = [];
-        let match = timeRegEx.exec(selContent);
 
-        while (match) {
-            matches.push(this._convertToIso(match[0]));
-            match = timeRegEx.exec(selContent);
+        for (const item of rankedPattern) {
+            const timeRegEx = new RegExp(item, 'g');
+
+            let match = timeRegEx.exec(selContent);
+
+            while (match) {
+                matches.push(this._convertToIso(match[0]));
+                match = timeRegEx.exec(selContent);
+            }
+
+            if (matches.length >= 2) {
+                break;
+            }
         }
 
         let timePeriod: moment.Duration;
-        if (matches.length >= 2) {
-            const firstDate = new Date(matches[0]);
-            const lastDate = new Date(matches[matches.length - 1]);
+        timePeriod = undefined;
 
-            timePeriod = moment.duration(lastDate.valueOf() - firstDate.valueOf());
-        } else {
-            timePeriod = undefined;
+        if (matches.length >= 2) {
+            const firstMoment = moment(matches[0]);
+            const lastMoment = moment(matches[matches.length - 1]);
+
+            if (firstMoment.isValid() && lastMoment.isValid()) {
+
+                // used for ISO Dates like '2018-09-29' and '2018-09-29 13:12:11.001'
+                timePeriod = moment.duration(lastMoment.diff(firstMoment));
+            } else {
+
+                const firstDuration = moment.duration(matches[0]);
+                const lastDuration = moment.duration(matches[matches.length - 1]);
+
+                if (moment.isDuration(firstDuration) && moment.isDuration(lastDuration)) {
+
+                    // Used for non ISO dates like '13:12:11.001'
+                    timePeriod = moment.duration(lastDuration.asMilliseconds() - firstDuration.asMilliseconds());
+                }
+            }
         }
 
         return timePeriod;
