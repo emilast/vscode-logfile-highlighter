@@ -24,6 +24,7 @@
 import * as path from 'path';
 import TestRunner = require('../testRunner');
 
+// The custom jasmine test runner for integration tests.
 export function run(testRoot: string, clb: (error: Error) => void) {
     const runner = new TestRunner();
     runner.run(path.normalize(testRoot + '../../..') + '/jasmine.integrationtest.json', clb);

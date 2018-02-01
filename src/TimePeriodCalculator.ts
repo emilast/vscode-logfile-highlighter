@@ -1,7 +1,6 @@
 'use strict';
 
 import * as moment from 'moment';
-import { duration } from 'moment';
 
 class TimePeriodCalculator {
 

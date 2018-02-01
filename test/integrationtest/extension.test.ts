@@ -2,22 +2,42 @@
 
 // You can import and use all API from the 'vscode' module
 // as well as import your extension to test it
-import * as proxyquire from 'proxyquire';
 import * as vscode from 'vscode';
-import * as highlighter from '../../src/extension';
+import * as extension from '../../src/extension';
 
-describe('foo', () => {
-    it('bar', () => {
-        class TimePeriodCalculatorMock {
-            constructor() {
-                console.log('Hello MockWorld');
-            }
+describe('Extension', () => {
+
+    it('gets activated as soon as a .log file is opened.', (done) => {
+        // Arrange
+        const extensionSpy = spyOn(extension, 'activate').and.callThrough();
+
+        // Act
+        if (vscode.workspace.workspaceFolders !== undefined) {
+            const workspaceRootPath = vscode.workspace.workspaceFolders[0].uri.path;
+            vscode.workspace.findFiles('*.log').then(
+                (uris) => {
+                    vscode.workspace.openTextDocument(uris[0]).then(
+                        (file) => {
+                            vscode.window.showTextDocument(file).then(
+                                (editor) => {
+
+                                    // Assert
+                                    expect(extensionSpy.calls.count()).toBe(1);
+                                    done();
+                                },
+                                (reason) => {
+                                    done.fail(reason);
+                                });
+                        },
+                        (reason) => {
+                            done.fail(reason);
+                        });
+                },
+                (reason) => {
+                    done.fail(reason);
+                });
+        } else {
+            done.fail('No folder was opened!');
         }
-
-        const extension = proxyquire('../../src/extension', {
-            './TimePeriodCalculator': TimePeriodCalculatorMock
-        });
-        extension.activate(null);
-        expect(1 + 1).toEqual(2);
     });
 });

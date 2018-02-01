@@ -9,7 +9,8 @@
         "variable-name": [true, "check-format", "allow-leading-underscore"],
         "indent": [true, "spaces", 4],
         "no-console": [false],
-        "trailing-comma": [false]
+        "trailing-comma": [false],
+        "no-empty": [false]
     },
     "rulesDirectory": []
 }

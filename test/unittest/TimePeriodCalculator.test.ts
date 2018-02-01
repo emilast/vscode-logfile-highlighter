@@ -92,6 +92,7 @@ describe('TimePeriodCalculator', () => {
             // Act
             const result = testObject.convertToDisplayString(input);
 
+            // Assert
             expect(result).toBe(expected);
         });
 
@@ -103,6 +104,7 @@ describe('TimePeriodCalculator', () => {
             // Act
             const result = testObject.convertToDisplayString(input);
 
+            // Assert
             expect(result).toBe(expected);
         });
 
@@ -115,6 +117,7 @@ describe('TimePeriodCalculator', () => {
             // Act
             const result = testObject.convertToDisplayString(input);
 
+            // Assert
             expect(result).toBe(expected);
         });
 
@@ -128,6 +131,7 @@ describe('TimePeriodCalculator', () => {
             // Act
             const result = testObject.convertToDisplayString(input);
 
+            // Assert
             expect(result).toBe(expected);
         });
 
@@ -142,6 +146,7 @@ describe('TimePeriodCalculator', () => {
             // Act
             const result = testObject.convertToDisplayString(input);
 
+            // Assert
             expect(result).toBe(expected);
         });
 
@@ -157,6 +162,7 @@ describe('TimePeriodCalculator', () => {
             // Act
             const result = testObject.convertToDisplayString(input);
 
+            // Assert
             expect(result).toBe(expected);
         });
     });
