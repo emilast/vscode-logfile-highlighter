@@ -80,7 +80,7 @@ class TimePeriodCalculator {
         let timePeriod: moment.Duration;
         timePeriod = undefined;
 
-        if (matches.length >= 2) {
+        if (matches.length >= 2 && matches[0].length === matches[matches.length - 1].length) {
             const firstMoment = moment(matches[0]);
             const lastMoment = moment(matches[matches.length - 1]);
 

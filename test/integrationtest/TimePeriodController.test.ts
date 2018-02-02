@@ -18,7 +18,8 @@ describe('TimePeriodController', () => {
                         (file) => {
                             vscode.window.showTextDocument(file).then(
                                 (editor) => {
-                                   done();
+                                    editor.selection = new Selection(new Position(0, 0), new Position(0, 0));
+                                    done();
                                 },
                                 (reason) => {
                                     done.fail(reason);
@@ -38,25 +39,58 @@ describe('TimePeriodController', () => {
 
     it('should show a status bar item when a range of valid log statements is selcted.', (done) => {
 
+        // Arrange
         const editor = vscode.window.activeTextEditor;
         jasmine.DEFAULT_TIMEOUT_INTERVAL = 10000;
         const controllerSpy = spyOn(TimePeriodController.prototype, 'updateTimePeriod').and.callThrough();
 
         // Assert
         vscode.window.onDidChangeTextEditorSelection((selectionChangedEvent) => {
-            // Wait for the TimePeriodController to update the status bar.
-            setTimeout(() => {
-                expect(controllerSpy.calls.count()).toBe(1);
-                expect(typeof(controllerSpy.calls.argsFor(0)[0])).toBe('object');
-                expect(controllerSpy.calls.argsFor(0)[0].text).toBe('Selected: 1ms');
-                done();
+            // Only assert once
+            if (controllerSpy.calls.count() === 1) {
+                // Wait for the TimePeriodController to update the status bar.
+                setTimeout(() => {
+                    expect(controllerSpy.calls.count()).toBe(1);
+                    expect(typeof (controllerSpy.calls.argsFor(0)[0])).toBe('object');
+                    expect(controllerSpy.calls.argsFor(0)[0].text).toBe('Selected: 1ms');
                 }, 1000);
-
+                done();
+            }
         });
 
         // Act
         if (editor) {
             editor.selection = new Selection(new Position(0, 0), new Position(2, 0));
+        } else {
+            done.fail('No text editor is active!');
+        }
+    });
+
+    it('should not show a status bar item when a range of invalid log statements is selcted.', (done) => {
+
+        // Arrange
+        const editor = vscode.window.activeTextEditor;
+        jasmine.DEFAULT_TIMEOUT_INTERVAL = 10000;
+        const controllerSpy = spyOn(TimePeriodController.prototype, 'updateTimePeriod').and.callThrough();
+
+        // Assert
+        vscode.window.onDidChangeTextEditorSelection((selectionChangedEvent) => {
+
+            // Only check on second call once.
+            if (controllerSpy.calls.count() === 2) {
+
+                // Wait for the TimePeriodController to update the status bar.
+                setTimeout(() => {
+                    expect(typeof (controllerSpy.calls.argsFor(1)[0])).toBe('object');
+                    expect(controllerSpy.calls.argsFor(1)[0].text).toBe('');
+                }, 1000);
+                done();
+            }
+        });
+
+        // Act
+        if (editor) {
+            editor.selection = new Selection(new Position(0, 1), new Position(1, 12));
         } else {
             done.fail('No text editor is active!');
         }

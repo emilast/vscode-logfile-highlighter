@@ -1,6 +1,7 @@
 'use strict';
 
 import * as vscode from 'vscode';
+import { StatusBarItem } from 'vscode';
 import TimePeriodCalculator = require('./TimePeriodCalculator');
 
 class TimePeriodController {
@@ -12,13 +13,18 @@ class TimePeriodController {
     constructor(timeCalculator: TimePeriodCalculator) {
         this._timeCalculator = timeCalculator;
 
+        // Create as needed
+        if (!this._statusBarItem) {
+            this._statusBarItem = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Left);
+        }
+
         // subscribe to selection change and editor activation events
         const subscriptions: vscode.Disposable[] = [];
         vscode.window.onDidChangeTextEditorSelection(this._onEvent, this, subscriptions);
         vscode.window.onDidChangeActiveTextEditor(this._onEvent, this, subscriptions);
 
         // update the counter for the current file
-        this._updateTimePeriod();
+        this.updateTimePeriod(this._statusBarItem);
 
         // create a combined disposable from both event subscriptions
         this._disposable = vscode.Disposable.from(...subscriptions);
@@ -29,12 +35,7 @@ class TimePeriodController {
         this._disposable.dispose();
     }
 
-    private _updateTimePeriod() {
-
-        // Create as needed
-        if (!this._statusBarItem) {
-            this._statusBarItem = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Left);
-        }
+    public updateTimePeriod(statusBarItem: StatusBarItem) {
 
         // Get the current text editor
         const editor = vscode.window.activeTextEditor;
@@ -48,6 +49,7 @@ class TimePeriodController {
         // Only update status if an log file
         if (doc.languageId === 'log') {
 
+            this._statusBarItem.text = '';
             const timePeriod = this._timeCalculator.getTimePeriod(doc.getText(editor.selection));
 
             if (timePeriod !== undefined) {
@@ -66,7 +68,7 @@ class TimePeriodController {
     }
 
     private _onEvent() {
-        this._updateTimePeriod();
+        this.updateTimePeriod(this._statusBarItem);
     }
 }
 
