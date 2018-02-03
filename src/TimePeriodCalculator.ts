@@ -60,9 +60,10 @@ class TimePeriodCalculator {
         // E.g.: The dateTimePattern ('2016-08-23 09:13:16.323') is preferred
         // over the datesPattern ('2017-09-29 and 29/01/2019')
         const rankedPattern = [dateTimePattern, clockPattern, datesPattern];
-        const matches: string[] = [];
+        let matches: string[];
 
         for (const item of rankedPattern) {
+            matches = [];
             const timeRegEx = new RegExp(item, 'g');
 
             let match = timeRegEx.exec(selContent);
@@ -80,7 +81,7 @@ class TimePeriodCalculator {
         let timePeriod: moment.Duration;
         timePeriod = undefined;
 
-        if (matches.length >= 2 && matches[0].length === matches[matches.length - 1].length) {
+        if (matches.length >= 2) {
             const firstMoment = moment(matches[0]);
             const lastMoment = moment(matches[matches.length - 1]);
 

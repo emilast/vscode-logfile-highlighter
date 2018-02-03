@@ -1,6 +1,5 @@
 'use strict';
 
-import * as proxyquire from 'proxyquire';
 import { Position, Selection } from 'vscode';
 import * as vscode from 'vscode';
 import TimePeriodController = require('../../src/TimePeriodController');
@@ -41,19 +40,16 @@ describe('TimePeriodController', () => {
 
         // Arrange
         const editor = vscode.window.activeTextEditor;
-        jasmine.DEFAULT_TIMEOUT_INTERVAL = 10000;
-        const controllerSpy = spyOn(TimePeriodController.prototype, 'updateTimePeriod').and.callThrough();
+        let controllerSpy = spyOn(TimePeriodController.prototype, 'updateTimePeriod').and.callThrough();
 
         // Assert
         vscode.window.onDidChangeTextEditorSelection((selectionChangedEvent) => {
             // Only assert once
-            if (controllerSpy.calls.count() === 1) {
-                // Wait for the TimePeriodController to update the status bar.
-                setTimeout(() => {
-                    expect(controllerSpy.calls.count()).toBe(1);
-                    expect(typeof (controllerSpy.calls.argsFor(0)[0])).toBe('object');
-                    expect(controllerSpy.calls.argsFor(0)[0].text).toBe('Selected: 1ms');
-                }, 1000);
+            if (controllerSpy !== undefined && controllerSpy.calls.count() === 1) {
+                expect(controllerSpy.calls.count()).toBe(1);
+                expect(typeof (controllerSpy.calls.argsFor(0)[0])).toBe('object');
+                expect(controllerSpy.calls.argsFor(0)[0].text).toBe('Selected: 1ms');
+                controllerSpy = undefined;
                 done();
             }
         });
@@ -70,20 +66,16 @@ describe('TimePeriodController', () => {
 
         // Arrange
         const editor = vscode.window.activeTextEditor;
-        jasmine.DEFAULT_TIMEOUT_INTERVAL = 10000;
-        const controllerSpy = spyOn(TimePeriodController.prototype, 'updateTimePeriod').and.callThrough();
+        let controllerSpy = spyOn(TimePeriodController.prototype, 'updateTimePeriod').and.callThrough();
 
         // Assert
         vscode.window.onDidChangeTextEditorSelection((selectionChangedEvent) => {
 
             // Only check on second call once.
-            if (controllerSpy.calls.count() === 2) {
-
-                // Wait for the TimePeriodController to update the status bar.
-                setTimeout(() => {
-                    expect(typeof (controllerSpy.calls.argsFor(1)[0])).toBe('object');
-                    expect(controllerSpy.calls.argsFor(1)[0].text).toBe('');
-                }, 1000);
+            if (controllerSpy !== undefined && controllerSpy.calls.count() === 2) {
+                expect(typeof (controllerSpy.calls.argsFor(1)[0])).toBe('object');
+                expect(controllerSpy.calls.argsFor(1)[0].text).toBe('');
+                controllerSpy = undefined;
                 done();
             }
         });
@@ -95,4 +87,63 @@ describe('TimePeriodController', () => {
             done.fail('No text editor is active!');
         }
     });
+
+    it('should update the status bar item when the active editor switches to another file.', (done) => {
+
+        // Arrange
+        let controllerSpy = spyOn(TimePeriodController.prototype, 'updateTimePeriod').and.callThrough();
+
+        // Assert
+        vscode.window.onDidChangeActiveTextEditor((selectionChangedEvent) => {
+
+            // Only check on fourth call once.
+            if (controllerSpy !== undefined && controllerSpy.calls.count() === 4) {
+
+                // Wait for the TimePeriodController to update the status bar.
+                setTimeout(() => {
+                    expect(typeof (controllerSpy.calls.argsFor(3)[0])).toBe('object');
+                    expect(controllerSpy.calls.argsFor(3)[0].text).toBe('Selected: 1ms');
+                    controllerSpy = undefined;
+                    done();
+                }, 200);
+            }
+        });
+
+        // Open both files and select some lines then change back to the first file.
+        vscode.workspace.findFiles('*.log').then(
+            (uris) => {
+                // Open and show second file with default selection
+                vscode.workspace.openTextDocument(uris[1]).then(
+                    (secondFile) => {
+                        vscode.window.showTextDocument(secondFile, {
+                            preview: false,
+                            selection: new Selection(new Position(0, 0), new Position(2, 0))
+                        }).then(
+                            (editor) => {
+                                // Switch back to the first file with default selection.
+                                vscode.workspace.openTextDocument(uris[0]).then(
+                                    (firstFile) => {
+                                        vscode.window.showTextDocument(firstFile, {
+                                            preserveFocus: false,
+                                            preview: false,
+                                            selection: new Selection(new Position(0, 0), new Position(2, 0))
+                                        });
+                                    },
+                                    (reason) => {
+                                        done.fail(reason);
+                                    });
+                            },
+                            (reason) => {
+                                done.fail(reason);
+                            });
+                    },
+                    (reason) => {
+                        done.fail(reason);
+                    });
+            },
+            (reason) => {
+                done.fail(reason);
+            });
+    });
+
 });
