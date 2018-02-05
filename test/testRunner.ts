@@ -41,10 +41,9 @@ if (!module.parent) {
         "node testRunner.js -c ./myConfigPath/jasmine.json"');
         process.exit(1);
     } else {
-        const j = process.argv;
         let configPath = process.argv[process.argv.indexOf('-c') + 1];
         if (!path.isAbsolute(configPath)) {
-            configPath = path.normalize(path.dirname(process.argv[1]) + '../../../') + configPath;
+            configPath = path.resolve(configPath);
         }
         const runner = new TestRunner();
         runner.run(configPath, (error) => {
