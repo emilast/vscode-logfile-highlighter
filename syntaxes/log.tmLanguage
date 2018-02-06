@@ -167,7 +167,7 @@
 				<string>\b([a-zA-Z.]*Exception)\b</string>
 
 				<key>name</key>
-				<string>string.regexp, emphasis log.type</string>
+				<string>string.regexp, emphasis log.exceptiontype</string>
 			</dict>
 			
 			<!-- Colorize rows of exception call stacks -->
