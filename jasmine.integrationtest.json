@@ -1,0 +1,11 @@
+{
+  "spec_dir": "./out/test/integrationtest",
+  "spec_files": [
+    "**/*[tT]est.js"
+  ],
+  "helpers": [
+    "helpers/**/*.js"
+  ],
+  "stopSpecOnExpectationFailure": false,
+  "random": false
+}

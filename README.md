@@ -7,12 +7,14 @@
 ## Description
 A Visual Studio Code extension for adding color highlighting to log files. It is based on standard conventions for log4net log files but it's general enough to be useful for other variations of log files as well. The colors are customizable but by default the current color theme's colors are used.
 
+## Features
+### Syntax Highlighting
 The extension associates with `.log` files and applies coloring to the different elements in the file, for example:
 
 * Dates and times in ISO format, such as
     * `2015-12-09`
     * `2015-12-09 09:29`
-    * `2015-12-09 09:29:02,258`
+    * `2015-12-09 09:29:02.258`
 * Dates and times in some culture specific formats
     * `12/09/2016`
     * `12.09.2016`
@@ -49,6 +51,11 @@ The extension associates with `.log` files and applies coloring to the different
     * `http://www.meadow.se/wordpress/`
 * Namespaces (sequences of alphanumeric and dot characters). Useful to identity namespace qualified type names, for example.
     * `MyApp.MyNameSpace.MyClass`
+
+### Visualization of Time Duration
+If you select multiple lines of a `.log` file,
+a status bar item is displayed that indicates how many days, hours, minutes, seconds and milliseconds you have selected.
+![Time Duration Sample](content/Selection-Sample.gif)  
 
 ## Customization
 

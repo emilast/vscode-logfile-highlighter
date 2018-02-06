@@ -1,1 +1,11 @@
+.vscode/**
+.vscode-test/**
+out/test/**
+out/**/*.map
+src/**
+test/**
+.gitignore
+tsconfig.json
 content/sample.png
+jasmine.*.json
+tslint.json
