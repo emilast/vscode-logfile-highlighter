@@ -73,7 +73,7 @@ log.error
 log.exception
 log.info
 log.string
-log.type
+log.exceptiontype
 log.warning
 ```
 

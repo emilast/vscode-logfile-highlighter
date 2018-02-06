@@ -1,5 +1,16 @@
 # Change Log
 
+### 2.0.0 - 6 Feb 2019
+
+* New feature: **Visualization of Time Duration**
+  * Select two or more lines and the time difference between the first and last log event is shown in the status bar.
+  * Big thanks to Leo Hanisch (@HaaLeo) for implementing this feature!
+
+* Git hashes are now colored.
+
+* Custom token for overriding exception types has changed from `log.type` to `log.exceptiontype`, which makes more sense.
+
+
 ### 1.2.0 - 19 Sep 2017
 
 * New feature: Customization of colors that overrides the default (which is to reuse theme colors). Fixes issues #24 and #27.
