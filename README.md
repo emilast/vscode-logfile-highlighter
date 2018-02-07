@@ -24,7 +24,7 @@ The extension associates with `.log` files and applies coloring to the different
 * Log level, such as
     * `DEBUG`, `Debug`
     * `INFO`, `INFORMATION`, `Info`, `Information`
-    * `WARN`, `WARNING`, `Info`, `Information`
+    * `WARN`, `WARNING`, `Warn`, `Warning`
     * `ERROR`, `FAIL`, `FAILURE`, `Error`, `Fail`, `Failure`
 * Numeric constants, such as
     * `1`
