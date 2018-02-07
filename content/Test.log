@@ -1,15 +1,28 @@
 Log levels
 -------------------
 ERROR, FAIL, FAILURE
+Error, Fail, Failure
 WARN, WARNING
+Warn, Warning
 INFO, INFORMATION
+Info, Information
 DEBUG
+Debug
 
 error:
+Error:
 warning:
+Warning:
 debug:
+Debug:
 information:
+Information:
 
+[Error]
+[Eror]
+[Err]
+[Er]
+[E]
 [ERROR]
 [eror]
 [err]
@@ -21,19 +34,33 @@ information:
 [wrn]
 [wn]
 [w]
+[Warning]
+[Warn]
+[Wrn]
+[Wn]
+[W]
 
 [INFORMATION]
 [info]
 [inf]
 [in]
 [i]
-
+[Information]
+[Info]
+[Inf]
+[In]
+[I]
 
 [DEBUG]
 [dbug]
 [dbg]
 [de]
 [d]
+[Debug]
+[Dbug]
+[Dbg]
+[De]
+[D]
 
 Dates and times:
 -------------------
