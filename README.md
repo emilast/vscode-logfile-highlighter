@@ -22,10 +22,10 @@ The extension associates with `.log` files and applies coloring to the different
     * `12-09-2015 09:29`
     * `12-09-2015 09:29:02,258`
 * Log level, such as
-    * `DEBUG`
-    * `INFO`, `INFORMATION`
-    * `WARN`, `WARNING`
-    * `ERROR`, `FAIL`, `FAILURE`
+    * `DEBUG`, `Debug`
+    * `INFO`, `INFORMATION`, `Info`, `Information`
+    * `WARN`, `WARNING`, `Info`, `Information`
+    * `ERROR`, `FAIL`, `FAILURE`, `Error`, `Fail`, `Failure`
 * Numeric constants, such as
     * `1`
     * `234`
@@ -79,7 +79,7 @@ log.warning
 
 To override the color for one of these, use the `editor.tokenColorCustomizations` user setting, which was introduced in Visual Studio Code 1.15. Here's an example that forces errors to be red and bold and warnings to be orange, regardless of what color theme is used:
 
-```
+```JSON
 "editor.tokenColorCustomizations": {
     "textMateRules": [
         {
@@ -104,7 +104,7 @@ To override the color for one of these, use the `editor.tokenColorCustomizations
 
 To make VS Code treat other file extensions than the default `.log` as log files, add the following to the user settings:
 
-```
+```JSON
 "files.associations": {
     "*.log.*": "log"
 },
