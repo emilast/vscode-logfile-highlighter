@@ -113,6 +113,25 @@ Namespaces
 ----------------------
 MyApp.MyNameSpace.MyClass
 
+File Paths
+----------------------
+C:/foo/bar.txt
+//foo/bar.txt
+./foo/bar.txt
+../../../foo/bar.txt
+e:/f-oo/b_a9r/ba t0z/bar.txt
+C:\foo\bar.txt
+\\foo\bar.txt
+.\foo\bar.txt
+..\..\..\foo\bar.txt
+e:\f-oo\b_a9r\ba t0z\bar.txt
+../
+//foo/
+./
+c:/
+
+
+
 Git hashes
 -----------------------
 Commit: 6b1a8c9bf7a9f4a190bb08226ea376a11e9bdef8 [6b1a8c9]

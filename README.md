@@ -47,8 +47,13 @@ The extension associates with `.log` files and applies coloring to the different
         at MyClass.DoSomethingElse(string foo)
         at MyClass.DoSomething()
     ```
-* Url:s
+* Urls:
     * `http://www.meadow.se/wordpress/`
+* File Paths (`/` as well as `\` as seperator):
+    * `C:/foo/bar.txt`
+    * `../../foo/bar.txt`
+    * `./foo/bar.txt`
+    * `//foo/bar.txt`
 * Namespaces (sequences of alphanumeric and dot characters). Useful to identity namespace qualified type names, for example.
     * `MyApp.MyNameSpace.MyClass`
 
