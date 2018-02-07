@@ -39,7 +39,31 @@
 				"scopeName": "text.log",
 				"path": "./syntaxes/log.tmLanguage"
 			}
-		]
+		],
+		"configuration": {
+		"type": "object",
+		"title": "The vscode-logfile-highlighter configuration.",
+		"properties": {
+			"logFileHighlighter.customLogLevel": {
+				"type": ["array"],
+				"items": {
+					"description": "Custom log level.",
+					"type": "object",
+					"properties": {
+						"name": {
+							"type": "string",
+							"description": "The name that will be highlighted."
+						},
+						"color": {
+							"type": "string",
+							"description": "The color that will be used for highlighting."
+						}
+					}
+				},
+				"description": "An array of custom log level that shall be highlighted."
+			}
+		}
+	}
 	},
 	"activationEvents": [
 		"onLanguage:log"
