@@ -1,28 +1,15 @@
 Log levels
 -------------------
 ERROR, FAIL, FAILURE
-Error, Fail, Failure
 WARN, WARNING
-Warn, Warning
 INFO, INFORMATION
-Info, Information
 DEBUG
-Debug
 
 error:
-Error:
 warning:
-Warning:
 debug:
-Debug:
 information:
-Information:
 
-[Error]
-[Eror]
-[Err]
-[Er]
-[E]
 [ERROR]
 [eror]
 [err]
@@ -34,33 +21,19 @@ Information:
 [wrn]
 [wn]
 [w]
-[Warning]
-[Warn]
-[Wrn]
-[Wn]
-[W]
 
 [INFORMATION]
 [info]
 [inf]
 [in]
 [i]
-[Information]
-[Info]
-[Inf]
-[In]
-[I]
+
 
 [DEBUG]
 [dbug]
 [dbg]
 [de]
 [d]
-[Debug]
-[Dbug]
-[Dbg]
-[De]
-[D]
 
 Dates and times:
 -------------------
@@ -109,10 +82,6 @@ Url:s
 ----------------------
 http://www.meadow.se/wordpress/
 
-Namespaces
-----------------------
-MyApp.MyNameSpace.MyClass
-
 File Paths
 ----------------------
 C:/foo/bar.txt
@@ -130,7 +99,9 @@ e:\f-oo\b_a9r\ba t0z\bar.txt
 ./
 c:/
 
-
+Namespaces
+----------------------
+MyApp.MyNameSpace.MyClass
 
 Git hashes
 -----------------------
