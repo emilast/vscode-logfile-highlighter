@@ -22,10 +22,10 @@ The extension associates with `.log` files and applies coloring to the different
     * `12-09-2015 09:29`
     * `12-09-2015 09:29:02,258`
 * Log level, such as
-    * `DEBUG`, `Debug`
-    * `INFO`, `INFORMATION`, `Info`, `Information`
-    * `WARN`, `WARNING`, `Warn`, `Warning`
-    * `ERROR`, `FAIL`, `FAILURE`, `Error`, `Fail`, `Failure`
+    * `DEBUG`
+    * `INFO`, `INFORMATION`
+    * `WARN`, `WARNING`
+    * `ERROR`, `FAIL`, `FAILURE`
 * Numeric constants, such as
     * `1`
     * `234`
