@@ -82,6 +82,23 @@ Url:s
 ----------------------
 http://www.meadow.se/wordpress/
 
+File Paths
+----------------------
+C:/foo/bar.txt
+//foo/bar.txt
+./foo/bar.txt
+../../../foo/bar.txt
+e:/f-oo/b_a9r/ba t0z/bar.txt
+C:\foo\bar.txt
+\\foo\bar.txt
+.\foo\bar.txt
+..\..\..\foo\bar.txt
+e:\f-oo\b_a9r\ba t0z\bar.txt
+../
+//foo/
+./
+c:/
+
 Namespaces
 ----------------------
 MyApp.MyNameSpace.MyClass
