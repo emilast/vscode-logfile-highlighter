@@ -18,6 +18,10 @@ class CustomLogLevel {
         });
     }
 
+    public dispose() {
+        this.decoration.dispose();
+    }
+
     private createRegex(logLevelValue: string): RegExp[] {
         const result: RegExp[] = [];
 
@@ -38,23 +42,6 @@ class CustomLogLevel {
             const second = new RegExp('\\[(' + logLevelValue + ')\\]|\\b(' + logLevelValue + ')\\:', 'ig');
 
             result.push(first, second);
-
-            //// Todo remove
-            // logLevelValue = 'HelloWorld';
-            // const firstVariant = '(?i)\\b(' + logLevelValue + ')\\:|' +
-            //     '(?-i)\\b(' + logLevelValue.toUpperCase() + '|' + logLevelValue + ')\\b';
-            // const secondVariant = '(?i)\\[(' + logLevelValue + ')\\]';
-            // '(' + first.source + '|' + second.source + ')|(' + third.source + ')'
-
-            // let testResult = result[0].test('HelloWorld');
-            // testResult = result[0].test('helloworld:');
-            // testResult = result[0].test('Helloworld'.toUpperCase());
-            // testResult = result[0].test('[helloworld]');
-
-            // testResult = result[1].test('HelloWorld');
-            // testResult = result[1].test('helloworld:');
-            // testResult = result[1].test('Helloworld'.toUpperCase());
-            // testResult = result[1].test('[helloworld]');
         }
 
         return result;

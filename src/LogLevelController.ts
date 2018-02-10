@@ -33,6 +33,7 @@ class LogLevelController {
 
     public dispose() {
         this._disposable.dispose();
+        this._colorizer.dispose();
     }
 
     private onDidChangeConfiguration(): void {
