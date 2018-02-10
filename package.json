@@ -57,7 +57,7 @@
 								"pattern": "^[^$|^\\s]",
 								"type": "string",
 								"title": "The value that will be highlighted.",
-								"description": "Either the log level name or a regular expression."
+								"description": "Either the log level name or a regular expression pattern."
 							},
 							"color": {
 								"pattern": "^[^$|^\\s]",
