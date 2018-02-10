@@ -105,9 +105,9 @@ To override the color for one of these, use the `editor.tokenColorCustomizations
 }
 ```
 
-### Cusom Log Levels
+### Custom Log Levels
 
-If your `*.log` files use log level that are not supported by the extension by default, you can simply add your custom log levels by setting an option in the `settings.json`. As  `value` you can either use a word that matches `/\w+/g` or a valid javaScript regex pattern (Bare in mind to **escape special characters**). As `color` you can use hex colors or predefined vscode colors.  
+If your `*.log` files use log levels that are not supported by the extension by default, you can simply add your custom log levels by setting an option in the `settings.json`. As  `value` you can either use a word that matches `/\w+/g` or a valid javaScript regex pattern (bare in mind to **escape special characters**). As `color` you can use hex colors or predefined vscode colors.  
 For example:
 
 ```JSON
