@@ -117,7 +117,7 @@ For example:
         "color": "green"
     },
     {
-        "value": "/E\\w+",
+        "value": "E/\\w+",
         "color": "#af1f1f"
     }
 ]
