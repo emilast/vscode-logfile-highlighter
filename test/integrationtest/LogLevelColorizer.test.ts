@@ -31,9 +31,9 @@ describe('LogLevelColorizer', () => {
         new Range(7, 31, 7, 39)
     ];
     const eRanges = [
-        new Range(8, 31, 8, 45),
-        new Range(9, 31, 9, 43),
-        new Range(10, 31, 10, 44)
+        new Range(8, 31, 8, 44),
+        new Range(9, 31, 9, 42),
+        new Range(10, 31, 10, 43)
     ];
 
     // Initial situation for all tests:
