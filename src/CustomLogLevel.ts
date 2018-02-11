@@ -26,7 +26,7 @@ class CustomLogLevel {
         const result: RegExp[] = [];
 
         // Check if the log level value is a "simple" string or not.
-        if (!/\w+/g.test(logLevelValue)) {
+        if (!/^\w+$/g.test(logLevelValue)) {
 
             // log level is already regex.
             try {
