@@ -194,7 +194,7 @@
 			<!-- Match File Paths -->
 			<dict>
 				<key>match</key>
-				<string>(([A-Za-z]\:(\\|/))|(\.(\\|/))|(\.\.(\\|/)){1,}|(\\\\|//)[\w -]+(\\|/))([\w -]+(\\|/))*</string>
+				<string>(([a-zA-Z]\:)|(\.\.)|(\.))?((/|\\)[\w\-\.]*)</string>
 
 				<key>name</key>
 				<string>constant.language log.constant</string>

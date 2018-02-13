@@ -97,7 +97,10 @@ e:\f-oo\b_a9r\ba t0z\bar.txt
 ../
 //foo/
 ./
-c:/
+c:\
+c:\boot.ini
+C:\windows
+\\unc\path
 
 Namespaces
 ----------------------
