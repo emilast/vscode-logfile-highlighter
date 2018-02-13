@@ -125,7 +125,7 @@ The patterns are defined in the user settings like in this example:
 ]
 ```
 
-* `pattern` - can be either a string constant or a JavaScript regular expression (remember to **escape special characters**).
+* `pattern` - The matching expression. This can be either a string constant or a JavaScript regular expression (remember to **escape special characters**).
 
 * `foreground` - The color to use as foreground color for the matched pattern. Use hex colors or predefined vscode colors.
 

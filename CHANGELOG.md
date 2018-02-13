@@ -1,10 +1,22 @@
 # Change Log
 
+
+### 2.1.0 - 14 feb 2018
+
+* New feature: **Custom highlighting patterns**
+  * LogFileHighlighter can now be configured to add highlighting to user-specified patterns.
+  * This can be used to adapt the extension to unsupported logging frameworks, to highlight domain specific patterns or just about anything else.
+  * Feature contributed by Leo Hanisch ([@HaaLeo)](https://github.com/HaaLeo). Greatly appreciated, Leo!
+
+* File system paths are now highlighted. Applies to both Windows-style paths (`C:\Windows`) and Unix-style (`/dev/null`).
+
+* Added dash (`-`) to be allowed in "namespace" names. Makes text such as `vscode.merge-conflict` to be colored correctly.
+
 ### 2.0.0 - 6 Feb 2018
 
 * New feature: **Visualization of Time Duration**
   * Select two or more lines and the time difference between the first and last log event is shown in the status bar.
-  * Big thanks to Leo Hanisch (@HaaLeo) for implementing this feature!
+  * Big thanks to Leo Hanisch ([@HaaLeo)](https://github.com/HaaLeo) for implementing this feature!
 
 * Git hashes are now colored.
 
