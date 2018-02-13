@@ -64,11 +64,11 @@ a status bar item is displayed that indicates how many days, hours, minutes, sec
 
 ## Customization
 
-### Default Log Level Colors
+### Customizing the colors
 
-By default, this extension reuses existing theme colors in order to adapt to the user's preferences. Sometimes this will result in colors that may not make complete sense in the log file context (for example `ERROR` might be green and `DEBUG` red, when it would be more appropriate tp have it the other way around).
+By default, this extension reuses existing theme colors in order to adapt to the user's preferences. Sometimes this will result in colors that may not make complete sense in the log file context (for example `ERROR` might be green and `DEBUG` red, when it would be more appropriate to have it the other way around).
 
-For this reason, the extension defines a special set of grammar tokens that can be used to override the colors of the default log levels:
+For this reason, the extension defines a special set of grammar tokens that can be used to override the colors of the default log items:
 
 ```
 log.constant
@@ -105,26 +105,30 @@ To override the color for one of these, use the `editor.tokenColorCustomizations
 }
 ```
 
-### Custom Log Levels
+### Defining custom highlighting patterns
 
-If your `*.log` files use log levels that are not supported by the extension by default, you can simply add your custom log levels by setting an option in the `settings.json`. As  `value` you can either use a word that matches `/^\w+$/g` or a valid javaScript regex pattern (bare in mind to **escape special characters**). As `color` you can use hex colors or predefined vscode colors.  
-For example:
+The extension also supports defining custom patterns to be highlighted. This can be useful to make the extension compatible with the log levels of an otherwise unsupported logging framework or to highlight domain specific patterns, or just about anything else.
+
+The patterns are defined in the user settings like in this example:
+
 
 ```JSON
-"logFileHighlighter.customLogLevels": [
+"logFileHighlighter.customPatterns": [
     {
-        "value": "Verbose",
-        "color": "green"
+        "pattern": "Verbose",
+        "foreground": "green"
     },
     {
-        "value": "E/\\w+",
-        "color": "#af1f1f"
+        "pattern": "E/\\w+",
+        "foreground": "#af1f1f"
     }
 ]
-
 ```
 
-![Custom Log Level Sample](content/CustomLogLevel-Sample.gif)  
+* `pattern` - can be either a string constant or a JavaScript regular expression (remember to **escape special characters**).
+
+* `foreground` - The color to use as foreground color for the matched pattern. Use hex colors or predefined vscode colors.
+
 
 ### File associations
 
