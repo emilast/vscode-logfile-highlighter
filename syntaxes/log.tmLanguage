@@ -204,7 +204,7 @@
 			as well as file names and extensions (e.g. bar.txt) -->
 			<dict>
 				<key>match</key>
-				<string>\b([\w]+\.)+(\w)+\b</string>
+				<string>\b([\w-]+\.)+([\w-])+\b</string>
 
 				<key>name</key>
 				<string>constant.language log.constant</string>
