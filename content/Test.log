@@ -88,12 +88,12 @@ C:/foo/bar.txt
 //foo/bar.txt
 ./foo/bar.txt
 ../../../foo/bar.txt
-e:/f-oo/b_a9r/ba t0z/bar.txt
+e:/f-oo/b_a9r/bat0z/bar.txt
 C:\foo\bar.txt
 \\foo\bar.txt
 .\foo\bar.txt
 ..\..\..\foo\bar.txt
-e:\f-oo\b_a9r\ba t0z\bar.txt
+e:\f-oo\b_a9r\bat0z\bar.txt
 ../
 //foo/
 ./
@@ -113,3 +113,20 @@ Commit: 6b1a8c9bf7a9f4a190bb08226ea376a11e9bdef8 [6b1a8c9]
 Parents: 8d3639a482
 
 
+Custom keywords
+----------------
+Foo
+E/Custom error
+
+To color the above, add this to the user settings:
+
+	"logFileHighlighter.customPatterns": [
+		{
+			"pattern": "Foo",
+			"foreground": "green"
+		},
+		{
+			"pattern": "E/\\w+",
+			"foreground": "#af1f1f"
+		}
+	]
