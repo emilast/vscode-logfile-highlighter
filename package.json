@@ -7,7 +7,7 @@
 		"Other"
 	],
 	"license": "MIT",
-	"version": "2.0.0",
+	"version": "2.1.0",
 	"bugs": {
 		"url": "https://github.com/emilast/vscode-logfile-highlighter/issues"
 	},
@@ -39,7 +39,43 @@
 				"scopeName": "text.log",
 				"path": "./syntaxes/log.tmLanguage"
 			}
-		]
+		],
+		"configuration": {
+			"type": "object",
+			"title": "The vscode-logfile-highlighter configuration.",
+			"properties": {
+				"logFileHighlighter.customPatterns": {
+					"type": [
+						"array"
+					],
+					"items": {
+						"title": "Custom patterns to highlight.",
+						"description": "A custom pattern that is highlighted with the given foreground color.",
+						"type": "object",
+						"properties": {
+							"pattern": {
+								"pattern": "^[^$|^\\s]",
+								"type": "string",
+								"title": "The pattern that will be highlighted.",
+								"description": "Either the exact string to highlight, or a regular expression pattern."
+							},
+							"foreground": {
+								"pattern": "^[^$|^\\s]",
+								"type": "string",
+								"title": "The color.",
+								"description": "The foreground color that will be used for highlighting."
+							}
+						},
+						"required": [
+							"pattern",
+							"foreground"
+						]
+					},
+					"title": "Custom highlighting patterns.",
+					"description": "An array of custom patterns that shall be highlighted."
+				}
+			}
+		}
 	},
 	"activationEvents": [
 		"onLanguage:log"

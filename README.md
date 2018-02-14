@@ -66,9 +66,9 @@ a status bar item is displayed that indicates how many days, hours, minutes, sec
 
 ### Customizing the colors
 
-By default, this extension reuses existing theme colors in order to adapt to the user's preferences. Sometimes this will result in colors that may not make complete sense in the log file context (for example `ERROR` might be green and `DEBUG` red, when it would be more appropriate tp have it the other way around).
+By default, this extension reuses existing theme colors in order to adapt to the user's preferences. Sometimes this will result in colors that may not make complete sense in the log file context (for example `ERROR` might be green and `DEBUG` red, when it would be more appropriate to have it the other way around).
 
-For this reason, the extension defines a special set of grammar tokens that can be used to override the default colors:
+For this reason, the extension defines a special set of grammar tokens that can be used to override the colors of the default log items:
 
 ```
 log.constant
@@ -104,6 +104,31 @@ To override the color for one of these, use the `editor.tokenColorCustomizations
     ]
 }
 ```
+
+### Defining custom highlighting patterns
+
+The extension also supports defining custom patterns to be highlighted. This can be useful to make the extension compatible with the log levels of an otherwise unsupported logging framework or to highlight domain specific patterns, or just about anything else.
+
+The patterns are defined in the user settings like in this example:
+
+
+```JSON
+"logFileHighlighter.customPatterns": [
+    {
+        "pattern": "Verbose",
+        "foreground": "green"
+    },
+    {
+        "pattern": "E/\\w+",
+        "foreground": "#af1f1f"
+    }
+]
+```
+
+* `pattern` - The matching expression. This can be either a string constant or a JavaScript regular expression (remember to **escape special characters**).
+
+* `foreground` - The color to use as foreground color for the matched pattern. Use hex colors or predefined vscode colors.
+
 
 ### File associations
 
