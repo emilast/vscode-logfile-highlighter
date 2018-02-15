@@ -7,6 +7,9 @@
 ## Description
 A Visual Studio Code extension for adding color highlighting to log files. It is based on standard conventions for log4net log files but it's general enough to be useful for other variations of log files as well. The colors are customizable but by default the current color theme's colors are used.
 
+**Note**
+An earlier version of the syntax highlighting definition from this extension was included into Visual Studio Code [version 1.20](https://code.visualstudio.com/updates/v1_20#_output-panel). If the default behavior of log files in VS Code is good enough for you, then you don't need this extension. However, if you want additional highlighting, customizable patterns and time duration calculation, then keep reading :-)
+
 ## Features
 ### Syntax Highlighting
 The extension associates with `.log` files and applies coloring to the different elements in the file, for example:
@@ -127,7 +130,7 @@ The patterns are defined in the user settings like in this example:
 
 * `pattern` - The matching expression. This can be either a string constant or a JavaScript regular expression (remember to **escape special characters**).
 
-* `foreground` - The color to use as foreground color for the matched pattern. Use hex colors or predefined vscode colors.
+* `foreground` - The color to use as foreground color for the matched pattern. Use hex colors or predefined VS Code colors.
 
 ![Custom Pattern Sample](content/CustomPattern-Sample.gif)  
 
