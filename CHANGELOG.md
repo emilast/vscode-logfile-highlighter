@@ -1,6 +1,12 @@
 # Change Log
 
 
+### 2.1.1 - 15 feb 2018
+
+* Updated readme file:
+  * Added a note about that an earlier version of the extension has now been incorporated into the standard Visual Studio Code installation.
+  * Added an animated GIF showcasing the custom pattern highlighting feature.
+
 ### 2.1.0 - 14 feb 2018
 
 * New feature: **Custom highlighting patterns**
