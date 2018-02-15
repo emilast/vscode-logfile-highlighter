@@ -129,6 +129,7 @@ The patterns are defined in the user settings like in this example:
 
 * `foreground` - The color to use as foreground color for the matched pattern. Use hex colors or predefined vscode colors.
 
+![Custom Pattern Sample](content/CustomPattern-Sample.gif)  
 
 ### File associations
 

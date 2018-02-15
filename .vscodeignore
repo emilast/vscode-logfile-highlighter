@@ -6,6 +6,7 @@ src/**
 test/**
 .gitignore
 tsconfig.json
+content/*.gif
 content/sample.png
 jasmine.*.json
 tslint.json
