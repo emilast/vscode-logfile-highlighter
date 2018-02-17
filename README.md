@@ -1,6 +1,7 @@
 # Log File Highlighter
 
-[![License](https://img.shields.io/badge/license-MIT-green.svg?style=flat)](https://raw.githubusercontent.com/emilast/vscode-logfile-highlighter/master/LICENSE) [![Version](https://vsmarketplacebadge.apphb.com/version/emilast.LogFileHighlighter.svg)](https://marketplace.visualstudio.com/items?itemName=emilast.LogFileHighlighter) [![Installs](https://vsmarketplacebadge.apphb.com/installs/emilast.LogFileHighlighter.svg)](https://marketplace.visualstudio.com/items?itemName=emilast.LogFileHighlighter) [![Ratings](https://vsmarketplacebadge.apphb.com/rating/emilast.LogFileHighlighter.svg)](https://marketplace.visualstudio.com/items?itemName=emilast.LogFileHighlighter)
+[![License](https://img.shields.io/badge/license-MIT-green.svg?style=flat)](https://raw.githubusercontent.com/emilast/vscode-logfile-highlighter/master/LICENSE) [![Version](https://vsmarketplacebadge.apphb.com/version/emilast.LogFileHighlighter.svg)](https://marketplace.visualstudio.com/items?itemName=emilast.LogFileHighlighter) [![Build Status](https://travis-ci.org/emilast/vscode-logfile-highlighter.svg)](https://travis-ci.org/emilast/vscode-logfile-highlighter) [![Installs](https://vsmarketplacebadge.apphb.com/installs/emilast.LogFileHighlighter.svg)](https://marketplace.visualstudio.com/items?itemName=emilast.LogFileHighlighter) [![Ratings](https://vsmarketplacebadge.apphb.com/rating/emilast.LogFileHighlighter.svg)](https://marketplace.visualstudio.com/items?itemName=emilast.LogFileHighlighter)
+
 
 ![alt text][sample]
 
