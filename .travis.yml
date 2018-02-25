@@ -17,6 +17,7 @@ install:
   - npm run vscode:prepublish
 
 script:
+  - npm run tslint
   - npm run unittest
 
 after_success:

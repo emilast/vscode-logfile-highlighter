@@ -1,8 +1,8 @@
 'use strict';
 
 import * as vscode from 'vscode';
-import CustomPatternDecorator = require('./CustomPatternDecorator');
 import CustomPatternController = require('./CustomPatternController');
+import CustomPatternDecorator = require('./CustomPatternDecorator');
 import TimePeriodCalculator = require('./TimePeriodCalculator');
 import TimePeriodController = require('./TimePeriodController');
 
