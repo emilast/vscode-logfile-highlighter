@@ -2,15 +2,11 @@ language: node_js
 
 sudo: false
 
-branches:
-  only:
-    - /.*/
-
 stages:
   - build
   - unit test
   - name: integration test
-    env: "CODE_TESTS_PATH"="out/test/integrationtest"
+    env: CODE_TESTS_PATH=out/test/integrationtest
 
 node_js:
   - "node"
