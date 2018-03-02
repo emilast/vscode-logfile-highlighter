@@ -26,7 +26,6 @@ import TestRunner = require('../testRunner');
 
 // The custom jasmine test runner for integration tests.
 export function run(testRoot: string, clb: (error: Error) => void) {
-    jasmine.DEFAULT_TIMEOUT_INTERVAL = 50000;
     const runner = new TestRunner();
     runner.run(path.resolve(testRoot, '../../../jasmine.integrationtest.json'), clb);
 }
