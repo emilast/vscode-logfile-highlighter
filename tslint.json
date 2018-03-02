@@ -10,7 +10,8 @@
         "indent": [true, "spaces", 4],
         "no-console": [false],
         "trailing-comma": [false],
-        "no-empty": [false]
+        "no-empty": [false],
+        "object-literal-sort-keys": [false]
     },
     "rulesDirectory": []
 }

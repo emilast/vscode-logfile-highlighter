@@ -1,11 +1,15 @@
 # Log File Highlighter
 
-[![License](https://img.shields.io/badge/license-MIT-green.svg?style=flat)](https://raw.githubusercontent.com/emilast/vscode-logfile-highlighter/master/LICENSE) [![Version](https://vsmarketplacebadge.apphb.com/version/emilast.LogFileHighlighter.svg)](https://marketplace.visualstudio.com/items?itemName=emilast.LogFileHighlighter) [![Installs](https://vsmarketplacebadge.apphb.com/installs/emilast.LogFileHighlighter.svg)](https://marketplace.visualstudio.com/items?itemName=emilast.LogFileHighlighter) [![Ratings](https://vsmarketplacebadge.apphb.com/rating/emilast.LogFileHighlighter.svg)](https://marketplace.visualstudio.com/items?itemName=emilast.LogFileHighlighter)
+[![License](https://img.shields.io/badge/license-MIT-green.svg?style=flat)](https://raw.githubusercontent.com/emilast/vscode-logfile-highlighter/master/LICENSE) [![Version](https://vsmarketplacebadge.apphb.com/version/emilast.LogFileHighlighter.svg)](https://marketplace.visualstudio.com/items?itemName=emilast.LogFileHighlighter) [![Build Status](https://travis-ci.org/emilast/vscode-logfile-highlighter.svg?branch=master)](https://travis-ci.org/emilast/vscode-logfile-highlighter) [![Installs](https://vsmarketplacebadge.apphb.com/installs/emilast.LogFileHighlighter.svg)](https://marketplace.visualstudio.com/items?itemName=emilast.LogFileHighlighter) [![Ratings](https://vsmarketplacebadge.apphb.com/rating/emilast.LogFileHighlighter.svg)](https://marketplace.visualstudio.com/items?itemName=emilast.LogFileHighlighter)
+
 
 ![alt text][sample]
 
 ## Description
 A Visual Studio Code extension for adding color highlighting to log files. It is based on standard conventions for log4net log files but it's general enough to be useful for other variations of log files as well. The colors are customizable but by default the current color theme's colors are used.
+
+**Note**
+An earlier version of the syntax highlighting definition from this extension was included into Visual Studio Code [version 1.20](https://code.visualstudio.com/updates/v1_20#_output-panel). If the default behavior of log files in VS Code is good enough for you, then you don't need this extension. However, if you want additional highlighting, customizable patterns and time duration calculation, then keep reading :-)
 
 ## Features
 ### Syntax Highlighting
@@ -127,7 +131,7 @@ The patterns are defined in the user settings like in this example:
 
 * `pattern` - The matching expression. This can be either a string constant or a JavaScript regular expression (remember to **escape special characters**).
 
-* `foreground` - The color to use as foreground color for the matched pattern. Use hex colors or predefined vscode colors.
+* `foreground` - The color to use as foreground color for the matched pattern. Use hex colors or predefined VS Code colors.
 
 ![Custom Pattern Sample](content/CustomPattern-Sample.gif)  
 
