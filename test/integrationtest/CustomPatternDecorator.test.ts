@@ -21,7 +21,7 @@ describe('CustomPatternDecorator', () => {
             }
         ]).then(() => done());
 
-    }, 10000);
+    });
 
     let testObject: CustomPatternDecorator;
     const verbRanges = [
@@ -66,7 +66,7 @@ describe('CustomPatternDecorator', () => {
         } else {
             done.fail('No folder was opened!');
         }
-    }, 10000);
+    });
 
     describe('updateConfiguration', () => {
         it('should update the its log level.', (done) => {
@@ -85,7 +85,7 @@ describe('CustomPatternDecorator', () => {
                 expect(decoratorSpy.calls.count()).toBe(1);
                 done();
             });
-        }, 10000);
+        });
     });
 
     describe('decorateDocument', () => {
@@ -125,7 +125,7 @@ describe('CustomPatternDecorator', () => {
             for (let i = 0; i < actualERanges.length; i++) {
                 expect(eRanges[i].isEqual(actualERanges[i])).toBeTruthy();
             }
-        }, 10000);
+        });
     });
 
     describe('decorateEditors', () => {
@@ -153,7 +153,7 @@ describe('CustomPatternDecorator', () => {
             for (let i = 0; i < actualERanges.length; i++) {
                 expect(eRanges[i].isEqual(actualERanges[i])).toBeTruthy();
             }
-        }, 10000);
+        });
     });
 
     // Remove configuration again.
@@ -161,5 +161,5 @@ describe('CustomPatternDecorator', () => {
         const config = vscode.workspace.getConfiguration('logFileHighlighter');
         config.update('customPatterns', []).then(() => done());
 
-    }, 10000);
+    });
 });

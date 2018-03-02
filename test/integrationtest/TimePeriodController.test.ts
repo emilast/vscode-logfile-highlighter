@@ -34,7 +34,7 @@ describe('TimePeriodController', () => {
         } else {
             done.fail('No folder was opened!');
         }
-    }, 10000);
+    });
 
     it('should show a status bar item when a range of valid log statements is selcted.', (done) => {
 
@@ -60,7 +60,7 @@ describe('TimePeriodController', () => {
         } else {
             done.fail('No text editor is active!');
         }
-    }, 10000);
+    });
 
     it('should not show a status bar item when a range of invalid log statements is selcted.', (done) => {
 
@@ -86,7 +86,7 @@ describe('TimePeriodController', () => {
         } else {
             done.fail('No text editor is active!');
         }
-    }, 10000);
+    });
 
     it('should update the status bar item when the active editor switches to another file.', (done) => {
 
@@ -144,5 +144,5 @@ describe('TimePeriodController', () => {
             (reason) => {
                 done.fail(reason);
             });
-    }, 10000);
+    });
 });
