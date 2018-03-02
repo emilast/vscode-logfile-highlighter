@@ -3,7 +3,7 @@ language: node_js
 sudo: false
 
 env: 
-  - CODE_TESTS_PATH=out/test/integrationtest
+  - CODE_TESTS_PATH=$TRAVIS_BUILD_DIR/out/test/integrationtest
 
 stages:
   - build
