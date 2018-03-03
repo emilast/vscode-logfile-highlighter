@@ -10,14 +10,14 @@ npm run compile
 ## Test extension in new Code instance
 
 1. Open the project folder in Code.
-2. Choose **Debug/Start Debugging** or press **F5**.
+2. Choose **Debug/Start Debugging** or press <kbd>F5</kbd>.
 
 ## Run tests
 
 ### Unit tests
 
 #### VsCode
-1. <kbd>Ctrl</kbd> + <kbd>P</kbd><kbd>
+1. <kbd>Ctrl</kbd> + <kbd>P</kbd>
 2. type *Debug Unit Tests*
 3. Press <kbd>Enter</kbd>
 
@@ -29,7 +29,7 @@ npm run unittest
 
 ### Integration tests
 #### VsCode
-1. <kbd>Ctrl</kbd> + <kbd>P</kbd><kbd>
+1. <kbd>Ctrl</kbd> + <kbd>P</kbd>
 2. type *Debug Integration Tests*
 3. Press <kbd>Enter</kbd>
 
