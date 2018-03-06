@@ -145,5 +145,4 @@ describe('TimePeriodController', () => {
                 done.fail(reason);
             });
     });
-
 });

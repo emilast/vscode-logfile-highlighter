@@ -2,6 +2,14 @@ language: node_js
 
 sudo: false
 
+env: 
+  - CODE_TESTS_PATH=$TRAVIS_BUILD_DIR/out/test/integrationtest CODE_TESTS_WORKSPACE=$TRAVIS_BUILD_DIR/test/integrationtest/testLogs
+
+stages:
+  - build
+  - unit test
+  - integration test
+
 node_js:
   - "node"
 
@@ -16,9 +24,18 @@ install:
   - npm install
   - npm run vscode:prepublish
 
-script:
-  - npm run tslint
-  - npm run unittest
+jobs:
+  include:
+    - stage: build
+      script:
+        - npm run compile
+        - npm run tslint
+    - stage: unit test
+      script: 
+        - npm run unittest
+    - stage: integration test
+      script: 
+        - npm run integrationtest
 
 after_success:
   - bash <(curl -s https://codecov.io/bash)

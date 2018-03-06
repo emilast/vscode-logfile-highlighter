@@ -12,12 +12,12 @@ describe('CustomPatternDecorator', () => {
         const config = vscode.workspace.getConfiguration('logFileHighlighter');
         config.update('customPatterns', [
             {
-                pattern: 'green',
-                foreground: 'Verbose'
+                pattern: 'Verbose',
+                foreground: 'green'
             },
             {
-                pattern: 'red',
-                foreground: 'E/\\w+'
+                pattern: 'E/\\w+',
+                foreground: 'red'
             }
         ]).then(() => done());
 
@@ -74,12 +74,12 @@ describe('CustomPatternDecorator', () => {
             const config = vscode.workspace.getConfiguration('logFileHighlighter');
             config.update('customPatterns', [
                 {
-                    pattern: 'darkgreen',
-                    foreground: 'Verbose'
+                    pattern: 'Verbose',
+                    foreground: 'yellow'
                 },
                 {
-                    pattern: 'red',
-                    foreground: 'E/\\w+'
+                    pattern: 'E/\\w+',
+                    foreground: 'darkred'
                 }
             ]).then(() => {
                 expect(decoratorSpy.calls.count()).toBe(1);
@@ -160,5 +160,6 @@ describe('CustomPatternDecorator', () => {
     afterAll((done) => {
         const config = vscode.workspace.getConfiguration('logFileHighlighter');
         config.update('customPatterns', []).then(() => done());
+
     });
 });
