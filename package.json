@@ -54,7 +54,7 @@
 						"type": "object",
 						"properties": {
 							"pattern": {
-								"pattern": "^[^$|^\\s]",
+								"pattern": "^[^$|\\s]",
 								"type": "string",
 								"title": "The pattern that will be highlighted.",
 								"description": "Either the exact string to highlight, or a regular expression pattern."
