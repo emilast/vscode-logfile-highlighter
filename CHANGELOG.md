@@ -2,6 +2,7 @@
 
 * Removed highlighting of file system paths. It was hard to define in a fool proof way and since there is no way to turn it off, it's better to let people add that highlighting using the custom highlighting patterns feature.
 
+* Protected string constant matching from matching quotes in abbreviated phrases such as `don´t`,
 
 ### 2.1.1 - 15 Feb 2018
 

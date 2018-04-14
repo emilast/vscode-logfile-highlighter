@@ -68,6 +68,8 @@ String constants
 "lorem ipsum"
 'lorem ipsum'
 
+Don't highlight the wrong 'string'.
+
 
 .Net exceptions
 ----------------------
