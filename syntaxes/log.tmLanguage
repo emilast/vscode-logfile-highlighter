@@ -191,15 +191,6 @@
 				<string>constant.language log.constant</string>
 			</dict>
 
-			<!-- Match File Paths -->
-			<dict>
-				<key>match</key>
-				<string>(([a-zA-Z]\:)|(\.\.)|(\.))?((/|\\)[\w\-\.]*)</string>
-
-				<key>name</key>
-				<string>constant.language log.constant</string>
-			</dict>
-
 			<!-- Match character and . sequences (such as namespaces) 
 			as well as file names and extensions (e.g. bar.txt) -->
 			<dict>

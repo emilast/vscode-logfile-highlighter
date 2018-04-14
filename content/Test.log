@@ -82,26 +82,6 @@ Url:s
 ----------------------
 http://www.meadow.se/wordpress/
 
-File Paths
-----------------------
-C:/foo/bar.txt
-//foo/bar.txt
-./foo/bar.txt
-../../../foo/bar.txt
-e:/f-oo/b_a9r/bat0z/bar.txt
-C:\foo\bar.txt
-\\foo\bar.txt
-.\foo\bar.txt
-..\..\..\foo\bar.txt
-e:\f-oo\b_a9r\bat0z\bar.txt
-../
-//foo/
-./
-c:\
-c:\boot.ini
-C:\windows
-\\unc\path
-
 Namespaces
 ----------------------
 MyApp.MyNameSpace.MyClass
@@ -116,7 +96,7 @@ Parents: 8d3639a482
 Custom keywords
 ----------------
 Foo
-E/Custom error
+E/Custom error E/hhj
 
 To color the above, add this to the user settings:
 
