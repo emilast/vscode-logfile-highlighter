@@ -30,7 +30,7 @@ class CustomPattern {
 
             // log level is already regex.
             try {
-                result.push(new RegExp(pattern, 'g'));
+                result.push(new RegExp(pattern, 'gm'));
             } catch (err) {
                 vscode.window.showErrorMessage('Regex of custom log level is invalid. Error: ' + err);
             }
@@ -38,7 +38,7 @@ class CustomPattern {
 
             // Log level consists only of "simple" characters -> build regex.
             const first = new RegExp('\\b(?!\\[)(' + pattern.toUpperCase() +
-                '|' + pattern + ')(?!\\]|\\:)\\b', 'g');
+                '|' + pattern + ')(?!\\]|\\:)\\b', 'gm');
             const second = new RegExp('\\[(' + pattern + ')\\]|\\b(' + pattern + ')\\:', 'ig');
 
             result.push(first, second);
