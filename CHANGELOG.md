@@ -1,5 +1,11 @@
 # Change Log
 
+### 2.2.0 - 15 April 2018
+
+* Added CI builds in Travis (found [here](https://travis-ci.org/emilast/vscode-logfile-highlighter)) and a Travis badge in the Readme file.
+
+* Added support for multiline expressions in the custom highlighting patterns feature. Allows the use of `^` and `$` for indicating the begin and end of lines respectively.
+
 * Removed highlighting of file system paths. It was hard to define in a fool proof way and since there is no way to turn it off, it's better to let people add that highlighting using the custom highlighting patterns feature.
 
 * Protected string constant matching from matching quotes in abbreviated phrases such as `don´t`,
