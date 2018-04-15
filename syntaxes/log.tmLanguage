@@ -155,7 +155,7 @@
 	
 			<dict>
 				<key>match</key>
-				<string>'[^']*'</string>
+				<string>(^|[^\w])'[^']*'</string>
 
 				<key>name</key>
 				<string>string log.string</string>
@@ -186,15 +186,6 @@
 			<dict>
 				<key>match</key>
 				<string>\b(http|https|ftp|file)://\S+\b/?</string>
-
-				<key>name</key>
-				<string>constant.language log.constant</string>
-			</dict>
-
-			<!-- Match File Paths -->
-			<dict>
-				<key>match</key>
-				<string>(([a-zA-Z]\:)|(\.\.)|(\.))?((/|\\)[\w\-\.]*)</string>
 
 				<key>name</key>
 				<string>constant.language log.constant</string>

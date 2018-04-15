@@ -7,7 +7,7 @@
 		"Other"
 	],
 	"license": "MIT",
-	"version": "2.1.1",
+	"version": "2.2.0",
 	"bugs": {
 		"url": "https://github.com/emilast/vscode-logfile-highlighter/issues"
 	},
@@ -54,7 +54,7 @@
 						"type": "object",
 						"properties": {
 							"pattern": {
-								"pattern": "^[^$|^\\s]",
+								"pattern": "^[^$|\\s]",
 								"type": "string",
 								"title": "The pattern that will be highlighted.",
 								"description": "Either the exact string to highlight, or a regular expression pattern."

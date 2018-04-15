@@ -3,7 +3,9 @@ language: node_js
 sudo: false
 
 env: 
-  - CODE_TESTS_PATH=$TRAVIS_BUILD_DIR/out/test/integrationtest CODE_TESTS_WORKSPACE=$TRAVIS_BUILD_DIR/test/integrationtest/testLogs
+- CODE_TESTS_PATH=$TRAVIS_BUILD_DIR/out/test/integrationtest CODE_TESTS_WORKSPACE=$TRAVIS_BUILD_DIR/test/integrationtest/testLogs CODE_VERSION=1.20.1
+  # Todo: Remove 'CODE_VERSION' attribute after the following issue is resolved.
+  # https://github.com/Microsoft/vscode/issues/47744
 
 stages:
   - build
