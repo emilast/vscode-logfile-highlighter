@@ -42,17 +42,20 @@ class TimePeriodCalculator {
         const selContent = data;
 
         // Clock times with optional timezone ("09:13:16", "09:13:16.323", "09:13:16+01:00")
-        const clockPattern = '\\d{2}:\\d{2}(?::\\d{2}(?:[.,]\\d{3,})?)?(?:Z| ?[+-]\\d{2}:\\d{2})?\\b';
+        let clockPattern = '\\d{2}:\\d{2}(?::\\d{2}(?:[.,]\\d{3,})?)?(?:Z| ?[+-]\\d{2}:\\d{2})?\\b';
 
         // ISO dates ("2016-08-23")
-        const isoDatePattern = '\\b\\d{4}-\\d{2}-\\d{2}(?:T|\\b)';
+        const isoDatePattern = '^\\d{4}-\\d{2}-\\d{2}(?:T|\\b)';
 
         // Culture specific dates ("23/08/2016", "23.08.2016")
-        const cultureDatesPattern = '\\b\\d{2}[^\\w\\s]\\d{2}[^\\w\\s]\\d{4}\\b';
+        const cultureDatesPattern = '^\\d{2}[^\\w\\s]\\d{2}[^\\w\\s]\\d{4}\\b';
 
         // Match '2016-08-23 09:13:16.323' as well as '29.01.2018 09:13:34,001'
         const dateTimePattern = '((?:' + isoDatePattern + '|' + cultureDatesPattern + '){1} ?' +
             '(?:' + clockPattern + '){1})';
+
+        // Only match at the beginning of a line.
+        clockPattern =  '^' + clockPattern;
 
         // Match 2017-09-29 as well as 29/01/2019
         const datesPattern = '(' + isoDatePattern + '|' + cultureDatesPattern + '){1}';
@@ -64,7 +67,7 @@ class TimePeriodCalculator {
 
         for (const item of rankedPattern) {
             matches = [];
-            const timeRegEx = new RegExp(item, 'g');
+            const timeRegEx = new RegExp(item, 'gm');
 
             let match = timeRegEx.exec(selContent);
 
