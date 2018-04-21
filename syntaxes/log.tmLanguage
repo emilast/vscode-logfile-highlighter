@@ -21,7 +21,7 @@
 			<!-- DEBUG -->
 			<dict>
 				<key>match</key>
-				<string>\b(DEBUG)\b|(?i)\b(debug)\:</string>
+				<string>\b(DEBUG|Debug|Trace)\b|(?i)\b(debug)\:</string>
 
 				<key>name</key>
 				<string>markup.changed log.debug</string>
@@ -39,7 +39,7 @@
 			<!-- INFO -->
 			<dict>
 				<key>match</key>
-				<string>\b(HINT|INFO|INFORMATION)\b|(?i)\b(info|information)\:</string>
+				<string>\b(HINT|INFO|INFORMATION|Info)\b|(?i)\b(info|information)\:</string>
 
 				<key>name</key>
 				<string>markup.inserted log.info</string>
@@ -57,7 +57,7 @@
 			<!-- WARN -->
 			<dict>
 				<key>match</key>
-				<string>\b(WARNING|WARN)\b|(?i)\b(warning)\:</string>
+				<string>\b(WARNING|WARN|Warn)\b|(?i)\b(warning)\:</string>
 
 				<key>name</key>
 				<string>markup.deleted log.warning</string>
@@ -75,7 +75,7 @@
 			<!-- ERROR -->
 			<dict>
 				<key>match</key>
-				<string>\b(ERROR|FAILURE|FAIL)\b|(?i)\b(error)\:</string>
+				<string>\b(ERROR|FAILURE|FAIL|Fatal|Error)\b|(?i)\b(error)\:</string>
 
 				<key>name</key>
 				<string>string.regexp, strong log.error</string>

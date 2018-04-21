@@ -35,6 +35,15 @@ information:
 [de]
 [d]
 
+NLog
+----
+Fatal
+Error but only once on each row. The second Error should not be highlighted.
+Warn
+Info
+Debug
+Trace
+
 Dates and times:
 -------------------
 2015-12-09
@@ -52,6 +61,8 @@ Dates and times:
 09:29
 09:29:02
 09:29:02,258
+
+2018-04-15 00:32:16 should not compare 2018-04-14 00:32:56
 
 Constants
 ----------------------
