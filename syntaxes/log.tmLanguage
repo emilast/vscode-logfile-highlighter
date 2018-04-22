@@ -15,7 +15,7 @@
 
 		<key>patterns</key>
 		<array>
-		
+
 			<!-- Log levels -->
 
 			<!-- DEBUG -->
@@ -39,7 +39,7 @@
 			<!-- INFO -->
 			<dict>
 				<key>match</key>
-				<string>\b(HINT|INFO|INFORMATION|Info)\b|(?i)\b(info|information)\:</string>
+				<string>\b(HINT|INFO|INFORMATION|Info|NOTICE)\b|(?i)\b(info|information)\:</string>
 
 				<key>name</key>
 				<string>markup.inserted log.info</string>
@@ -75,7 +75,7 @@
 			<!-- ERROR -->
 			<dict>
 				<key>match</key>
-				<string>\b(ERROR|FAILURE|FAIL|Fatal|Error)\b|(?i)\b(error)\:</string>
+				<string>\b(ALERT|CRITICAL|EMERGENCY|ERROR|FAILURE|FAIL|Fatal|Error)\b|(?i)\b(error)\:</string>
 
 				<key>name</key>
 				<string>string.regexp, strong log.error</string>
@@ -152,7 +152,7 @@
 				<key>name</key>
 				<string>string log.string</string>
 			</dict>
-	
+
 			<dict>
 				<key>match</key>
 				<string>(^|[^\w])'[^']*'</string>
@@ -169,7 +169,7 @@
 				<key>name</key>
 				<string>string.regexp, emphasis log.exceptiontype</string>
 			</dict>
-			
+
 			<!-- Colorize rows of exception call stacks -->
 			<dict>
 				<key>begin</key>
@@ -191,7 +191,7 @@
 				<string>constant.language log.constant</string>
 			</dict>
 
-			<!-- Match character and . sequences (such as namespaces) 
+			<!-- Match character and . sequences (such as namespaces)
 			as well as file names and extensions (e.g. bar.txt) -->
 			<dict>
 				<key>match</key>
@@ -201,7 +201,7 @@
 				<string>constant.language log.constant</string>
 			</dict>
 		</array>
-		
+
 		<key>uuid</key>
 		<string>E81BB6AB-CAC7-4C27-9A79-4137A4693EBD</string>
 	</dict>
