@@ -1,5 +1,9 @@
 # Change Log
 
+### 2.4.0 - 23 April 2018
+
+* Added some levels based on Syslog severity levels such as `EMERGENCY`, `ALERT`, `CRITICAL`, and `NOTICE`. Contributed by Mulia Nasution.
+
 ### 2.3.0 - 21 April 2018
 
 * Added NLog log levels: Fatal, Error, Warn, Info, Debug and Trace

@@ -44,6 +44,13 @@ Info
 Debug
 Trace
 
+Syslog
+------
+EMERGENCY
+ALERT
+CRITICAL
+NOTICE
+
 Dates and times:
 -------------------
 2015-12-09
