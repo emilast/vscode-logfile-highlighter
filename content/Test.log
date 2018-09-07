@@ -112,6 +112,11 @@ Git hashes
 Commit: 6b1a8c9bf7a9f4a190bb08226ea376a11e9bdef8 [6b1a8c9]
 Parents: 8d3639a482
 
+Should not be highlighted
+---------------------------
+c:\foo.bar\lorem
+/etc/foo.bar/lorem
+
 
 Custom keywords
 ----------------
