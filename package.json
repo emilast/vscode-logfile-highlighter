@@ -7,7 +7,7 @@
 		"Other"
 	],
 	"license": "MIT",
-	"version": "2.4.1",
+	"version": "2.4.2",
 	"bugs": {
 		"url": "https://github.com/emilast/vscode-logfile-highlighter/issues"
 	},
