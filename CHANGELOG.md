@@ -1,5 +1,8 @@
 # Change Log
 
+* Adjusted time format regex to match single-digit hours and to not require 3 digits for the fraction of a second part.
+
+
 ### 2.4.1 - 9 September 2018
 
 * Exclude coloring of patterns that looks like namespaces (a non-whitespace character sequence with at least one dot) when surrounded by slash or backslash characters.
