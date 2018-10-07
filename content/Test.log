@@ -86,6 +86,8 @@ String constants
 ----------------------
 "lorem ipsum"
 'lorem ipsum'
+['b','a']
+["don't","won't"]
 
 Don't highlight the wrong 'string'.
 

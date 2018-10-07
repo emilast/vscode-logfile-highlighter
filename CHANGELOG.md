@@ -2,6 +2,7 @@
 
 * Adjusted time format regex to match single-digit hours and to not require 3 digits for the fraction of a second part.
 
+* Fixed bug that the initial bracket was colored as a string quote in this example: ['a']
 
 ### 2.4.1 - 9 September 2018
 

@@ -155,7 +155,7 @@
 
 			<dict>
 				<key>match</key>
-				<string>(^|[^\w])'[^']*'</string>
+				<string>(?<![\w])'[^']*'</string>
 
 				<key>name</key>
 				<string>string log.string</string>
