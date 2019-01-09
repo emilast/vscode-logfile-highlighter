@@ -1,5 +1,9 @@
 # Change Log
 
+### 2.4.3 - 9 January 2019
+
+* Updated all dependencies to fix security vulnerabilities in `event-stream` and `flatmap-stream`.
+
 ### 2.4.2 - 7 October 2018
 
 * Adjusted time format regex to match single-digit hours and to not require 3 digits for the fraction of a second part.
