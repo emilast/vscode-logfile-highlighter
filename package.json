@@ -74,8 +74,7 @@
 							}
 						},
 						"required": [
-							"pattern",
-							"foreground"
+							"pattern"
 						]
 					},
 					"title": "Custom highlighting patterns.",

@@ -122,15 +122,23 @@ The patterns are defined in the user settings like in this example:
         "pattern": "E/\\w+",
         "foreground": "#af1f1f",
         "background": "blue"
+    },
+    {
+        "pattern": "\\[.*\\]",
+        "background": "#333333"
     }
 ]
 ```
 
 * `pattern` - The matching expression. This can be either a string constant or a JavaScript regular expression (remember to **escape special characters**).
 
-* `foreground` - The color to use as foreground color for the matched pattern. Use hex colors or predefined VS Code colors.
+* `foreground` - [Optional] The color to use as foreground color for the matched pattern. Use hex colors or predefined VS Code colors.
 
 * `background` - [Optional] The color to use as background color for the matched pattern. Use hex colors or predefined VS Code colors.
+
+**Note**: Both `foreground` and `background` are optional individually but *at least* one of them must be set for the custom pattern to be activated.
+
+**Tip**: By only setting the `background` a custom pattern can be combined with the built-in patterns that control the foreground color. This is shown in the last pattern in the example above.
 
 ![Custom Pattern Sample](content/CustomPattern-Sample.gif)  
 

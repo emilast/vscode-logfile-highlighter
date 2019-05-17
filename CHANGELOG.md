@@ -5,6 +5,10 @@
 * New setting: **Background color for custom highlighting patterns**
   * Now in addition it is possible to add a `background` color for custom patterns.
 
+* Compatibility fix for [Remote Development](https://code.visualstudio.com/blogs/2019/05/02/remote-development).
+
+* Updated all dependencies to fix security vulnerabilities.
+
 ### 2.4.3 - 9 January 2019
 
 * Updated all dependencies to fix security vulnerabilities in `event-stream` and `flatmap-stream`.
