@@ -8,7 +8,7 @@ env:
 stages:
   - build
   - unit test
-  - integration test
+  # - integration test
 
 node_js:
   - "node"
@@ -33,9 +33,9 @@ jobs:
     - stage: unit test
       script: 
         - npm run unittest
-    - stage: integration test
-      script: 
-        - npm run integrationtest
+    # - stage: integration test
+    #   script: 
+    #     - npm run integrationtest
 
 after_success:
   - bash <(curl -s https://codecov.io/bash)
