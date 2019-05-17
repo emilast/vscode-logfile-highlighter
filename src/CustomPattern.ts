@@ -5,14 +5,17 @@ import * as vscode from 'vscode';
 class CustomPattern {
     public readonly pattern: string;
     public readonly foreground: string;
+    public readonly background: string;
     public readonly regexes: RegExp[];
     public readonly decoration: vscode.TextEditorDecorationType;
 
-    public constructor(pattern: string, foreground: string) {
+    public constructor(pattern: string, foreground: string, background: string) {
         this.pattern = pattern;
         this.foreground = foreground;
+        this.background = background;
         this.regexes = this.createRegex(pattern);
         this.decoration = vscode.window.createTextEditorDecorationType({
+            backgroundColor: this.background,
             color: this.foreground,
             rangeBehavior: vscode.DecorationRangeBehavior.ClosedClosed
         });
