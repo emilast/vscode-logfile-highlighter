@@ -120,7 +120,8 @@ The patterns are defined in the user settings like in this example:
     },
     {
         "pattern": "E/\\w+",
-        "foreground": "#af1f1f"
+        "foreground": "#af1f1f",
+        "background": "blue"
     }
 ]
 ```
@@ -128,6 +129,8 @@ The patterns are defined in the user settings like in this example:
 * `pattern` - The matching expression. This can be either a string constant or a JavaScript regular expression (remember to **escape special characters**).
 
 * `foreground` - The color to use as foreground color for the matched pattern. Use hex colors or predefined VS Code colors.
+
+* `background` - [Optional] The color to use as background color for the matched pattern. Use hex colors or predefined VS Code colors.
 
 ![Custom Pattern Sample](content/CustomPattern-Sample.gif)  
 

@@ -1,5 +1,10 @@
 # Change Log
 
+### Unreleased
+
+* New setting: **Background color for custom highlighting patterns**
+  * Now in addition it is possible to add a `background` color for custom patterns.
+
 ### 2.4.3 - 9 January 2019
 
 * Updated all dependencies to fix security vulnerabilities in `event-stream` and `flatmap-stream`.

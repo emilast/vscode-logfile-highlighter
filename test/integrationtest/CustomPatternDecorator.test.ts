@@ -17,7 +17,8 @@ describe('CustomPatternDecorator', () => {
             },
             {
                 pattern: 'E/\\w+',
-                foreground: 'red'
+                foreground: 'red',
+                background: 'yellow'
             }
         ]).then(() => done());
 
@@ -79,7 +80,8 @@ describe('CustomPatternDecorator', () => {
                 },
                 {
                     pattern: 'E/\\w+',
-                    foreground: 'darkred'
+                    foreground: 'darkred',
+                    background: 'yellow'
                 }
             ]).then(() => {
                 expect(decoratorSpy.calls.count()).toBe(1);

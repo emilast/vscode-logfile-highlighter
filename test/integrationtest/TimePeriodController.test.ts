@@ -128,6 +128,7 @@ describe('TimePeriodController', () => {
                                             preview: false,
                                             selection: new Selection(new Position(0, 0), new Position(2, 0))
                                         });
+                                        done();
                                     },
                                     (reason) => {
                                         done.fail(reason);
