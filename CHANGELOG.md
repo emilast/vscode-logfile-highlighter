@@ -1,5 +1,36 @@
 # Change Log
 
+### 2.4.3 - 9 January 2019
+
+* Updated all dependencies to fix security vulnerabilities in `event-stream` and `flatmap-stream`.
+
+### 2.4.2 - 7 October 2018
+
+* Adjusted time format regex to match single-digit hours and to not require 3 digits for the fraction of a second part.
+
+* Fixed bug that the initial bracket was colored as a string quote in this example: ['a']
+
+### 2.4.1 - 9 September 2018
+
+* Exclude coloring of patterns that looks like namespaces (a non-whitespace character sequence with at least one dot) when surrounded by slash or backslash characters.
+
+  Should stop coloring of `foo.bar` in cases like these:
+
+  ```
+  c:\foo.bar\lorem
+  /etc/foo.bar/lorem
+  ```
+
+### 2.4.0 - 23 April 2018
+
+* Added some levels based on Syslog severity levels such as `EMERGENCY`, `ALERT`, `CRITICAL`, and `NOTICE`. Contributed by Mulia Nasution.
+
+### 2.3.0 - 21 April 2018
+
+* Added NLog log levels: Fatal, Error, Warn, Info, Debug and Trace
+
+* Fixed bug in the duration calculation feature so that it only looks for times and dates at the beginning of log lines.
+
 ### 2.2.0 - 15 April 2018
 
 * Added CI builds in Travis (found [here](https://travis-ci.org/emilast/vscode-logfile-highlighter)) and a Travis badge in the Readme file.

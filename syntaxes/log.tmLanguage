@@ -15,13 +15,13 @@
 
 		<key>patterns</key>
 		<array>
-		
+
 			<!-- Log levels -->
 
 			<!-- DEBUG -->
 			<dict>
 				<key>match</key>
-				<string>\b(DEBUG)\b|(?i)\b(debug)\:</string>
+				<string>\b(DEBUG|Debug|Trace)\b|(?i)\b(debug)\:</string>
 
 				<key>name</key>
 				<string>markup.changed log.debug</string>
@@ -39,7 +39,7 @@
 			<!-- INFO -->
 			<dict>
 				<key>match</key>
-				<string>\b(HINT|INFO|INFORMATION)\b|(?i)\b(info|information)\:</string>
+				<string>\b(HINT|INFO|INFORMATION|Info|NOTICE)\b|(?i)\b(info|information)\:</string>
 
 				<key>name</key>
 				<string>markup.inserted log.info</string>
@@ -57,7 +57,7 @@
 			<!-- WARN -->
 			<dict>
 				<key>match</key>
-				<string>\b(WARNING|WARN)\b|(?i)\b(warning)\:</string>
+				<string>\b(WARNING|WARN|Warn)\b|(?i)\b(warning)\:</string>
 
 				<key>name</key>
 				<string>markup.deleted log.warning</string>
@@ -75,7 +75,7 @@
 			<!-- ERROR -->
 			<dict>
 				<key>match</key>
-				<string>\b(ERROR|FAILURE|FAIL)\b|(?i)\b(error)\:</string>
+				<string>\b(ALERT|CRITICAL|EMERGENCY|ERROR|FAILURE|FAIL|Fatal|Error)\b|(?i)\b(error)\:</string>
 
 				<key>name</key>
 				<string>string.regexp, strong log.error</string>
@@ -111,7 +111,7 @@
 			<!-- Clock times with optional timezone ("09:13:16", "09:13:16.323", "09:13:16+01:00") -->
 			<dict>
 				<key>match</key>
-				<string>\d{2}:\d{2}(:\d{2}([.,]\d{3,})?)?(Z| ?[+-]\d{2}:\d{2})?\b</string>
+				<string>\d{1,2}:\d{2}(:\d{2}([.,]\d{1,})?)?(Z| ?[+-]\d{1,2}:\d{2})?\b</string>
 
 				<key>name</key>
 				<string>comment log.date</string>
@@ -152,10 +152,10 @@
 				<key>name</key>
 				<string>string log.string</string>
 			</dict>
-	
+
 			<dict>
 				<key>match</key>
-				<string>(^|[^\w])'[^']*'</string>
+				<string>(?<![\w])'[^']*'</string>
 
 				<key>name</key>
 				<string>string log.string</string>
@@ -169,7 +169,7 @@
 				<key>name</key>
 				<string>string.regexp, emphasis log.exceptiontype</string>
 			</dict>
-			
+
 			<!-- Colorize rows of exception call stacks -->
 			<dict>
 				<key>begin</key>
@@ -191,17 +191,17 @@
 				<string>constant.language log.constant</string>
 			</dict>
 
-			<!-- Match character and . sequences (such as namespaces) 
+			<!-- Match character and . sequences (such as namespaces)
 			as well as file names and extensions (e.g. bar.txt) -->
 			<dict>
 				<key>match</key>
-				<string>\b([\w-]+\.)+([\w-])+\b</string>
+				<string>(?<![\w/\\])([\w-]+\.)+([\w-])+(?![\w/\\])</string>
 
 				<key>name</key>
 				<string>constant.language log.constant</string>
 			</dict>
 		</array>
-		
+
 		<key>uuid</key>
 		<string>E81BB6AB-CAC7-4C27-9A79-4137A4693EBD</string>
 	</dict>

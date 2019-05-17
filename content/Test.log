@@ -35,6 +35,22 @@ information:
 [de]
 [d]
 
+NLog
+----
+Fatal
+Error but only once on each row. The second Error should not be highlighted.
+Warn
+Info
+Debug
+Trace
+
+Syslog
+------
+EMERGENCY
+ALERT
+CRITICAL
+NOTICE
+
 Dates and times:
 -------------------
 2015-12-09
@@ -52,6 +68,9 @@ Dates and times:
 09:29
 09:29:02
 09:29:02,258
+07/03/2018  0:15:05.49
+
+2018-04-15 00:32:16 should not compare 2018-04-14 00:32:56
 
 Constants
 ----------------------
@@ -67,6 +86,8 @@ String constants
 ----------------------
 "lorem ipsum"
 'lorem ipsum'
+['b','a']
+["don't","won't"]
 
 Don't highlight the wrong 'string'.
 
@@ -93,6 +114,11 @@ Git hashes
 -----------------------
 Commit: 6b1a8c9bf7a9f4a190bb08226ea376a11e9bdef8 [6b1a8c9]
 Parents: 8d3639a482
+
+Should not be highlighted
+---------------------------
+c:\foo.bar\lorem
+/etc/foo.bar/lorem
 
 
 Custom keywords
