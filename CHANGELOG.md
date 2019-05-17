@@ -1,6 +1,6 @@
 # Change Log
 
-### Unreleased
+### 2.5.0 - 17 May 2019
 
 * New setting: **Background color for custom highlighting patterns**
   * Now in addition it is possible to add a `background` color for custom patterns.
