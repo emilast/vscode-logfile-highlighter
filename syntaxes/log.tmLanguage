@@ -18,10 +18,28 @@
 
 			<!-- Log levels -->
 
+			<!-- Trace/Verbose -->
+			<dict>
+				<key>match</key>
+				<string>\b(Trace)\b:</string>
+
+				<key>name</key>
+				<string>comment log.verbose</string>
+			</dict>
+
+			<!-- Serilog VERBOSE -->
+			<dict>
+				<key>match</key>
+				<string>(?i)\[(verbose|verb|vrb|vb|v)\]</string>
+
+				<key>name</key>
+				<string>comment log.verbose</string>
+			</dict>
+
 			<!-- DEBUG -->
 			<dict>
 				<key>match</key>
-				<string>\b(DEBUG|Debug|Trace)\b|(?i)\b(debug)\:</string>
+				<string>\b(DEBUG|Debug)\b|(?i)\b(debug)\:</string>
 
 				<key>name</key>
 				<string>markup.changed log.debug</string>

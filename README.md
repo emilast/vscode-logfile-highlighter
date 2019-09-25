@@ -73,6 +73,7 @@ For this reason, the extension defines a special set of grammar tokens that can 
 ```
 log.constant
 log.date
+log.verbose
 log.debug
 log.error
 log.exception

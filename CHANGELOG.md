@@ -1,5 +1,7 @@
 # Change Log
 
+* Added the Serilog "Verbose" log level to the default patterns
+
 ### 2.5.0 - 17 May 2019
 
 * New setting: **Background color for custom highlighting patterns**
