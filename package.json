@@ -96,15 +96,15 @@
 		"unittest": "node out/test/testRunner.js -c jasmine.unittest.json"
 	},
 	"devDependencies": {
-		"@types/jasmine": "^2.8.14",
-		"@types/node": "^9.6.41",
+		"@types/jasmine": "^2.8.16",
+		"@types/node": "^9.6.52",
 		"jasmine": "^2.99.0",
 		"jasmine-core": "^2.99.1",
-		"tslint": "^5.12.0",
+		"tslint": "^5.20.0",
 		"typescript": "^2.9.2",
-		"vscode": "^1.1.34"
+		"vscode": "^1.1.36"
 	},
 	"dependencies": {
-		"moment": "^2.23.0"
+		"moment": "^2.24.0"
 	}
 }
