@@ -57,6 +57,14 @@ ALERT
 CRITICAL
 NOTICE
 
+Android logcat
+--------------
+E/
+W/
+I/
+D/
+V/
+
 Dates and times:
 -------------------
 2015-12-09

@@ -36,6 +36,15 @@
 				<string>comment log.verbose</string>
 			</dict>
 
+			<!-- Android logcat Verboce -->
+			<dict>
+				<key>match</key>
+				<string>\bV/</string>
+
+				<key>name</key>
+				<string>comment log.verbose</string>
+			</dict>
+
 			<!-- DEBUG -->
 			<dict>
 				<key>match</key>
@@ -49,6 +58,15 @@
 			<dict>
 				<key>match</key>
 				<string>(?i)\[(debug|dbug|dbg|de|d)\]</string>
+
+				<key>name</key>
+				<string>markup.changed log.debug</string>
+			</dict>
+
+			<!-- Android logcat Debug -->
+			<dict>
+				<key>match</key>
+				<string>\bD/</string>
 
 				<key>name</key>
 				<string>markup.changed log.debug</string>
@@ -72,6 +90,15 @@
 				<string>markup.inserted log.info</string>
 			</dict>
 
+			<!-- Android logcat Info -->
+			<dict>
+				<key>match</key>
+				<string>\bI/</string>
+
+				<key>name</key>
+				<string>markup.inserted log.info</string>
+			</dict>
+
 			<!-- WARN -->
 			<dict>
 				<key>match</key>
@@ -90,6 +117,15 @@
 				<string>markup.deleted log.warning</string>
 			</dict>
 
+			<!-- Android logcat Warning -->
+			<dict>
+				<key>match</key>
+				<string>\bW/</string>
+
+				<key>name</key>
+				<string>markup.deleted log.warning</string>
+			</dict>
+
 			<!-- ERROR -->
 			<dict>
 				<key>match</key>
@@ -103,6 +139,15 @@
 			<dict>
 				<key>match</key>
 				<string>(?i)\[(error|eror|err|er|e|fatal|fatl|ftl|fa|f)\]</string>
+
+				<key>name</key>
+				<string>string.regexp, strong log.error</string>
+			</dict>
+
+			<!-- Android logcat Error -->
+			<dict>
+				<key>match</key>
+				<string>\bE/</string>
 
 				<key>name</key>
 				<string>string.regexp, strong log.error</string>
