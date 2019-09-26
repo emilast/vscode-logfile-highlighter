@@ -1,8 +1,12 @@
 # Change Log
 
+### 2.6.0 - 26 Sep 2019
+
 * Added the Android logcat log levels `/E`, `/W`, `/I`, `/D` and `/V` to the default patterns.
 
 * Added the Serilog "Verbose" log level to the default patterns.
+
+* Updated dependencies
 
 ### 2.5.0 - 17 May 2019
 
