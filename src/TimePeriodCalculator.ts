@@ -37,25 +37,19 @@ class TimePeriodCalculator {
         return text;
     }
 
-    public getTimePeriod(data: string): moment.Duration {
-
-        const selContent = data;
-
+    public getTimePeriod(firstLine: string, lastLine: string): moment.Duration {
         // Clock times with optional timezone ("09:13:16", "09:13:16.323", "09:13:16+01:00")
-        let clockPattern = '\\d{2}:\\d{2}(?::\\d{2}(?:[.,]\\d{3,})?)?(?:Z| ?[+-]\\d{2}:\\d{2})?\\b';
+        const clockPattern = '\\d{2}:\\d{2}(?::\\d{2}(?:[.,]\\d{3,})?)?(?:Z| ?[+-]\\d{2}:\\d{2})?\\b';
 
         // ISO dates ("2016-08-23")
-        const isoDatePattern = '^\\d{4}-\\d{2}-\\d{2}(?:T|\\b)';
+        const isoDatePattern = '\\d{4}-\\d{2}-\\d{2}(?:T|\\b)';
 
         // Culture specific dates ("23/08/2016", "23.08.2016")
-        const cultureDatesPattern = '^\\d{2}[^\\w\\s]\\d{2}[^\\w\\s]\\d{4}\\b';
+        const cultureDatesPattern = '\\d{2}[^\\w\\s]\\d{2}[^\\w\\s]\\d{4}\\b';
 
         // Match '2016-08-23 09:13:16.323' as well as '29.01.2018 09:13:34,001'
         const dateTimePattern = '((?:' + isoDatePattern + '|' + cultureDatesPattern + '){1} ?' +
             '(?:' + clockPattern + '){1})';
-
-        // Only match at the beginning of a line.
-        clockPattern =  '^' + clockPattern;
 
         // Match 2017-09-29 as well as 29/01/2019
         const datesPattern = '(' + isoDatePattern + '|' + cultureDatesPattern + '){1}';
@@ -63,20 +57,19 @@ class TimePeriodCalculator {
         // E.g.: The dateTimePattern ('2016-08-23 09:13:16.323') is preferred
         // over the datesPattern ('2017-09-29 and 29/01/2019')
         const rankedPattern = [dateTimePattern, clockPattern, datesPattern];
-        let matches: string[];
+        let firstLineMatch: string;
+        let lastLineMatch: string;
 
         for (const item of rankedPattern) {
-            matches = [];
-            const timeRegEx = new RegExp(item, 'gm');
+            const timeRegEx = new RegExp(item);
 
-            let match = timeRegEx.exec(selContent);
+            // Get the first match for both lines
+            const firstMatch = timeRegEx.exec(firstLine);
+            const lastMatch = timeRegEx.exec(lastLine);
 
-            while (match) {
-                matches.push(this._convertToIso(match[0]));
-                match = timeRegEx.exec(selContent);
-            }
-
-            if (matches.length >= 2) {
+            if (firstMatch && lastMatch) {
+                firstLineMatch = this._convertToIso(firstMatch[0]);
+                lastLineMatch = this._convertToIso(lastMatch[0]);
                 break;
             }
         }
@@ -84,9 +77,9 @@ class TimePeriodCalculator {
         let timePeriod: moment.Duration;
         timePeriod = undefined;
 
-        if (matches.length >= 2) {
-            const firstMoment = moment(matches[0]);
-            const lastMoment = moment(matches[matches.length - 1]);
+        if (firstLineMatch && lastLineMatch) {
+            const firstMoment = moment(firstLineMatch);
+            const lastMoment = moment(lastLineMatch);
 
             if (firstMoment.isValid() && lastMoment.isValid()) {
 
@@ -94,8 +87,8 @@ class TimePeriodCalculator {
                 timePeriod = moment.duration(lastMoment.diff(firstMoment));
             } else {
 
-                const firstDuration = moment.duration(matches[0]);
-                const lastDuration = moment.duration(matches[matches.length - 1]);
+                const firstDuration = moment.duration(firstLineMatch);
+                const lastDuration = moment.duration(lastLineMatch);
 
                 if (moment.isDuration(firstDuration) && moment.isDuration(lastDuration)) {
 
