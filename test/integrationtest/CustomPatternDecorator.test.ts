@@ -117,14 +117,14 @@ describe('CustomPatternDecorator', () => {
             const actualVerbRanges = vscodeSpy.calls.argsFor(0)[1];
             expect(typeof(verbRanges)).toBe('object');
             expect(actualVerbRanges.length).toBe(4);
-            for (let i = 0; i < actualVerbRanges.length; i++) {
+            for (const verb of actualVerbRanges) {
                 // expect(verbRanges[i].isEqual(actualVerbRanges[i])).toBeTruthy();
             }
 
             const actualERanges = vscodeSpy.calls.argsFor(1)[1];
             expect(typeof(actualERanges)).toBe('object');
             expect(actualERanges.length).toBe(3);
-            for (let i = 0; i < actualERanges.length; i++) {
+            for (const eRange of actualERanges) {
                 // expect(eRanges[i].isEqual(actualERanges[i])).toBeTruthy();
             }
         });
@@ -145,14 +145,14 @@ describe('CustomPatternDecorator', () => {
             const actualVerbRanges = vscodeSpy.calls.argsFor(0)[1];
             expect(typeof(verbRanges)).toBe('object');
             expect(actualVerbRanges.length).toBe(4);
-            for (let i = 0; i < actualVerbRanges.length; i++) {
+            for (const verb of actualVerbRanges) {
                 // expect(verbRanges[i].isEqual(actualVerbRanges[i])).toBeTruthy();
             }
 
             const actualERanges = vscodeSpy.calls.argsFor(1)[1];
             expect(typeof(actualERanges)).toBe('object');
             expect(actualERanges.length).toBe(3);
-            for (let i = 0; i < actualERanges.length; i++) {
+            for (const eRange of actualERanges) {
                 // expect(eRanges[i].isEqual(actualERanges[i])).toBeTruthy();
             }
         });
