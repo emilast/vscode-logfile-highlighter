@@ -75,7 +75,7 @@
 			<!-- INFO -->
 			<dict>
 				<key>match</key>
-				<string>\b(HINT|INFO|INFORMATION|Info|NOTICE)\b|(?i)\b(info|information)\:</string>
+				<string>\b(HINT|INFO|INFORMATION|Info|NOTICE|II)\b|(?i)\b(info|information)\:</string>
 
 				<key>name</key>
 				<string>markup.inserted log.info</string>
@@ -102,7 +102,7 @@
 			<!-- WARN -->
 			<dict>
 				<key>match</key>
-				<string>\b(WARNING|WARN|Warn)\b|(?i)\b(warning)\:</string>
+				<string>\b(WARNING|WARN|Warn|WW)\b|(?i)\b(warning)\:</string>
 
 				<key>name</key>
 				<string>markup.deleted log.warning</string>
@@ -129,7 +129,7 @@
 			<!-- ERROR -->
 			<dict>
 				<key>match</key>
-				<string>\b(ALERT|CRITICAL|EMERGENCY|ERROR|FAILURE|FAIL|Fatal|Error)\b|(?i)\b(error)\:</string>
+				<string>\b(ALERT|CRITICAL|EMERGENCY|ERROR|FAILURE|FAIL|Fatal|FATAL|Error|EE)\b|(?i)\b(error)\:</string>
 
 				<key>name</key>
 				<string>string.regexp, strong log.error</string>
