@@ -19,7 +19,7 @@
 		"vscode": "^1.15.0"
 	},
 	"publisher": "emilast",
-	"extensionKind": "ui",
+	"extensionKind": ["ui"],
 	"main": "./out/src/extension",
 	"contributes": {
 		"languages": [
