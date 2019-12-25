@@ -1,8 +1,10 @@
 # Change Log
 
-### 2.7.0 - Unreleased
+### 2.7.0 - 25 Dec 2019
 
-* Changed the **Visualization of Time Duration** feature. Now it does not anymore require timestamps to be at the very beginning of a line. Instead the first occurrence of a timestamp in a line is used (#88).
+* Changed the **Visualization of Time Duration** feature. Now it does not anymore require timestamps to be at the very beginning of a line. Instead the first occurrence of a timestamp in a line is used.
+
+* Added Xorg levels `WW`, `II`  and `EE`. 
 
 * Updated dependencies
 
