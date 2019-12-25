@@ -1,7 +1,6 @@
 'use strict';
 
 import * as vscode from 'vscode';
-import { StatusBarItem } from 'vscode';
 import TimePeriodCalculator = require('./TimePeriodCalculator');
 
 class TimePeriodController {
@@ -24,7 +23,7 @@ class TimePeriodController {
         vscode.window.onDidChangeActiveTextEditor(this._onEvent, this, subscriptions);
 
         // update the counter for the current file
-        this.updateTimePeriod(this._statusBarItem);
+        this.updateTimePeriod();
 
         // create a combined disposable from both event subscriptions
         this._disposable = vscode.Disposable.from(...subscriptions);
@@ -35,7 +34,7 @@ class TimePeriodController {
         this._disposable.dispose();
     }
 
-    public updateTimePeriod(statusBarItem: StatusBarItem) {
+    public updateTimePeriod() {
 
         // Get the current text editor
         const editor = vscode.window.activeTextEditor;
@@ -50,7 +49,18 @@ class TimePeriodController {
         if (doc.languageId === 'log') {
 
             this._statusBarItem.text = '';
-            const timePeriod = this._timeCalculator.getTimePeriod(doc.getText(editor.selection));
+
+            // Get the selections first and last non empty line
+            const firstLine: vscode.TextLine = doc.lineAt(editor.selection.start.line);
+            let lastLine: vscode.TextLine;
+            // If last line is not partially selected use last but first line
+            if (editor.selection.end.character === 0) {
+                lastLine = doc.lineAt(editor.selection.end.line - 1);
+            } else {
+                lastLine = doc.lineAt(editor.selection.end.line);
+            }
+
+            const timePeriod = firstLine.text !== lastLine.text ? this._timeCalculator.getTimePeriod(firstLine.text, lastLine.text) : undefined;
 
             if (timePeriod !== undefined) {
 
@@ -68,7 +78,7 @@ class TimePeriodController {
     }
 
     private _onEvent() {
-        this.updateTimePeriod(this._statusBarItem);
+        this.updateTimePeriod();
     }
 }
 

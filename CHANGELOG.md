@@ -1,5 +1,11 @@
 # Change Log
 
+### 2.7.0 - Unreleased
+
+* Changed the **Visualization of Time Duration** feature. Now it does not anymore require timestamps to be at the very beginning of a line. Instead the first occurrence of a timestamp in a line is used (#88).
+
+* Updated dependencies
+
 ### 2.6.0 - 26 Sep 2019
 
 * Added the Android logcat log levels `/E`, `/W`, `/I`, `/D` and `/V` to the default patterns.
