@@ -1,5 +1,6 @@
 'use strict';
 
+import * as moment from 'moment';
 import * as vscode from 'vscode';
 import TimePeriodCalculator = require('./TimePeriodCalculator');
 
@@ -52,7 +53,7 @@ class TimePeriodController {
 
             const startLineNumber = editor.selection.start.line;
             const endLineNumber = editor.selection.end.line;
-            let timePeriod = undefined;
+            let timePeriod: moment.Duration;
 
             if (startLineNumber !== endLineNumber) {
 
