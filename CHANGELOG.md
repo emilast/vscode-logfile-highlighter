@@ -1,5 +1,9 @@
 # Change Log
 
+### 2.7.1 - Unreleased
+
+* Fixed a bug that caused the extension to crash on activation.
+
 ### 2.7.0 - 25 Dec 2019
 
 * Changed the **Visualization of Time Duration** feature. Now it does not anymore require timestamps to be at the very beginning of a line. Instead the first occurrence of a timestamp in a line is used.
