@@ -51,7 +51,7 @@ class TimePeriodController {
             this._statusBarItem.text = '';
 
             const startLineNumber = editor.selection.start.line;
-            let endLineNumber = editor.selection.end.line;
+            const endLineNumber = editor.selection.end.line;
             let timePeriod = undefined;
 
             if (startLineNumber !== endLineNumber) {
