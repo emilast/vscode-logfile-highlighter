@@ -50,17 +50,26 @@ class TimePeriodController {
 
             this._statusBarItem.text = '';
 
-            // Get the selections first and last non empty line
-            const firstLine: vscode.TextLine = doc.lineAt(editor.selection.start.line);
-            let lastLine: vscode.TextLine;
-            // If last line is not partially selected use last but first line
-            if (editor.selection.end.character === 0) {
-                lastLine = doc.lineAt(editor.selection.end.line - 1);
-            } else {
-                lastLine = doc.lineAt(editor.selection.end.line);
-            }
+            const startLineNumber = editor.selection.start.line;
+            let endLineNumber = editor.selection.end.line;
+            let timePeriod = undefined;
 
-            const timePeriod = firstLine.text !== lastLine.text ? this._timeCalculator.getTimePeriod(firstLine.text, lastLine.text) : undefined;
+            if (startLineNumber !== endLineNumber) {
+
+                // Get the selections first and last non empty line
+                const startLine: vscode.TextLine = doc.lineAt(startLineNumber);
+                let endLine: vscode.TextLine;
+
+                // If last line is not partially selected use last but first line
+                if (editor.selection.end.character === 0) {
+                    // Because startLineNumber !== endLineNumber, endLineNumber - 1 >= 0 holds
+                    endLine = doc.lineAt(endLineNumber - 1);
+                } else {
+                    endLine = doc.lineAt(endLineNumber);
+                }
+
+                timePeriod = this._timeCalculator.getTimePeriod(startLine.text, endLine.text);
+            }
 
             if (timePeriod !== undefined) {
 
