@@ -1,6 +1,6 @@
 # Change Log
 
-### 2.7.1 - Unreleased
+### 2.7.1 - 11 Jan 2020
 
 * Fixed a bug that caused the extension to crash on activation.
 
