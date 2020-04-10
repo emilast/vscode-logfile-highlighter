@@ -16,10 +16,13 @@
 		"url": "https://github.com/emilast/vscode-logfile-highlighter.git"
 	},
 	"engines": {
-		"vscode": "^1.15.0"
+		"vscode": "^1.42.0"
 	},
 	"publisher": "emilast",
-	"extensionKind": ["ui", "workspace"],
+	"extensionKind": [
+		"ui",
+		"workspace"
+	],
 	"main": "./out/src/extension",
 	"contributes": {
 		"languages": [
@@ -96,12 +99,12 @@
 		"unittest": "node out/test/testRunner.js -c jasmine.unittest.json"
 	},
 	"devDependencies": {
-		"@types/jasmine": "^3.5.0",
-		"@types/node": "^12.12.21",
+		"@types/jasmine": "^3.5.10",
+		"@types/node": "^12.12.34",
 		"jasmine": "^3.5.0",
 		"jasmine-core": "^3.5.0",
 		"tslint": "^5.20.1",
-		"typescript": "^3.7.4",
+		"typescript": "^3.8.3",
 		"vscode": "^1.1.36"
 	},
 	"dependencies": {
