@@ -1,6 +1,6 @@
 # Change Log
 
-### Not yet released
+### 2.8.0 - 10 April 2020
 
 * Changed the format on the foreground and background color settiings for custom patterns so that a color picker can be used to select the color.
 
