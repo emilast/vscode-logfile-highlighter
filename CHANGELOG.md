@@ -1,5 +1,11 @@
 # Change Log
 
+### Not yet released
+
+* Changed the format on the foreground and background color settiings for custom patterns so that a color picker can be used to select the color.
+
+* Added "workspace" extensionkind setting to enable the extension to work as a workspace extension.
+
 ### 2.7.1 - 11 Jan 2020
 
 * Fixed a bug that caused the extension to crash on activation.

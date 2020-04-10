@@ -61,15 +61,15 @@
 								"description": "Either the exact string to highlight, or a regular expression pattern."
 							},
 							"foreground": {
-								"pattern": "^[^$|^\\s]",
+								"format": "color-hex",
 								"type": "string",
-								"title": "The color.",
+								"title": "Foreground color",
 								"description": "The foreground color that will be used for highlighting."
 							},
 							"background": {
-								"pattern": "^[^$|^\\s]",
+								"format": "color-hex",
 								"type": "string",
-								"title": "The color.",
+								"title": "Background color",
 								"description": "The background color that will be used for highlighting."
 							}
 						},
