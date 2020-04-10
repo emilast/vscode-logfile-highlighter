@@ -45,7 +45,7 @@ class CustomPatternDecorator {
             return editor.document.fileName === doc.fileName;
         });
 
-        const change = changedEvent.contentChanges.sort((a, b) => Math.abs(a.range.start.line - b.range.start.line))[0];
+        const change = changedEvent.contentChanges.slice().sort((a, b) => Math.abs(a.range.start.line - b.range.start.line))[0];
 
         // Start always at the beginning of the line.
         const startPos = new vscode.Position(change.range.start.line, 0);
