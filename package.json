@@ -105,7 +105,7 @@
 		"jasmine-core": "^3.5.0",
 		"tslint": "^5.20.1",
 		"typescript": "^3.9.5",
-		"vscode": "^1.1.36"
+		"vscode": "^1.1.37"
 	},
 	"dependencies": {
 		"moment": "^2.27.0"
