@@ -49,9 +49,7 @@
 			"title": "The vscode-logfile-highlighter configuration.",
 			"properties": {
 				"logFileHighlighter.customPatterns": {
-					"type": [
-						"array"
-					],
+					"type": "array",
 					"items": {
 						"title": "Custom patterns to highlight.",
 						"description": "A custom pattern that is highlighted with the given foreground color.",

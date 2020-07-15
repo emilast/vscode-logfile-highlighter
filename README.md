@@ -117,12 +117,12 @@ The patterns are defined in the user settings like in this example:
 "logFileHighlighter.customPatterns": [
     {
         "pattern": "Verbose",
-        "foreground": "green"
+        "foreground": "#22aa22"
     },
     {
         "pattern": "E/\\w+",
         "foreground": "#af1f1f",
-        "background": "blue"
+        "background": "#344323"
     },
     {
         "pattern": "\\[.*\\]",
@@ -133,9 +133,9 @@ The patterns are defined in the user settings like in this example:
 
 * `pattern` - The matching expression. This can be either a string constant or a JavaScript regular expression (remember to **escape special characters**).
 
-* `foreground` - [Optional] The color to use as foreground color for the matched pattern. Use hex colors or predefined VS Code colors.
+* `foreground` - [Optional] The color to use as foreground color for the matched pattern. Hex colors are preferred since they can be selected with the VS Code color picker but predefined VS Code color names work as well.
 
-* `background` - [Optional] The color to use as background color for the matched pattern. Use hex colors or predefined VS Code colors.
+* `background` - [Optional] The color to use as background color for the matched pattern.
 
 **Note**: Both `foreground` and `background` are optional individually but *at least* one of them must be set for the custom pattern to be activated.
 
