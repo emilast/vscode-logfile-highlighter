@@ -1,6 +1,10 @@
 # Change Log
 
 * Added coloring of MAC addresses (hex numbers separated by colons or dashes (':', '-').
+   * Example: `43:A4:19:A5:AF:C0`
+
+* Added coloring of single-character log-levels: `V`, `D`, `I`, `W` and `E`
+   * Coloring on happens if not other alphabetical characters precedes the log level on the lines.
 
 ### 2.8.0 - 10 April 2020
 

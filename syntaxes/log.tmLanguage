@@ -36,10 +36,10 @@
 				<string>comment log.verbose</string>
 			</dict>
 
-			<!-- Android logcat Verboce -->
+			<!-- Android logcat Verbose -->
 			<dict>
 				<key>match</key>
-				<string>\bV/</string>
+				<string>(?<=^[\s\d\p]*)\bV\b</string>
 
 				<key>name</key>
 				<string>comment log.verbose</string>
@@ -66,7 +66,7 @@
 			<!-- Android logcat Debug -->
 			<dict>
 				<key>match</key>
-				<string>\bD/</string>
+				<string>(?<=^[\s\d\p]*)\bD\b</string>
 
 				<key>name</key>
 				<string>markup.changed log.debug</string>
@@ -93,7 +93,7 @@
 			<!-- Android logcat Info -->
 			<dict>
 				<key>match</key>
-				<string>\bI/</string>
+				<string>(?<=^[\s\d\p]*)\bI\b</string>
 
 				<key>name</key>
 				<string>markup.inserted log.info</string>
@@ -120,7 +120,7 @@
 			<!-- Android logcat Warning -->
 			<dict>
 				<key>match</key>
-				<string>\bW/</string>
+				<string>(?<=^[\s\d\p]*)\bW\b</string>
 
 				<key>name</key>
 				<string>markup.deleted log.warning</string>
@@ -147,7 +147,7 @@
 			<!-- Android logcat Error -->
 			<dict>
 				<key>match</key>
-				<string>\bE/</string>
+				<string>(?<=^[\s\d\p]*)\bE\b</string>
 
 				<key>name</key>
 				<string>string.regexp, strong log.error</string>
