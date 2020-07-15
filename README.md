@@ -42,6 +42,12 @@ The extension associates with `.log` files and applies coloring to the different
     * `'lorem ipsum'`
 * GUIDs. Example:
     * `859A4209-A82D-4CA1-8468-C2606A3501EE`
+* MAC addresses (hex numbers separated by colons or dashes (':', '-')
+    * `43:A4:19:A5:AF:C0`
+    * `43-A4-19-A5-AF-C0`
+    * `fde8:e767:269c:0:9425:3477:7c8f:7f1a`
+    * `fde8-e767-269c-0-9425-3477-7c8f-7f1a`
+
 * .Net exception type names, i.e. word ending with `Exception`, such as
     * `ArgumentNullException`
     * `HttpException`

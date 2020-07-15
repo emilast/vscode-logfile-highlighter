@@ -1,5 +1,7 @@
 # Change Log
 
+* Added coloring of MAC addresses (hex numbers separated by colons or dashes (':', '-').
+
 ### 2.8.0 - 10 April 2020
 
 * Changed the format on the foreground and background color settings for custom patterns so that a color picker can be used to select the color.

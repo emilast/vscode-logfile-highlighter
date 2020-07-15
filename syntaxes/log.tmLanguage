@@ -198,6 +198,15 @@
 				<string>constant.language log.constant</string>
 			</dict>
 
+			<!-- MAC addresses: 89:A1:23:45:AB:C0, fde8:e767:269c:0:9425:3477:7c8f:7f1a -->
+			<dict>
+				<key>match</key>
+				<string>([0-9a-fA-F]+[:-])+[0-9a-fA-F]+</string>
+
+				<key>name</key>
+				<string>constant.language log.constant</string>
+			</dict>
+
 			<!-- Constants -->
 			<dict>
 				<key>match</key>

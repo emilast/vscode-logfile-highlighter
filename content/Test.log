@@ -129,6 +129,14 @@ Git hashes
 Commit: 6b1a8c9bf7a9f4a190bb08226ea376a11e9bdef8 [6b1a8c9]
 Parents: 8d3639a482
 
+MAC addresses (hex number sequences separated by colon or dash (':', '-')
+-------------------------------------------------------------------------
+43:A4:19:A5:AF:C0
+43-A4-19-A5-AF-C0
+fde8:e767:269c:0:9425:3477:7c8f:7f1a
+fde8-e767-269c-0-9425-3477-7c8f-7f1a
+
+
 Should not be highlighted
 ---------------------------
 c:\foo.bar\lorem
