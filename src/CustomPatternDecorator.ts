@@ -18,7 +18,7 @@ class CustomPatternDecorator {
 
     public updateConfiguration(): void {
         const configPatterns = vscode.workspace.getConfiguration('logFileHighlighter').get(
-            'customPatterns') as Array<{ pattern: string, foreground?: string, background?: string }>;
+            'customPatterns') as { pattern: string, foreground?: string, background?: string }[];
 
         for (const pattern of this._configPattern) {
             pattern.dispose();
