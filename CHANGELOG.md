@@ -1,5 +1,9 @@
 # Change Log
 
+* Added requirement for short dates that they are preceded by whitespace or the beginning of a line to decrease the risk of unwanted highlighting in number sequences.
+
+* Updated dependencies.
+
 ### 2.9.0 - 15 July 2020
 
 * Added coloring of MAC addresses (hex numbers separated by colons or dashes (':', '-').

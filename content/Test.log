@@ -141,7 +141,7 @@ Should not be highlighted
 ---------------------------
 c:\foo.bar\lorem
 /etc/foo.bar/lorem
-
+192.168.10.11:5678 (should be highlighted as number constants, not as datetime)
 
 Custom keywords
 ----------------

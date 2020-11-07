@@ -165,7 +165,7 @@
 			<!-- Culture specific dates ("23/08/2016", "23.08.2016") -->
 			<dict>
 				<key>match</key>
-				<string>\b\d{2}[^\w\s]\d{2}[^\w\s]\d{4}\b</string>
+				<string>(?<=(^|\s))\d{2}[^\w\s]\d{2}[^\w\s]\d{4}\b</string>
 
 				<key>name</key>
 				<string>comment log.date</string>
