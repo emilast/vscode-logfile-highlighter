@@ -118,6 +118,9 @@ HttpException
 Url:s
 ----------------------
 http://www.meadow.se/wordpress/
+https://www.meadow.se/wordpress/
+tcp://127.0.0.1
+rabbitmq://127.0.0.1
 
 Namespaces
 ----------------------

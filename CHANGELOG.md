@@ -1,5 +1,9 @@
 # Change Log
 
+### 2.10.0 - 7 Nov 2020
+
+* Changed the regex for URIs so that all schemes that matches `[a-z]*` are supported, rather than just `http`,`https`, `ftp`, and `file`.
+
 * Added requirement for short dates that they are preceded by whitespace or the beginning of a line to decrease the risk of unwanted highlighting in number sequences.
 
 * Updated dependencies.

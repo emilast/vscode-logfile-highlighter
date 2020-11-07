@@ -257,7 +257,7 @@
 			<!-- Match Urls -->
 			<dict>
 				<key>match</key>
-				<string>\b(http|https|ftp|file)://\S+\b/?</string>
+				<string>\b[a-z]+://\S+\b/?</string>
 
 				<key>name</key>
 				<string>constant.language log.constant</string>
