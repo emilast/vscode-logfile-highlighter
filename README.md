@@ -19,7 +19,7 @@ The extension associates with `.log` files and applies coloring to the different
     * `2015-12-09`
     * `2015-12-09 09:29`
     * `2015-12-09 09:29:02.258`
-* Dates and times in some culture specific formats
+* Dates and times in some culture-specific formats
     * `12/09/2016`
     * `12.09.2016`
     * `12-09-2016`
@@ -79,13 +79,13 @@ For this reason, the extension defines a special set of grammar tokens that can 
 ```
 log.constant
 log.date
-log.verbose
 log.debug
 log.error
 log.exception
+log.exceptiontype
 log.info
 log.string
-log.exceptiontype
+log.verbose
 log.warning
 ```
 

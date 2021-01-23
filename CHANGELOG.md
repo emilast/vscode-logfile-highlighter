@@ -1,5 +1,11 @@
 # Change Log
 
+### 2.11.0 - 23 Jan 2021
+
+* Fixed the patterns for GUID strings and MAC addresses so that they only match when the characters are at word boundaries which helps to avoid accidental matches.
+
+* Updated dependencies.
+
 ### 2.10.0 - 7 Nov 2020
 
 * Changed the regex for URIs so that all schemes that matches `[a-z]*` are supported, rather than just `http`,`https`, `ftp`, and `file`.
