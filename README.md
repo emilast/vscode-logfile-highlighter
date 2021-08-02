@@ -149,6 +149,8 @@ The patterns are defined in the user settings like in this example:
 
 ![Custom Pattern Sample](content/CustomPattern-Sample.gif)  
 
+## Tips
+
 ### File associations
 
 To make VS Code treat other file extensions than the default `.log` as log files, add the following to the user settings:
@@ -162,3 +164,13 @@ The example above associates extensions such as `.log.1` and `.log.2` with the L
 
 
 [sample]: https://raw.githubusercontent.com/emilast/vscode-logfile-highlighter/master/content/sample.png
+
+### Syntax highlighting of large files
+
+VS Code disables color highlighting for large files by default. This can be disabled with the **editor.largeFileOptimization** setting. To enable highlighting for large log files without changing the setting for other file types, place it in the `[log]` scope like this:
+
+```json
+"[log]": {
+    "editor.largeFileOptimizations": false,
+}
+```
