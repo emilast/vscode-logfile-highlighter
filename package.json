@@ -98,7 +98,7 @@
 	},
 	"devDependencies": {
 		"@types/jasmine": "^3.8.2",
-		"@types/node": "^16.4.13",
+		"@types/node": "^16.9.0",
 		"jasmine": "^3.8.0",
 		"jasmine-core": "^3.8.0",
 		"tslint": "^6.1.3",
