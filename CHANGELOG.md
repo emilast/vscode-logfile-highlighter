@@ -1,5 +1,9 @@
 # Change Log
 
+### 2.12.0 - 7 Oct 2021
+
+* Maintenance release with lots of package updates
+
 ### 2.11.0 - 23 Jan 2021
 
 * Fixed the patterns for GUID strings and MAC addresses so that they only match when the characters are at word boundaries which helps to avoid accidental matches.
