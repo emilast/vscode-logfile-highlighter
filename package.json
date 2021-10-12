@@ -7,7 +7,7 @@
 		"Other"
 	],
 	"license": "MIT",
-	"version": "2.12.0",
+	"version": "2.13.0",
 	"bugs": {
 		"url": "https://github.com/emilast/vscode-logfile-highlighter/issues"
 	},
@@ -97,12 +97,12 @@
 		"unittest": "node out/test/testRunner.js -c jasmine.unittest.json"
 	},
 	"devDependencies": {
-		"@types/jasmine": "^3.9.1",
-		"@types/node": "^16.10.2",
-		"jasmine": "^3.9.0",
-		"jasmine-core": "^3.9.0",
+		"@types/jasmine": "^3.6.3",
+		"@types/node": "^14.14.22",
+		"jasmine": "^3.6.4",
+		"jasmine-core": "^3.6.0",
 		"tslint": "^6.1.3",
-		"typescript": "^4.4.3",
+		"typescript": "^4.1.3",
 		"vscode": "^1.1.37"
 	},
 	"dependencies": {
