@@ -1,5 +1,9 @@
 # Change Log
 
+### 2.14.0 - 29 Jan 2022
+
+* Mainenance - package updates
+
 ### 2.13.0 - 12 Oct 2021
 
 * Temporarily rolled back package updates to be the same as 2.11.0 since some kind of memory error seems to have appeared with custom patterns (issue #286).
