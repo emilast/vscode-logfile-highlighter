@@ -137,11 +137,20 @@ The patterns are defined in the user settings like in this example:
 ]
 ```
 
-* `pattern` - The matching expression. This can be either a string constant or a JavaScript regular expression (remember to **escape special characters**).
+| Setting       | Optional      | Description   | Example 	|
+|--- 	        |---	        |---	        |---	    |
+| `pattern`     | Mandatory 	| The matching expression. This can be either a string constant or a JavaScript regular expression (remember to **escape special characters**).|  `foobar`<br>`(todo\|TODO)` 	|
+| `foreground`  | Optional	    | The color to use as foreground color for the matched pattern. Hex colors are preferred since they can be selected with the VS Code color picker but predefined VS Code color names work as well. 	| `yellow`<br>`#ff5588` |
+| `background`  | Optional	    | The color to use as background color for the matched pattern. | `yellow`<br>`#ff5588` |
+| `fontWeight`  | Optional	    | Used to change the weight of the font. | `bold`   |
+| `fontStyle`   | Optional	    | Used to change the style of the font.  | `italic` |
+| `border`      | Optional	    | Can be used for adding a border around matched text. | `2px solid yellow` |
+| `borderRadius`| Optional	    | Can be used together with the `border` setting to make the border corners rounded. | `3px` |
+| `letterSpacing`| Optional	    | Can be used to increase or decrease the horizontsl spacing between characters in the matched text. | `5px` <br> `-1px` |
+| `overviewColor`| Optional	    | If set, this enables matched text to be indicated in the overview ruler to the right of the text editor window in Code. | `yellow`<br>`#ff5588` |
+| `overviewRulerLane`| Optional	| If `overviewColor` is set, then this setting controls the placement of the marker in the ruler.| `Left`<br>`Right`<br>`Center`<br>`Full`|
+| `textDecoration`| Optional	| Used for adding additional CSS text decorations. |`red underline overline dotted`<br>`red wavy underline`|
 
-* `foreground` - [Optional] The color to use as foreground color for the matched pattern. Hex colors are preferred since they can be selected with the VS Code color picker but predefined VS Code color names work as well.
-
-* `background` - [Optional] The color to use as background color for the matched pattern.
 
 **Note**: Both `foreground` and `background` are optional individually but *at least* one of them must be set for the custom pattern to be activated.
 

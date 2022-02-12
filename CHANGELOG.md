@@ -1,5 +1,35 @@
 # Change Log
 
+### 2.15.0 - 12 Feb 2022
+
+* Added new text decoration options for custom patterns:
+
+  * fontWeight
+  * fontStyle
+  * border
+  * borderRadius
+  * letterSpacing
+  * overviewColor
+  * overviewRulerLane
+  * textDecoration
+
+  These allow for considerably more customization for the matched text.
+
+  Example that uses the new settings:
+
+  ```json
+  {
+      "pattern": "(todo|TODO)",
+      "foreground": "#34f10e",
+      "background": "#4d042e",
+      "fontWeight": "bold",
+      "overviewColor": "red",
+      "overviewRulerLane": "Full",
+      "textDecoration": "red underline overline dotted",
+  }
+  ```
+  ![Text decorations result](content/text_decorations.png)
+
 ### 2.14.0 - 29 Jan 2022
 
 * Mainenance - package updates
