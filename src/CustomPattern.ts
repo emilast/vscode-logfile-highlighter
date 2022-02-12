@@ -9,7 +9,12 @@ class CustomPattern {
     public readonly regexes: RegExp[];
     public readonly decoration: vscode.TextEditorDecorationType;
 
-    public constructor(pattern: string, foreground: string, background: string) {
+    public constructor(
+        pattern: string, foreground: string, background: string, fontWeight: string,
+        fontStyle: string, border: string, borderRadius: string, borderSpacing: string,
+        letterSpacing: string, overviewRulerColor: string, overviewRulerLane: vscode.OverviewRulerLane,
+        textDecoration: string)
+    {
         this.pattern = pattern;
         this.foreground = foreground;
         this.background = background;
@@ -17,6 +22,14 @@ class CustomPattern {
         this.decoration = vscode.window.createTextEditorDecorationType({
             backgroundColor: this.background,
             color: this.foreground,
+            fontWeight: fontWeight,
+            fontStyle: fontStyle,
+            border: border,
+            borderRadius: borderRadius,
+            letterSpacing: letterSpacing,
+            overviewRulerColor: overviewRulerColor,
+            overviewRulerLane: overviewRulerLane,
+            textDecoration: textDecoration,
             rangeBehavior: vscode.DecorationRangeBehavior.ClosedClosed
         });
     }
