@@ -18,7 +18,15 @@ class CustomPatternDecorator {
 
     public updateConfiguration(): void {
         const configPatterns = vscode.workspace.getConfiguration('logFileHighlighter').get(
-            'customPatterns') as { pattern: string, foreground?: string, background?: string }[];
+            'customPatterns') as {
+                pattern: string,
+                foreground?: string,
+                background?: string
+                fontWeight?: string
+                fontStyle?: string
+                border?: string
+                borderRadius?: string
+            }[];
 
         for (const pattern of this._configPattern) {
             pattern.dispose();
@@ -28,8 +36,19 @@ class CustomPatternDecorator {
 
         for (const item of configPatterns) {
             // If we have a pattern and either a foreground or background color, then use the pattern
-            if ((item.foreground !== undefined || item.background !== undefined) && item.pattern !== undefined) {
-                this._configPattern.push(new CustomPattern(item.pattern, item.foreground, item.background));
+            if (
+                (item.foreground !== undefined
+                    || item.background !== undefined
+                    || item.fontWeight !== undefined
+                    || item.fontStyle !== undefined
+                    || item.border !== undefined
+                    || item.borderRadius !== undefined
+                )
+                && item.pattern !== undefined) {
+                var pattern = new CustomPattern(
+                    item.pattern, item.foreground, item.background,
+                    item.fontWeight, item.fontStyle, item.border, item.borderRadius);
+                this._configPattern.push(pattern);
             }
         }
     }

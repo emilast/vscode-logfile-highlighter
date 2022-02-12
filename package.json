@@ -72,6 +72,26 @@
 								"type": "string",
 								"title": "Background color",
 								"description": "The background color that will be used for highlighting."
+							},
+							"fontWeight": {
+								"type": "string",
+								"title": "CSS font weight",
+								"description": "Font weight. Examples: 'normal', 'bold'"
+							},
+							"fontStyle": {
+								"type": "string",
+								"title": "CSS font style",
+								"description": "Font style. Examples: 'normal', 'italic'"
+							},
+							"border": {
+								"type": "string",
+								"title": "CSS border definition",
+								"description": "Border definition. Example: '4px dotted blue'."
+							},
+							"borderRadius": {
+								"type": "string",
+								"title": "CSS border radius",
+								"description": "Border radius, defines how rounded a border is. Example: '3px'"
 							}
 						},
 						"required": [
