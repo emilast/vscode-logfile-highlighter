@@ -92,6 +92,26 @@
 								"type": "string",
 								"title": "CSS border radius",
 								"description": "Border radius, defines how rounded a border is. Example: '3px'"
+							},
+							"letterSpacing": {
+								"type": "string",
+								"title": "CSS letter spacing",
+								"description": "Letter spacing, can be used for adjusting the horizontal distance between characters of the matched text. Example: '3px'"
+							},
+							"overviewColor": {
+								"type": "string",
+								"title": "Marker color in the ruler",
+								"description": "Marker color in the ruler to the right in the text editor window. Example: 'yellow'"
+							},
+							"overviewRulerLane": {
+								"type": "string",
+								"title": "Placement of the ruler marker",
+								"description": "Allows for configuring the placement of the ruler marker, if 'overviewColor' is set. Allowed dalues: Example: 'Left', 'Right', 'Center', 'Full'"
+							},
+							"textDecoration": {
+								"type": "string",
+								"title": "CSS text decoration",
+								"description": "Adds additional decorations to matched text. Example: 'underline overline dotted red'"
 							}
 						},
 						"required": [

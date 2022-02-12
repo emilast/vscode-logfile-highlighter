@@ -21,11 +21,16 @@ class CustomPatternDecorator {
             'customPatterns') as {
                 pattern: string,
                 foreground?: string,
-                background?: string
-                fontWeight?: string
-                fontStyle?: string
-                border?: string
-                borderRadius?: string
+                background?: string,
+                fontWeight?: string,
+                fontStyle?: string,
+                border?: string,
+                borderRadius?: string,
+                borderSpacing?: string,
+                letterSpacing?: string,
+                overviewColor?: string,
+                overviewRulerLane?: string,
+                textDecoration?: string,
             }[];
 
         for (const pattern of this._configPattern) {
@@ -47,7 +52,10 @@ class CustomPatternDecorator {
                 && item.pattern !== undefined) {
                 var pattern = new CustomPattern(
                     item.pattern, item.foreground, item.background,
-                    item.fontWeight, item.fontStyle, item.border, item.borderRadius);
+                    item.fontWeight, item.fontStyle, item.border, item.borderRadius,
+                    item.borderSpacing, item.letterSpacing,
+                    item.overviewColor, vscode.OverviewRulerLane[item.overviewRulerLane],
+                    item.textDecoration);
                 this._configPattern.push(pattern);
             }
         }

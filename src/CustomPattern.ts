@@ -11,7 +11,9 @@ class CustomPattern {
 
     public constructor(
         pattern: string, foreground: string, background: string, fontWeight: string,
-        fontStyle: string, border: string, borderRadius: string)
+        fontStyle: string, border: string, borderRadius: string, borderSpacing: string,
+        letterSpacing: string, overviewRulerColor: string, overviewRulerLane: vscode.OverviewRulerLane,
+        textDecoration: string)
     {
         this.pattern = pattern;
         this.foreground = foreground;
@@ -24,6 +26,10 @@ class CustomPattern {
             fontStyle: fontStyle,
             border: border,
             borderRadius: borderRadius,
+            letterSpacing: letterSpacing,
+            overviewRulerColor: overviewRulerColor,
+            overviewRulerLane: overviewRulerLane,
+            textDecoration: textDecoration,
             rangeBehavior: vscode.DecorationRangeBehavior.ClosedClosed
         });
     }
