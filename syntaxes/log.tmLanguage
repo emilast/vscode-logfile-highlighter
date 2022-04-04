@@ -39,7 +39,7 @@
 			<!-- Android logcat Verbose -->
 			<dict>
 				<key>match</key>
-				<string>(?<=^[\s\d\p]*)\bV\b</string>
+				<string><![CDATA[(?<=^[\s\d\p]*)\bV\b]]></string>
 
 				<key>name</key>
 				<string>comment log.verbose</string>
@@ -66,7 +66,7 @@
 			<!-- Android logcat Debug -->
 			<dict>
 				<key>match</key>
-				<string>(?<=^[\s\d\p]*)\bD\b</string>
+				<string><![CDATA[(?<=^[\s\d\p]*)\bD\b]]></string>
 
 				<key>name</key>
 				<string>markup.changed log.debug</string>
@@ -93,7 +93,7 @@
 			<!-- Android logcat Info -->
 			<dict>
 				<key>match</key>
-				<string>(?<=^[\s\d\p]*)\bI\b</string>
+				<string><![CDATA[(?<=^[\s\d\p]*)\bI\b]]></string>
 
 				<key>name</key>
 				<string>markup.inserted log.info</string>
@@ -120,7 +120,7 @@
 			<!-- Android logcat Warning -->
 			<dict>
 				<key>match</key>
-				<string>(?<=^[\s\d\p]*)\bW\b</string>
+				<string><![CDATA[(?<=^[\s\d\p]*)\bW\b]]></string>
 
 				<key>name</key>
 				<string>markup.deleted log.warning</string>
@@ -147,7 +147,7 @@
 			<!-- Android logcat Error -->
 			<dict>
 				<key>match</key>
-				<string>(?<=^[\s\d\p]*)\bE\b</string>
+				<string><![CDATA[(?<=^[\s\d\p]*)\bE\b]]></string>
 
 				<key>name</key>
 				<string>string.regexp, strong log.error</string>
@@ -165,7 +165,7 @@
 			<!-- Culture specific dates ("23/08/2016", "23.08.2016") -->
 			<dict>
 				<key>match</key>
-				<string>(?<=(^|\s))\d{2}[^\w\s]\d{2}[^\w\s]\d{4}\b</string>
+				<string><![CDATA[(?<=(^|\s))\d{2}[^\w\s]\d{2}[^\w\s]\d{4}\b]]></string>
 
 				<key>name</key>
 				<string>comment log.date</string>
@@ -227,7 +227,7 @@
 
 			<dict>
 				<key>match</key>
-				<string>(?<![\w])'[^']*'</string>
+				<string><![CDATA[(?<![\w])'[^']*']]></string>
 
 				<key>name</key>
 				<string>string log.string</string>
@@ -267,7 +267,7 @@
 			as well as file names and extensions (e.g. bar.txt) -->
 			<dict>
 				<key>match</key>
-				<string>(?<![\w/\\])([\w-]+\.)+([\w-])+(?![\w/\\])</string>
+				<string><![CDATA[(?<![\w/\\])([\w-]+\.)+([\w-])+(?![\w/\\])]]></string>
 
 				<key>name</key>
 				<string>constant.language log.constant</string>
