@@ -216,6 +216,15 @@
 				<string>constant.language log.constant</string>
 			</dict>
 
+			<!-- Hex Constants -->
+			<dict>
+				<key>match</key>
+				<string>\b(0x[a-fA-F0-9]+)\b</string>
+
+				<key>name</key>
+				<string>constant.language log.constant</string>
+			</dict>
+
 			<!-- String constants -->
 			<dict>
 				<key>match</key>

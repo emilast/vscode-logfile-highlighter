@@ -1,5 +1,11 @@
 # Change Log
 
+### Next
+
+* Added coloring of hexadecimal constants such as `0xE2`
+
+* Updated package dependencies
+
 ### 2.15.0 - 12 Feb 2022
 
 * Added new text decoration options for custom patterns:
