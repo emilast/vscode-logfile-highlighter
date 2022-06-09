@@ -138,13 +138,13 @@
 		"unittest": "node out/test/testRunner.js -c jasmine.unittest.json"
 	},
 	"devDependencies": {
-		"@types/jasmine": "^3.10.6",
-		"@types/node": "^17.0.35",
+		"@types/jasmine": "^4.0.3",
+		"@types/node": "^17.0.41",
 		"jasmine": "^4.1.0",
 		"jasmine-core": "^4.1.1",
 		"minimist": "^1.2.6",
 		"tslint": "^6.1.3",
-		"typescript": "^4.6.4",
+		"typescript": "^4.7.3",
 		"vscode": "^1.1.37"
 	},
 	"dependencies": {
