@@ -148,7 +148,7 @@
 		"vscode": "^1.1.37"
 	},
 	"dependencies": {
-		"moment": "^2.29.3"
+		"moment": "^2.29.4"
 	},
 	"resolutions": {
 		"minimist": "^1.2.6"
