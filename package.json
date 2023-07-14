@@ -138,7 +138,7 @@
 		"unittest": "node out/test/testRunner.js -c jasmine.unittest.json"
 	},
 	"devDependencies": {
-		"@types/jasmine": "^4.3.0",
+		"@types/jasmine": "^4.3.5",
 		"@types/node": "^20.4.2",
 		"jasmine": "^5.0.2",
 		"jasmine-core": "^5.0.1",
