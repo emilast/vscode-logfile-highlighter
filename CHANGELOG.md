@@ -1,5 +1,9 @@
 # Change Log
 
+### 2.17.0 - 19 Nov 2023
+
+* Updated package dependencies
+
 ### 2.16.0 - 9 Jun 2022
 
 * Added coloring of hexadecimal constants such as `0xE2`
