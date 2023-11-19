@@ -15,6 +15,17 @@
                 "kind": "build",
                 "isDefault": true
             }
+        },
+        {
+            "type": "npm",
+            "script": "unittest",
+            "problemMatcher": [],
+            "label": "npm: unittest",
+            "detail": "node out/test/testRunner.js -c jasmine.unittest.json",
+            "group": {
+                "kind": "test",
+                "isDefault": true
+            }
         }
     ]
 }

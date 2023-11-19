@@ -53,7 +53,7 @@ class CustomPatternController {
         }
     }
 
-    private onDidChangeVisibleTextEditors(editors: vscode.TextEditor[]) {
+    private onDidChangeVisibleTextEditors(editors: readonly vscode.TextEditor[]) {
         const logEditors = editors.filter((editor) => {
             return editor.document.languageId === this.LOG_ID;
         });
