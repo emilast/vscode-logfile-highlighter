@@ -254,7 +254,7 @@
 			<!-- Colorize rows of exception call stacks -->
 			<dict>
 				<key>begin</key>
-				<string>^[\t ]*at</string>
+				<string>^[\t ]*at[\t ]</string>
 
 				<key>end</key>
 				<string>$</string>
