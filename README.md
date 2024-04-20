@@ -120,18 +120,26 @@ The patterns are defined in the user settings like in this example:
 
 ```JSON
 "logFileHighlighter.customPatterns": [
+    // Highlight the text 'Verbose' with green color
     {
         "pattern": "Verbose",
         "foreground": "#22aa22"
     },
+    // Highlight the text 'E/' and any immediately following word constitient characters with red foreground and yellow background
     {
         "pattern": "E/\\w+",
         "foreground": "#af1f1f",
-        "background": "#344323"
+        "background": "#f3f38d"
     },
+    // Highlight anything between square brackets with dark grey background
     {
-        "pattern": "\\[.*\\]",
+        "pattern": "\\[(.*?)\\]",
         "background": "#333333"
+    },
+    // Highlight ERROR if surrounded by double quotes using positive lookbehind and lookahead expressions
+    {
+        "pattern": "(?<=\")ERROR(?=\")",
+        "foreground": "#00FF00",
     }
 ]
 ```
