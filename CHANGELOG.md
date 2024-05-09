@@ -1,5 +1,9 @@
 # Change Log
 
+### 2.19.0 - 9 May 2024
+
+* Updated package dependencies
+
 ### 2.18.0 - 19 Feb 2024
 
 * Adjusted coloring pattern for .Net exception stack traces to avoid accidental coloring of words that starts with "at" (thanks @ShawnZhong!)
