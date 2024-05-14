@@ -139,7 +139,7 @@
 		"@types/jasmine": "^4.3.0",
 		"@types/node": "^20.12.11",
 		"@types/vscode": "^1.89.0",
-		"@vscode/test-electron": "^2.3.9",
+		"@vscode/test-electron": "^2.3.10",
 		"jasmine": "^5.0.2",
 		"jasmine-core": "^5.1.2",
 		"minimist": "^1.2.8",
