@@ -21,7 +21,7 @@ describe('TimePeriodCalculator', () => {
             const result = testObject.getTimePeriod(firstLine, lastLine);
 
             // Assert
-            expect(result.asMilliseconds()).toBe(expected.asMilliseconds());
+            expect(result.duration.asMilliseconds()).toBe(expected.asMilliseconds());
         });
 
         it('gets the correct timePeriod from "hh:mm:ss.sss" and "hh:mm:ss.sss".', () => {
@@ -34,7 +34,7 @@ describe('TimePeriodCalculator', () => {
             const result = testObject.getTimePeriod(firstLine, lastLine);
 
             // Assert
-            expect(result.asMilliseconds()).toBe(expected.asMilliseconds());
+            expect(result.duration.asMilliseconds()).toBe(expected.asMilliseconds());
         });
 
         it('gets the correct timePeriod from "YYYY-MM-DDThh:mm:ss.sssZ" and "DD/MM/YYYThh:mm:ss,sssZ".', () => {
@@ -47,7 +47,7 @@ describe('TimePeriodCalculator', () => {
             const result = testObject.getTimePeriod(firstLine, lastLine);
 
             // Assert
-            expect(result.asMilliseconds()).toBe(expected.asMilliseconds());
+            expect(result.duration.asMilliseconds()).toBe(expected.asMilliseconds());
         });
 
         it('gets the correct timePeriod from "YYYY-MM-DD hh:mm:ss.sss" and "DD/MM/YYY hh:mm:ss,sss".', () => {
@@ -60,7 +60,7 @@ describe('TimePeriodCalculator', () => {
             const result = testObject.getTimePeriod(firstLine, lastLine);
 
             // Assert
-            expect(result.asMilliseconds()).toBe(expected.asMilliseconds());
+            expect(result.duration.asMilliseconds()).toBe(expected.asMilliseconds());
         });
 
         it('gets the correct timePeriod from "YYYY-MM-DD hh:mm" and MM/DD/YYYY hh:mm".', () => {
@@ -73,7 +73,7 @@ describe('TimePeriodCalculator', () => {
             const result = testObject.getTimePeriod(firstLine, lastLine);
 
             // Assert
-            expect(result.asMilliseconds()).toBe(expected.asMilliseconds());
+            expect(result.duration.asMilliseconds()).toBe(expected.asMilliseconds());
         });
 
         it('should only consider log statements with the same format (length).', () => {
@@ -86,7 +86,7 @@ describe('TimePeriodCalculator', () => {
             const result = testObject.getTimePeriod(firstLine, lastLine);
 
             // Assert
-            expect(result.asMilliseconds()).toBe(expected.asMilliseconds());
+            expect(result.duration.asMilliseconds()).toBe(expected.asMilliseconds());
         });
 
         it('should only consider the first timestamp statement of a line.', () => {
@@ -99,7 +99,7 @@ describe('TimePeriodCalculator', () => {
             const result = testObject.getTimePeriod(firstLine, lastLine);
 
             // Assert
-            expect(result.asMilliseconds()).toBe(expected.asMilliseconds());
+            expect(result.duration.asMilliseconds()).toBe(expected.asMilliseconds());
         });
     });
 

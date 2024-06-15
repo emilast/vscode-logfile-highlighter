@@ -1,6 +1,7 @@
 'use strict';
 
 import * as moment from 'moment';
+import { TimePeriod } from './TimePeriod';
 
 class TimePeriodCalculator {
 
@@ -37,8 +38,7 @@ class TimePeriodCalculator {
         return text;
     }
 
-    public getTimePeriod(firstLine: string, lastLine: string): moment.Duration {
-        // Clock times with optional timezone ("09:13:16", "09:13:16.323", "09:13:16+01:00")
+    public getTimestampFromText(text: string) : string {
         const clockPattern = '\\d{2}:\\d{2}(?::\\d{2}(?:[.,]\\d{3,})?)?(?:Z| ?[+-]\\d{2}:\\d{2})?\\b';
 
         // ISO dates ("2016-08-23")
@@ -57,22 +57,24 @@ class TimePeriodCalculator {
         // E.g.: The dateTimePattern ('2016-08-23 09:13:16.323') is preferred
         // over the datesPattern ('2017-09-29 and 29/01/2019')
         const rankedPattern = [dateTimePattern, clockPattern, datesPattern];
-        let firstLineMatch: string;
-        let lastLineMatch: string;
 
         for (const item of rankedPattern) {
             const timeRegEx = new RegExp(item);
 
             // Get the first match for both lines
-            const firstMatch = timeRegEx.exec(firstLine);
-            const lastMatch = timeRegEx.exec(lastLine);
+            const match = timeRegEx.exec(text);
 
-            if (firstMatch && lastMatch) {
-                firstLineMatch = this._convertToIso(firstMatch[0]);
-                lastLineMatch = this._convertToIso(lastMatch[0]);
-                break;
+            if (match) {
+                return this._convertToIso(match[0]);
             }
         }
+
+        return undefined;
+    }
+
+    public getTimePeriod(firstLine: string, lastLine: string): TimePeriod {
+        let firstLineMatch = this.getTimestampFromText(firstLine);
+        let lastLineMatch = this.getTimestampFromText(lastLine);
 
         let timePeriod: moment.Duration;
         timePeriod = undefined;
@@ -80,25 +82,29 @@ class TimePeriodCalculator {
         if (firstLineMatch && lastLineMatch) {
             const firstMoment = moment(firstLineMatch);
             const lastMoment = moment(lastLineMatch);
-
+        
             if (firstMoment.isValid() && lastMoment.isValid()) {
-
                 // used for ISO Dates like '2018-09-29' and '2018-09-29 13:12:11.001'
                 timePeriod = moment.duration(lastMoment.diff(firstMoment));
             } else {
-
                 const firstDuration = moment.duration(firstLineMatch);
                 const lastDuration = moment.duration(lastLineMatch);
-
+        
                 if (moment.isDuration(firstDuration) && moment.isDuration(lastDuration)) {
-
                     // Used for non ISO dates like '13:12:11.001'
                     timePeriod = moment.duration(lastDuration.asMilliseconds() - firstDuration.asMilliseconds());
                 }
             }
+
+            return {
+                startTime: firstMoment,
+                endTime: lastMoment,
+                duration: timePeriod
+            };
+
         }
 
-        return timePeriod;
+        return undefined
     }
 
     // Converts a given date string to an iso string.
