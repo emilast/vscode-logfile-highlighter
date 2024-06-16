@@ -5,7 +5,7 @@ import CustomPatternController = require('./CustomPatternController');
 import CustomPatternDecorator = require('./CustomPatternDecorator');
 import TimePeriodCalculator = require('./TimePeriodCalculator');
 import TimePeriodController = require('./TimePeriodController');
-import GreenUnderline =  require('./GreenUnderline');
+import GreenUnderline =  require('./ProgressIndicator');
 import { SelectionHelper } from './SelectionHelper';
 
 // this method is called when the extension is activated

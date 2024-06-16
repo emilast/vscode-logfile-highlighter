@@ -1,10 +1,9 @@
 import * as vscode from 'vscode';
 import TimePeriodCalculator = require('./TimePeriodCalculator');
-import { time } from 'console';
 import { SelectionHelper } from './SelectionHelper';
 import moment = require('moment');
 
-class GreenUnderline {
+class ProgressIndicator {
     private readonly decoration: vscode.TextEditorDecorationType;
     private _timeCalculator: TimePeriodCalculator;
     private _selectionHelper: SelectionHelper;
@@ -82,4 +81,4 @@ class GreenUnderline {
     }
 }
 
-export = GreenUnderline;
+export = ProgressIndicator;
