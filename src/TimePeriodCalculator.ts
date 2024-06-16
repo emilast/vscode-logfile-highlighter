@@ -3,7 +3,7 @@
 import * as moment from 'moment';
 import { TimePeriod } from './TimePeriod';
 
-class TimePeriodCalculator {
+export class TimePeriodCalculator {
 
     // Converts a given moment.Duration to a string that can be displayed.
     public convertToDisplayString(selectedDuration: moment.Duration): string {
@@ -126,5 +126,3 @@ class TimePeriodCalculator {
         return result;
     }
 }
-
-export = TimePeriodCalculator;

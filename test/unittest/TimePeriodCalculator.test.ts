@@ -1,7 +1,7 @@
 'use strict';
 
 import * as moment from 'moment';
-import TimePeriodCalculator = require('../../src/TimePeriodCalculator');
+import { TimePeriodCalculator } from '../../src/TimePeriodCalculator';
 
 describe('TimePeriodCalculator', () => {
     let testObject: TimePeriodCalculator;

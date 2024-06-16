@@ -1,11 +1,10 @@
 'use strict';
 
-import * as moment from 'moment';
 import * as vscode from 'vscode';
-import TimePeriodCalculator = require('./TimePeriodCalculator');
+import { TimePeriodCalculator } from './TimePeriodCalculator';
 import { SelectionHelper } from './SelectionHelper';
 
-class TimePeriodController {
+export class TimePeriodController {
 
     private _timeCalculator: TimePeriodCalculator;
     private _selectionHelper: SelectionHelper;
@@ -78,5 +77,3 @@ class TimePeriodController {
         this.updateTimePeriod();
     }
 }
-
-export = TimePeriodController;

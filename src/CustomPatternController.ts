@@ -1,9 +1,9 @@
 'use strict';
 
 import * as vscode from 'vscode';
-import CustomPatternDecorator = require('./CustomPatternDecorator');
+import { CustomPatternDecorator } from './CustomPatternDecorator';
 
-class CustomPatternController {
+export class CustomPatternController {
     private readonly LOG_ID: string = 'log';
 
     private _disposable: vscode.Disposable;
@@ -63,5 +63,3 @@ class CustomPatternController {
         }
     }
 }
-
-export = CustomPatternController;

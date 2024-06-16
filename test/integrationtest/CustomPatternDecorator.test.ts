@@ -2,7 +2,7 @@
 
 import { Position, Range, Selection } from 'vscode';
 import * as vscode from 'vscode';
-import CustomPatternDecorator = require('../../src/CustomPatternDecorator');
+import { CustomPatternDecorator } from '../../src/CustomPatternDecorator';
 
 describe('CustomPatternDecorator', () => {
 

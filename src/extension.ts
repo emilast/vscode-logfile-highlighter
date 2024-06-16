@@ -1,11 +1,11 @@
 'use strict';
 
 import * as vscode from 'vscode';
-import CustomPatternController = require('./CustomPatternController');
-import CustomPatternDecorator = require('./CustomPatternDecorator');
-import TimePeriodCalculator = require('./TimePeriodCalculator');
-import TimePeriodController = require('./TimePeriodController');
-import GreenUnderline =  require('./ProgressIndicator');
+import { CustomPatternController } from './CustomPatternController';
+import { CustomPatternDecorator } from './CustomPatternDecorator';
+import { TimePeriodCalculator } from './TimePeriodCalculator';
+import { TimePeriodController } from './TimePeriodController';
+import { ProgressIndicator } from './ProgressIndicator';
 import { SelectionHelper } from './SelectionHelper';
 
 // this method is called when the extension is activated
@@ -23,7 +23,7 @@ export function activate(context: vscode.ExtensionContext) {
     // Add to a list of disposables which are disposed when this extension is deactivated.
     context.subscriptions.push(timeController, customPatternController);
 
-    const greenUnderline = new GreenUnderline(timeCalculator, selectionHelper);
+    const progressIndicator = new ProgressIndicator(timeCalculator, selectionHelper);
     vscode.window.onDidChangeTextEditorSelection(event => {
         // Current line
         // if (event.textEditor === vscode.window.activeTextEditor) {
@@ -33,7 +33,7 @@ export function activate(context: vscode.ExtensionContext) {
         // All selected lines
         if (event.textEditor === vscode.window.activeTextEditor) {
             for (const selection of event.selections) {
-                greenUnderline.underlineLine(event.textEditor, selection.start.line, selection.end.line);
+                progressIndicator.decorateLines(event.textEditor, selection.start.line, selection.end.line);
             }
         }
     });

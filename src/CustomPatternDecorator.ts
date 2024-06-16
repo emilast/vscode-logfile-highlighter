@@ -1,9 +1,9 @@
 'use strict';
 
 import * as vscode from 'vscode';
-import CustomPattern = require('./CustomPattern');
+import { CustomPattern } from './CustomPattern';
 
-class CustomPatternDecorator {
+export class CustomPatternDecorator {
 
     // All custom log level specified in the configuration.
     private _configPattern: CustomPattern[];
@@ -153,5 +153,3 @@ class CustomPatternDecorator {
         });
     }
 }
-
-export = CustomPatternDecorator;
