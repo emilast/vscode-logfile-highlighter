@@ -23,22 +23,21 @@ export function activate(context: vscode.ExtensionContext) {
     // Add to a list of disposables which are disposed when this extension is deactivated.
     context.subscriptions.push(timeController, customPatternController);
 
-    const progressIndicator = new ProgressIndicator(timeCalculator, selectionHelper);
-    vscode.window.onDidChangeTextEditorSelection(event => {
-        // Current line
-        // if (event.textEditor === vscode.window.activeTextEditor) {
-        //     greenUnderline.underlineLine(event.textEditor, event.selections[0].active.line);
-        // }
 
-        // All selected lines
-        if (event.textEditor === vscode.window.activeTextEditor) {
-            for (const selection of event.selections) {
-                progressIndicator.decorateLines(event.textEditor, selection.start.line, selection.end.line);
+    const config = vscode.workspace.getConfiguration('logFileHighlighter');
+    const enableProgressIndicator = config.get('enableProgressIndicator', true);
+    if (enableProgressIndicator) {
+        const progressIndicator = new ProgressIndicator(timeCalculator, selectionHelper);
+
+        // When the active text editor changes, decorate the lines
+        vscode.window.onDidChangeTextEditorSelection(event => {
+            if (event.textEditor === vscode.window.activeTextEditor) {
+                for (const selection of event.selections) {
+                    progressIndicator.decorateLines(event.textEditor, selection.start.line, selection.end.line);
+                }
             }
-        }
-    });
-
-    
+        });
+    }
 }
 
 // this method is called when your extension is deactivated

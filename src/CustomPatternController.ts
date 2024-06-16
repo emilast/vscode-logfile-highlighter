@@ -9,7 +9,7 @@ export class CustomPatternController {
     private _disposable: vscode.Disposable;
     private _decorator: CustomPatternDecorator;
 
-    public constructor( decorator: CustomPatternDecorator) {
+    public constructor(decorator: CustomPatternDecorator) {
 
         this._decorator = decorator;
         const subscriptions: vscode.Disposable[] = [];

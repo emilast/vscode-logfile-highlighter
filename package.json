@@ -120,6 +120,11 @@
 					},
 					"title": "Custom highlighting patterns.",
 					"description": "An array of custom patterns that shall be highlighted."
+				},
+				"logFileHighlighter.enableProgressIndicator": {
+					"type": "boolean",
+					"default": true,
+					"description": "Enable or disable the progress indicator for selected lines"
 				}
 			}
 		}
