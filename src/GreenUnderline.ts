@@ -9,7 +9,7 @@ class GreenUnderline {
     private _timeCalculator: TimePeriodCalculator;
     private _selectionHelper: SelectionHelper;
 
-    private maxProgressWidth:number = 40;
+    private maxProgressWidth:number = 25;
 
     constructor(timeCalculator: TimePeriodCalculator, selectionHelper: SelectionHelper ) {
         this._timeCalculator = timeCalculator;
@@ -19,7 +19,8 @@ class GreenUnderline {
             // textDecoration: 'underline',
             borderWidth: '0 0 2px 0',
             borderStyle: 'solid',
-            borderColor: 'green'
+            borderColor: '#00ff1f8f',
+            // backgroundColor: '#00ff1f0f'
         });
     }
 
@@ -33,7 +34,10 @@ class GreenUnderline {
         let texts = this._selectionHelper.getFirstAndLastLines(editor, doc);
         if (texts !== undefined) {
             let timePeriod = this._timeCalculator.getTimePeriod(texts.startLine, texts.endLine);
+          
             if (timePeriod !== undefined) {
+
+                let timestampWidth = this._timeCalculator.getTimestampFromText(texts.endLine).original.length;
 
                 let ranges: vscode.Range[] = [];
                 for (let line = startLine; line <= endLine; line++) {
@@ -42,7 +46,7 @@ class GreenUnderline {
 
 
                     var timestamp = this._timeCalculator.getTimestampFromText(lineText);
-                    var ts = moment(timestamp);
+                    var ts = moment(timestamp.iso);
 
                     var progress = ts.diff(timePeriod.startTime) / timePeriod.duration.asMilliseconds();
 
@@ -55,7 +59,16 @@ class GreenUnderline {
                     // console.log('line: ' + line + ' text: ' + lineText + ' length: ' + length);
 
                     // var underlineLength = Math.floor(length * progress);
+
+                    // Max progress = given number of characters
                     var underlineLength = Math.floor(this.maxProgressWidth * progress);
+
+                    // Max progress = length of last line of the selection
+                    // var underlineLength = Math.floor(texts.endLine.length * progress);
+
+                    // Max progress = length of timestamp
+                    var underlineLength = Math.floor(timestampWidth * progress);
+
 
                     // console.log('underlineLength: ' + underlineLength);
                     var range = new vscode.Range(line, 0, line, underlineLength);
