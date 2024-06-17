@@ -39,6 +39,7 @@ export class ProgressIndicator {
           
             if (timePeriod !== undefined) {
 
+                let timestampStartIndex = this._timeCalculator.getTimestampFromText(texts.endLine).matchIndex;
                 let timestampWidth = this._timeCalculator.getTimestampFromText(texts.endLine).original.length;
 
                 // Iterate over all lines in the selection and decorate them according to their progress
@@ -46,28 +47,22 @@ export class ProgressIndicator {
                 let ranges: vscode.Range[] = [];
                 for (let line = startLine; line <= endLine; line++) {
                     var lineText = editor.document.lineAt(line).text;
-                    var length = lineText.length;
 
                     var timestamp = this._timeCalculator.getTimestampFromText(lineText);
                     var ts = moment(timestamp.iso);
 
                     var progress = ts.diff(timePeriod.startTime) / timePeriod.duration.asMilliseconds();
 
-                    // Compensate for tab charactes
-                    // const tabSize = editor.options.tabSize as number;
-                    // const tabCount = (lineText.match(/\t/g) || []).length;
-                    // length += tabCount * (tabSize - 1);
-
-                    // Max progress = given number of characters
-                    var decorationCharacterCount = Math.floor(this.maxProgressWidth * progress);
-
-                    // Max progress = length of last line of the selection
-                    // var underlineLength = Math.floor(texts.endLine.length * progress);
-
                     // Max progress = length of timestamp
                     var decorationCharacterCount = Math.floor(timestampWidth * progress);
 
-                    var range = new vscode.Range(line, 0, line, decorationCharacterCount);
+                    // set decorationCharacterCount to 0 if not a number or infinit
+                    if (isNaN(decorationCharacterCount) || !isFinite(decorationCharacterCount)) {
+                        decorationCharacterCount = 0;
+                    }
+                    
+                    var range = new vscode.Range(line, timestampStartIndex, line, timestampStartIndex + decorationCharacterCount);
+
                     ranges.push(range);
                 }
 

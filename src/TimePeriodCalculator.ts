@@ -38,7 +38,7 @@ export class TimePeriodCalculator {
         return text;
     }
 
-    public getTimestampFromText(text: string) : { original: string, iso: string } {
+    public getTimestampFromText(text: string) : { original: string, matchIndex: number, iso: string } {
         const clockPattern = '\\d{2}:\\d{2}(?::\\d{2}(?:[.,]\\d{3,})?)?(?:Z| ?[+-]\\d{2}:\\d{2})?\\b';
 
         // ISO dates ("2016-08-23")
@@ -65,7 +65,7 @@ export class TimePeriodCalculator {
             const match = timeRegEx.exec(text);
 
             if (match) {
-                return { original: match[0], iso: this._convertToIso(match[0]) };
+                return { original: match[0], matchIndex: match.index, iso: this._convertToIso(match[0]) };
             }
         }
 
