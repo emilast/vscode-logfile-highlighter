@@ -6,30 +6,54 @@ import { ProgressIndicator } from './ProgressIndicator';
 export class ProgressIndicatorController {
 
     private _progressIndicator: ProgressIndicator;
-    private _disposable: vscode.Disposable;
+    private _disposableSubscriptions: vscode.Disposable;
     private _statusBarItem: vscode.StatusBarItem;
 
     constructor(progressIndicator: ProgressIndicator) {
         this._progressIndicator = progressIndicator;
 
-        // subscribe to selection change and editor activation events
-        const subscriptions: vscode.Disposable[] = [];
+        vscode.workspace.onDidChangeConfiguration(() => { this.onDidChangeConfiguration(); }, this);
+    }
 
-        // Setup
+    private progressIndicatorIsEnabled() {
         const config = vscode.workspace.getConfiguration('logFileHighlighter');
         const enableProgressIndicator = config.get('enableProgressIndicator', true);
-
-        if (enableProgressIndicator) {
-            vscode.window.onDidChangeTextEditorSelection(event => this.decorateLines(event), this, subscriptions);
-        }
-
-        // create a combined disposable from both event subscriptions
-        this._disposable = vscode.Disposable.from(...subscriptions);
+        return enableProgressIndicator;
     }
 
     public dispose() {
         this._statusBarItem.dispose();
-        this._disposable.dispose();
+        this._disposableSubscriptions.dispose();
+    }
+
+    private onDidChangeConfiguration(): void {
+        const enableProgressIndicator = this.progressIndicatorIsEnabled();
+
+        if (enableProgressIndicator) {
+            this.registerSelectionEventHandlers();
+        }
+        else {
+            // Remove all decorations
+            this._progressIndicator.removeAllDecorations();
+
+            // Unregister all event listeners
+            this.unregisterSelectionEventHandlers();
+        }
+    }
+
+    private registerSelectionEventHandlers() {
+        this.unregisterSelectionEventHandlers();
+
+        const subscriptions: vscode.Disposable[] = [];
+        vscode.window.onDidChangeTextEditorSelection(event => this.decorateLines(event), this, subscriptions);
+        this._disposableSubscriptions = vscode.Disposable.from(...subscriptions);
+    }
+
+    private unregisterSelectionEventHandlers() {
+        if (this._disposableSubscriptions) {
+            this._disposableSubscriptions.dispose();
+            this._disposableSubscriptions = null;
+        }
     }
 
     private decorateLines(event: vscode.TextEditorSelectionChangeEvent) {

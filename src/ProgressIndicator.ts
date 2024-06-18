@@ -70,4 +70,10 @@ export class ProgressIndicator {
             }
         }
     }
+
+    removeAllDecorations() {
+        vscode.window.visibleTextEditors.forEach(editor => {
+            editor.setDecorations(this.decoration, []);
+        });
+    }
 }
