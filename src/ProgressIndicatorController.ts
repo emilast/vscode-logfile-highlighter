@@ -15,10 +15,16 @@ export class ProgressIndicatorController {
         vscode.workspace.onDidChangeConfiguration(() => { this.onDidChangeConfiguration(); }, this);
     }
 
-    private progressIndicatorIsEnabled() {
+    private getConfiguration(): { enableProgressIndicator: boolean, progressIndicatorUnderlineColor: string } {
         const config = vscode.workspace.getConfiguration('logFileHighlighter');
+
         const enableProgressIndicator = config.get('enableProgressIndicator', true);
-        return enableProgressIndicator;
+        const progressIndicatorUnderlineColor = config.get('progressIndicatorUnderlineColor', '#00ff1f8f');
+
+        return {
+            enableProgressIndicator,
+            progressIndicatorUnderlineColor
+        };
     }
 
     public dispose() {
@@ -27,13 +33,15 @@ export class ProgressIndicatorController {
     }
 
     private onDidChangeConfiguration(): void {
-        const enableProgressIndicator = this.progressIndicatorIsEnabled();
+        const config = this.getConfiguration();
 
-        if (enableProgressIndicator) {
+        if (config.enableProgressIndicator) {
             this.registerSelectionEventHandlers();
+            this._progressIndicator.removeAllDecorations(); // Do this before the call to setUnderlineColor since the decoration object will be recreated
+            this._progressIndicator.setUnderlineColor(config.progressIndicatorUnderlineColor);
         }
         else {
-            // Remove all decorations
+            // Remove all decorations in case they're disabled now or have changed settings
             this._progressIndicator.removeAllDecorations();
 
             // Unregister all event listeners

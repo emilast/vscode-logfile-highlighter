@@ -125,6 +125,12 @@
 					"type": "boolean",
 					"default": true,
 					"description": "Enable or disable the progress indicator for selected lines"
+				},
+				"logFileHighlighter.progressIndicatorUnderlineColor": {
+					"format": "color-hex",
+					"type": "string",
+					"default": "#00ff1f8f",
+					"description": "The color to use for drawing the timestamp progress indicator underline"
 				}
 			}
 		}

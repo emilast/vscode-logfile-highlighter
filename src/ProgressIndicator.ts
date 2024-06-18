@@ -4,7 +4,8 @@ import { SelectionHelper } from './SelectionHelper';
 import moment = require('moment');
 
 export class ProgressIndicator {
-    private readonly decoration: vscode.TextEditorDecorationType;
+
+    private decoration: vscode.TextEditorDecorationType;
     private _timeCalculator: TimePeriodCalculator;
     private _selectionHelper: SelectionHelper;
 
@@ -13,12 +14,14 @@ export class ProgressIndicator {
     constructor(timeCalculator: TimePeriodCalculator, selectionHelper: SelectionHelper ) {
         this._timeCalculator = timeCalculator;
         this._selectionHelper = selectionHelper;
+    }
 
+    public setUnderlineColor(color: string) {
         this.decoration = vscode.window.createTextEditorDecorationType({
             // textDecoration: 'underline',
             borderWidth: '0 0 2px 0',
             borderStyle: 'solid',
-            borderColor: '#00ff1f8f',
+            borderColor: color,
             // backgroundColor: '#00ff1f0f'
         });
     }
@@ -73,7 +76,9 @@ export class ProgressIndicator {
 
     removeAllDecorations() {
         vscode.window.visibleTextEditors.forEach(editor => {
-            editor.setDecorations(this.decoration, []);
+            if (this.decoration) {
+                editor.setDecorations(this.decoration, []);
+            }
         });
     }
 }
