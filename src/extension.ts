@@ -26,6 +26,14 @@ export function activate(context: vscode.ExtensionContext) {
     const progressIndicator = new ProgressIndicator(timeCalculator, selectionHelper);
     const progressIndicatorController = new ProgressIndicatorController(progressIndicator);
 
+    // register commands
+    context.subscriptions.push(
+        vscode.commands.registerCommand(
+            'logFileHighlighter.removeProgressIndicatorDecorations', () => {
+                // Remove decorations
+                progressIndicatorController.removeDecorations();
+            }));
+
     // Add to a list of disposables which are disposed when this extension is deactivated.
     context.subscriptions.push(timeController, customPatternController, progressIndicatorController);
 }

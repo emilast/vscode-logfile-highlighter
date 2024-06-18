@@ -44,6 +44,19 @@
 				"path": "./syntaxes/log.tmLanguage"
 			}
 		],
+		"commands": [
+			{
+				"command": "logFileHighlighter.removeProgressIndicatorDecorations",
+				"title": "Log File Highlighter: Remove Progress Indicator Decorations"
+			}
+		],
+		"keybindings": [
+			{
+				"command": "logFileHighlighter.removeProgressIndicatorDecorations",
+				"key": "Escape",
+				"when": "editorTextFocus"
+			}
+		],
 		"configuration": {
 			"type": "object",
 			"title": "The vscode-logfile-highlighter configuration.",

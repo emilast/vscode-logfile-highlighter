@@ -15,6 +15,10 @@ export class ProgressIndicatorController {
         vscode.workspace.onDidChangeConfiguration(() => { this.onDidChangeConfiguration(); }, this);
     }
 
+    public removeDecorations() {
+        this._progressIndicator.removeAllDecorations();
+    }
+    
     private getConfiguration(): { enableProgressIndicator: boolean, progressIndicatorUnderlineColor: string } {
         const config = vscode.workspace.getConfiguration('logFileHighlighter');
 
