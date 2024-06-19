@@ -2,7 +2,7 @@
 
 import * as vscode from 'vscode';
 
-class CustomPattern {
+export class CustomPattern {
     public readonly pattern: string;
     public readonly foreground: string;
     public readonly background: string;
@@ -63,5 +63,3 @@ class CustomPattern {
         return result;
     }
 }
-
-export = CustomPattern;

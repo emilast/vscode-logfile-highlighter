@@ -1,8 +1,8 @@
 'use strict';
 
-import { Position, Selection } from 'vscode';
 import * as vscode from 'vscode';
-import TimePeriodController = require('../../src/TimePeriodController');
+import { Position, Selection } from 'vscode';
+import { TimePeriodController } from '../../src/TimePeriodController';
 
 describe('TimePeriodController', () => {
 

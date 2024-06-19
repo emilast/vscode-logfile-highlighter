@@ -1,17 +1,19 @@
 'use strict';
 
-import * as moment from 'moment';
 import * as vscode from 'vscode';
-import TimePeriodCalculator = require('./TimePeriodCalculator');
+import { TimePeriodCalculator } from './TimePeriodCalculator';
+import { SelectionHelper } from './SelectionHelper';
 
-class TimePeriodController {
+export class TimePeriodController {
 
     private _timeCalculator: TimePeriodCalculator;
+    private _selectionHelper: SelectionHelper;
     private _disposable: vscode.Disposable;
     private _statusBarItem: vscode.StatusBarItem;
 
-    constructor(timeCalculator: TimePeriodCalculator) {
+    constructor(timeCalculator: TimePeriodCalculator, selectionHelper: SelectionHelper ) {
         this._timeCalculator = timeCalculator;
+        this._selectionHelper = selectionHelper;
 
         // Create as needed
         if (!this._statusBarItem) {
@@ -51,35 +53,19 @@ class TimePeriodController {
 
             this._statusBarItem.text = '';
 
-            const startLineNumber = editor.selection.start.line;
-            const endLineNumber = editor.selection.end.line;
-            let timePeriod: moment.Duration;
+            let texts = this._selectionHelper.getFirstAndLastLines(editor, doc);
 
-            if (startLineNumber !== endLineNumber) {
+            if (texts !== undefined) {
+                let timePeriod = this._timeCalculator.getTimePeriod(texts.startLine, texts.endLine);
+                if (timePeriod !== undefined) {
 
-                // Get the selections first and last non empty line
-                const startLine: vscode.TextLine = doc.lineAt(startLineNumber);
-                let endLine: vscode.TextLine;
+                    // Update the status bar
+                    this._statusBarItem.text = this._timeCalculator.convertToDisplayString(timePeriod.duration);
+                    this._statusBarItem.show();
 
-                // If last line is not partially selected use last but first line
-                if (editor.selection.end.character === 0) {
-                    // Because startLineNumber !== endLineNumber, endLineNumber - 1 >= 0 holds
-                    endLine = doc.lineAt(endLineNumber - 1);
                 } else {
-                    endLine = doc.lineAt(endLineNumber);
+                    this._statusBarItem.hide();
                 }
-
-                timePeriod = this._timeCalculator.getTimePeriod(startLine.text, endLine.text);
-            }
-
-            if (timePeriod !== undefined) {
-
-                // Update the status bar
-                this._statusBarItem.text = this._timeCalculator.convertToDisplayString(timePeriod);
-                this._statusBarItem.show();
-
-            } else {
-                this._statusBarItem.hide();
             }
 
         } else {
@@ -91,5 +77,3 @@ class TimePeriodController {
         this.updateTimePeriod();
     }
 }
-
-export = TimePeriodController;

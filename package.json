@@ -44,9 +44,22 @@
 				"path": "./syntaxes/log.tmLanguage"
 			}
 		],
+		"commands": [
+			{
+				"command": "logFileHighlighter.removeProgressIndicatorDecorations",
+				"title": "Log File Highlighter: Remove Progress Indicator Decorations"
+			}
+		],
+		"keybindings": [
+			{
+				"command": "logFileHighlighter.removeProgressIndicatorDecorations",
+				"key": "Escape",
+				"when": "editorTextFocus"
+			}
+		],
 		"configuration": {
 			"type": "object",
-			"title": "The vscode-logfile-highlighter configuration.",
+			"title": "Log File Highlighter",
 			"properties": {
 				"logFileHighlighter.customPatterns": {
 					"type": "array",
@@ -120,6 +133,17 @@
 					},
 					"title": "Custom highlighting patterns.",
 					"description": "An array of custom patterns that shall be highlighted."
+				},
+				"logFileHighlighter.enableProgressIndicator": {
+					"type": "boolean",
+					"default": true,
+					"description": "Enable or disable the progress indicator for selected lines"
+				},
+				"logFileHighlighter.progressIndicatorUnderlineColor": {
+					"format": "color-hex",
+					"type": "string",
+					"default": "#00ff1f8f",
+					"description": "The color to use for drawing the timestamp progress indicator underline"
 				}
 			}
 		}
