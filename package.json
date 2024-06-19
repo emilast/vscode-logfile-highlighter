@@ -59,7 +59,7 @@
 		],
 		"configuration": {
 			"type": "object",
-			"title": "The vscode-logfile-highlighter configuration.",
+			"title": "Log File Highlighter",
 			"properties": {
 				"logFileHighlighter.customPatterns": {
 					"type": "array",

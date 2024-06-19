@@ -62,10 +62,13 @@ The extension associates with `.log` files and applies coloring to the different
 * Namespaces (sequences of alphanumeric and dot characters). Useful to identity namespace qualified type names, for example.
     * `MyApp.MyNameSpace.MyClass`
 
-### Visualization of Time Duration
-If you select multiple lines of a `.log` file,
-a status bar item is displayed that indicates how many days, hours, minutes, seconds and milliseconds you have selected.
-![Time Duration Sample](content/Selection-Sample.gif)  
+### Visualization of Time Duration and Progress
+If you select multiple lines of a `.log` file, some simple timestamp analysis is performed.
+
+* A status bar item is displayed that indicates how many days, hours, minutes, seconds and milliseconds that is selected.
+* A progress bar is also drawn under the timestamps in the selection to give a visual representation of each line's point in time within the selection.
+
+![Time Duration Sample](content/TimeAnalysis.gif)  
 
 ## Customization
 
@@ -110,6 +113,19 @@ To override the color for one of these, use the `editor.tokenColorCustomizations
     ]
 }
 ```
+
+### Time Analysis settings
+
+* **enableProgressIndicator** can be used to disable the progress indicator feature. The default value is `true`. Set it to `false` to disable the feature.
+
+* **progressIndicatorUnderlineColor** can be used to set the color of the progress indicator. The default value is `#00ff1f8f`. Note the alpha channel value at the end of the color value (`8f`). This can be used to make the color semi-transparent for mixing with the background color.
+
+Example:
+```JSON
+"logFileHighlighter.enableProgressIndicator": true,
+"logFileHighlighter.progressIndicatorUnderlineColor": "#ffee00",
+```
+
 
 ### Defining custom highlighting patterns
 
