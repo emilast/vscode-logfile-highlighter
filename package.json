@@ -7,7 +7,7 @@
 		"Other"
 	],
 	"license": "MIT",
-	"version": "2.19.0",
+	"version": "3.0.0",
 	"bugs": {
 		"url": "https://github.com/emilast/vscode-logfile-highlighter/issues"
 	},
@@ -162,7 +162,7 @@
 	"devDependencies": {
 		"@types/jasmine": "^4.6.4",
 		"@types/node": "^20.14.5",
-		"@types/vscode": "^1.90.0",
+		"@types/vscode": "^1.89.0",
 		"@vscode/test-electron": "^2.4.0",
 		"jasmine": "^5.0.2",
 		"jasmine-core": "^5.1.2",
