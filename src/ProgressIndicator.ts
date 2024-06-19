@@ -9,8 +9,6 @@ export class ProgressIndicator {
     private _timeCalculator: TimePeriodCalculator;
     private _selectionHelper: SelectionHelper;
 
-    private maxProgressWidth:number = 25;
-
     constructor(timeCalculator: TimePeriodCalculator, selectionHelper: SelectionHelper ) {
         this._timeCalculator = timeCalculator;
         this._selectionHelper = selectionHelper;
@@ -18,11 +16,9 @@ export class ProgressIndicator {
 
     public setUnderlineColor(color: string) {
         this.decoration = vscode.window.createTextEditorDecorationType({
-            // textDecoration: 'underline',
             borderWidth: '0 0 2px 0',
             borderStyle: 'solid',
             borderColor: color,
-            // backgroundColor: '#00ff1f0f'
         });
     }
 
