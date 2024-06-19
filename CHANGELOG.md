@@ -2,6 +2,10 @@
 
 ### XXX
 
+* **Breaking change**: Remove special handling of custom patterns that are not regular expressions
+
+  * Before, if the pattern contained nothing but alphanumeric characters, it was treated in a special way. It was colored only if not followed by a right square bracket or a colon. This is now removed, which might cause some existing patterns to be applied on more places than before. Fixes issue #366.
+
 * New feature: A **time progress indicator** is now added to the selected lines when two or more lines are selected. The progress indicator gives a visual representation of each line's point in time within the selection.
   * The color of the progress indicator can be customized using the `logFileHighlighter.progressIndicatorUnderlineColor` setting. The default color is `#00ff1f8f`.
   * The feature can be disabled using the `logFileHighlighter.enableProgressIndicator` setting.

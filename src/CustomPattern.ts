@@ -41,23 +41,10 @@ export class CustomPattern {
     private createRegex(pattern: string): RegExp[] {
         const result: RegExp[] = [];
 
-        // Check if the log level value is a "simple" string or not.
-        if (!/^\w+$/g.test(pattern)) {
-
-            // log level is already regex.
-            try {
-                result.push(new RegExp(pattern, 'gm'));
-            } catch (err) {
-                vscode.window.showErrorMessage('Regex of custom log level is invalid. Error: ' + err);
-            }
-        } else {
-
-            // Log level consists only of "simple" characters -> build regex.
-            const first = new RegExp('\\b(?!\\[)(' + pattern.toUpperCase() +
-                '|' + pattern + ')(?!\\]|\\:)\\b', 'gm');
-            const second = new RegExp('\\[(' + pattern + ')\\]|\\b(' + pattern + ')\\:', 'ig');
-
-            result.push(first, second);
+        try {
+            result.push(new RegExp(pattern, 'gm'));
+        } catch (err) {
+            vscode.window.showErrorMessage('Regex of custom log level is invalid. Error: ' + err);
         }
 
         return result;
