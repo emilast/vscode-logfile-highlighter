@@ -3,7 +3,7 @@
 ### 3.0.0 - 19 June 2024
 
 **Breaking change**
-* : Remove special handling of custom patterns that are not regular expressions
+* Remove special handling of custom patterns that are not regular expressions
   * Before, if the pattern contained nothing but alphanumeric characters, it was treated in a special way. It was colored only if not followed by a right square bracket or a colon. This is now removed, which might cause some existing patterns to be applied on more places than before. Fixes issue #366.
 
 **New feature**
