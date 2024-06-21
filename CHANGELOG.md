@@ -1,5 +1,9 @@
 # Change Log
 
+### 3.0.1 - 20 June 2024
+
+* Buf fix: Change the Escape key binding to only apply to log files. Partly fixes issue #588 where the key binding seems to conflict with the Vim VS Code extension.
+
 ### 3.0.0 - 19 June 2024
 
 **Breaking change**
