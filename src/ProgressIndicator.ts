@@ -48,21 +48,22 @@ export class ProgressIndicator {
                     var lineText = editor.document.lineAt(line).text;
 
                     var timestamp = this._timeCalculator.getTimestampFromText(lineText);
-                    var ts = moment(timestamp.iso);
+                    if (timestamp) {
 
-                    var progress = ts.diff(timePeriod.startTime) / timePeriod.duration.asMilliseconds();
+                        var ts = moment(timestamp.iso);
+                        var progress = ts.diff(timePeriod.startTime) / timePeriod.duration.asMilliseconds();
 
-                    // Max progress = length of timestamp
-                    var decorationCharacterCount = Math.floor(timestampWidth * progress);
+                        // Max progress = length of timestamp
+                        var decorationCharacterCount = Math.floor(timestampWidth * progress);
 
-                    // set decorationCharacterCount to 0 if not a number or infinit
-                    if (isNaN(decorationCharacterCount) || !isFinite(decorationCharacterCount)) {
-                        decorationCharacterCount = 0;
+                        // set decorationCharacterCount to 0 if not a number or infinit
+                        if (isNaN(decorationCharacterCount) || !isFinite(decorationCharacterCount)) {
+                            decorationCharacterCount = 0;
+                        }
+
+                        var range = new vscode.Range(line, timestampStartIndex, line, timestampStartIndex + decorationCharacterCount);
+                        ranges.push(range);
                     }
-
-                    var range = new vscode.Range(line, timestampStartIndex, line, timestampStartIndex + decorationCharacterCount);
-
-                    ranges.push(range);
                 }
 
                 editor.setDecorations(this.decoration, ranges);

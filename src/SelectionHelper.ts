@@ -7,29 +7,38 @@ export class SelectionHelper {
     getFirstAndLastLines(editor: vscode.TextEditor, doc: vscode.TextDocument) {
         const startLineNumber = editor.selection.start.line;
         const endLineNumber = editor.selection.end.line;
-        let timePeriod: TimePeriod | undefined;
 
         if (startLineNumber !== endLineNumber) {
+            let startLine: vscode.TextLine | undefined;
+            let endLine: vscode.TextLine | undefined;
 
-            // Get the selections first and last non empty line
-            const startLine: vscode.TextLine = doc.lineAt(startLineNumber);
-            let endLine: vscode.TextLine;
-
-            // If last line is not partially selected use last but first line
-            if (editor.selection.end.character === 0) {
-                // Because startLineNumber !== endLineNumber, endLineNumber - 1 >= 0 holds
-                endLine = doc.lineAt(endLineNumber - 1);
-            } else {
-                endLine = doc.lineAt(endLineNumber);
+            // Iterate from the start to find the first non-empty line
+            for (let i = startLineNumber; i <= endLineNumber; i++) {
+                const line = doc.lineAt(i);
+                if (line.text.trim() !== '') {
+                    startLine = line;
+                    break;
+                }
             }
 
-            return {
-                startLine: startLine.text,
-                endLine: endLine.text
-            };
+            // Iterate from the end to find the last non-empty line
+            for (let i = endLineNumber; i >= startLineNumber; i--) {
+                const line = doc.lineAt(i);
+                if (line.text.trim() !== '') {
+                    endLine = line;
+                    break;
+                }
+            }
+
+            // If startLine and endLine are set, return their text
+            if (startLine && endLine) {
+                return {
+                    startLine: startLine.text,
+                    endLine: endLine.text
+                };
+            }
         }
 
         return undefined;
-
     }
 }
