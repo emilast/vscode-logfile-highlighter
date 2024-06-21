@@ -1,8 +1,16 @@
 # Change Log
 
+### 3.0.2 - 21 June 2024
+
+**Bug fixes**
+* Time progress indicator: Make sure initialization is done faster when starting VS Code.
+* Time progress indicator: Improve handling of empty lines
+  * We now use the first and last non-empty lines for the time progress indicator rather than not showing the indicator if any of them were empty or do not contain a timestamp.
+  
 ### 3.0.1 - 20 June 2024
 
-* Buf fix: Change the Escape key binding to only apply to log files. Partly fixes issue #588 where the key binding seems to conflict with the Vim VS Code extension.
+**Bug fixes**
+* Change the Escape key binding to only apply to log files. Partly fixes issue #588 where the key binding seems to conflict with the Vim VS Code extension.
 
 ### 3.0.0 - 19 June 2024
 
