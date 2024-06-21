@@ -9,7 +9,7 @@ export class ProgressIndicator {
     private _timeCalculator: TimePeriodCalculator;
     private _selectionHelper: SelectionHelper;
 
-    constructor(timeCalculator: TimePeriodCalculator, selectionHelper: SelectionHelper ) {
+    constructor(timeCalculator: TimePeriodCalculator, selectionHelper: SelectionHelper) {
         this._timeCalculator = timeCalculator;
         this._selectionHelper = selectionHelper;
     }
@@ -35,7 +35,7 @@ export class ProgressIndicator {
         let texts = this._selectionHelper.getFirstAndLastLines(editor, doc);
         if (texts !== undefined) {
             let timePeriod = this._timeCalculator.getTimePeriod(texts.startLine, texts.endLine);
-          
+
             if (timePeriod !== undefined) {
 
                 let timestampStartIndex = this._timeCalculator.getTimestampFromText(texts.endLine).matchIndex;
@@ -59,7 +59,7 @@ export class ProgressIndicator {
                     if (isNaN(decorationCharacterCount) || !isFinite(decorationCharacterCount)) {
                         decorationCharacterCount = 0;
                     }
-                    
+
                     var range = new vscode.Range(line, timestampStartIndex, line, timestampStartIndex + decorationCharacterCount);
 
                     ranges.push(range);
@@ -71,10 +71,10 @@ export class ProgressIndicator {
     }
 
     removeAllDecorations() {
-        vscode.window.visibleTextEditors.forEach(editor => {
-            if (this.decoration) {
+        if (this.decoration) {
+            vscode.window.visibleTextEditors.forEach(editor => {
                 editor.setDecorations(this.decoration, []);
-            }
-        });
+            });
+        }
     }
 }

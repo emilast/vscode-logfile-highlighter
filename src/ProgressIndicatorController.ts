@@ -12,6 +12,8 @@ export class ProgressIndicatorController {
     constructor(progressIndicator: ProgressIndicator) {
         this._progressIndicator = progressIndicator;
 
+        this.init();
+
         vscode.workspace.onDidChangeConfiguration(() => { this.onDidChangeConfiguration(); }, this);
     }
 
@@ -37,6 +39,10 @@ export class ProgressIndicatorController {
     }
 
     private onDidChangeConfiguration(): void {
+        this.init();
+    }
+
+    private init() {
         const config = this.getConfiguration();
 
         if (config.enableProgressIndicator) {
