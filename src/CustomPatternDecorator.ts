@@ -20,6 +20,7 @@ export class CustomPatternDecorator {
         const configPatterns = vscode.workspace.getConfiguration('logFileHighlighter').get(
             'customPatterns') as {
                 pattern: string,
+                patternFlags: string,
                 foreground?: string,
                 background?: string,
                 fontWeight?: string,
@@ -51,7 +52,7 @@ export class CustomPatternDecorator {
                 )
                 && item.pattern !== undefined) {
                 var pattern = new CustomPattern(
-                    item.pattern, item.foreground, item.background,
+                    item.pattern, item.patternFlags ?? '', item.foreground, item.background,
                     item.fontWeight, item.fontStyle, item.border, item.borderRadius,
                     item.borderSpacing, item.letterSpacing,
                     item.overviewColor, vscode.OverviewRulerLane[item.overviewRulerLane],
@@ -93,10 +94,8 @@ export class CustomPatternDecorator {
                 let matches = regex.exec(contentToEnd);
 
                 while (matches) {
-                    const start = doc.positionAt(doc.offsetAt(startPos) + matches.index);
-                    const end = start.translate(0, matches[0].length);
+                    var { start, end } = this.getMatchPositions(doc, matches);
                     logLevelRanges.push(new vscode.Range(start, end));
-
                     matches = regex.exec(contentToEnd);
                 }
             }
@@ -122,11 +121,8 @@ export class CustomPatternDecorator {
                         let matches = regex.exec(content);
 
                         while (matches) {
-                            const start = editor.document.positionAt(matches.index);
-                            const end = start.translate(0, matches[0].length);
-
+                            var { start, end } = this.getMatchPositions(editor.document, matches);
                             logLevelRanges.push(new vscode.Range(start, end));
-
                             matches = regex.exec(content);
                         }
                     }
@@ -139,6 +135,25 @@ export class CustomPatternDecorator {
                 this._cache.set(editor.document.uri, docRanges);
             }
         }
+    }
+
+    private getMatchPositions(document: vscode.TextDocument, matches: RegExpExecArray) {
+        const start = document.positionAt(matches.index);
+        const matchString = matches[0];
+        const newlineCount = (matchString.match(/\n/g) || []).length;
+
+        let end;
+        if (newlineCount === 0) {
+            // Match is on the same line
+            end = start.translate(0, matchString.length);
+        } else {
+            // Match spans multiple lines
+            const lastNewlineIndex = matchString.lastIndexOf('\n');
+            const lengthOfLastLine = matchString.length - lastNewlineIndex - 1;
+            const lineOffset = newlineCount;
+            end = start.translate(lineOffset, lengthOfLastLine);
+        }
+        return { start, end };
     }
 
     public dispose() {

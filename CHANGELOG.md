@@ -1,5 +1,13 @@
 # Change Log
 
+**New feature**
+
+* There is now a new option for modifying the bahavior of custom patterns, the **patternFlags** setting. This setting allows for the use of regular expression flags such as "i" for case-insensitive matching or "s" for multiline matching. Fixes feature requests #87 and #276.
+
+  Example:
+  ![alt text](content/MultilinePattern.png)
+
+
 ### 3.0.3 - 22 June 2024
 
 **Bug fixes**

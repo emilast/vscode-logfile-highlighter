@@ -8,59 +8,26 @@
 A Visual Studio Code extension for adding color highlighting to log files. It is based on standard conventions for log4net log files but it's general enough to be useful for other variations of log files as well. The colors are customizable but by default the current color theme's colors are used.
 
 **Note**
-An earlier version of the syntax highlighting definition from this extension was included into Visual Studio Code [version 1.20](https://code.visualstudio.com/updates/v1_20#_output-panel). If the default behavior of log files in VS Code is good enough for you, then you don't need this extension. However, if you want additional highlighting, customizable patterns and time duration calculation, then keep reading :-)
+An earlier version of the syntax highlighting definition from this extension was included into Visual Studio Code [version 1.20](https://code.visualstudio.com/updates/v1_20#_output-panel). If the default behavior of log files in VS Code is good enough for you, then you don't need this extension. However, if you want additional highlighting, customizable patterns and time duration calculation and visualization, then keep reading :-)
 
 ## Features
 ### Syntax Highlighting
 The extension associates with `.log` files and applies coloring to the different elements in the file, for example:
 
-* Dates and times in ISO format, such as
-    * `2015-12-09`
-    * `2015-12-09 09:29`
-    * `2015-12-09 09:29:02.258`
-* Dates and times in some culture-specific formats
-    * `12/09/2016`
-    * `12.09.2016`
-    * `12-09-2016`
-    * `12-09-2015 09:29`
-    * `12-09-2015 09:29:02,258`
-* Log level, such as
-    * `DEBUG`
-    * `INFO`, `INFORMATION`
-    * `WARN`, `WARNING`
-    * `ERROR`, `FAIL`, `FAILURE`
-* Numeric constants, such as
-    * `1`
-    * `234`
-* Standard .Net constants
-    * `null`
-    * `true`
-    * `false`
-* String constants, enclosed in single or double quotes. Examples:
-    * `"lorem ipsum"`
-    * `'lorem ipsum'`
-* GUIDs. Example:
-    * `859A4209-A82D-4CA1-8468-C2606A3501EE`
-* MAC addresses (hex numbers separated by colons or dashes (':', '-')
-    * `43:A4:19:A5:AF:C0`
-    * `43-A4-19-A5-AF-C0`
-    * `fde8:e767:269c:0:9425:3477:7c8f:7f1a`
-    * `fde8-e767-269c-0-9425-3477-7c8f-7f1a`
-
-* .Net exception type names, i.e. word ending with `Exception`, such as
-    * `ArgumentNullException`
-    * `HttpException`
-* .Net exception stack traces, i.e. lines starting with whitespace characters, followed by `at`, for example:
-    ```
-    System.NullReferenceException: Object reference not set to an instance of an object.
-        at MyClass.DoSomethingElse(string foo)
-        at MyClass.DoSomething()
-    ```
-* Urls:
-    * `http://www.meadow.se/wordpress/`
-
-* Namespaces (sequences of alphanumeric and dot characters). Useful to identity namespace qualified type names, for example.
-    * `MyApp.MyNameSpace.MyClass`
+| Category                                         | Example                                                                                                                  |
+| ------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------ |
+| Dates and times in ISO format, such as           | `2015-12-09`, `2015-12-09 09:29`, `2015-12-09 09:29:02.258`                                                              |
+| Dates and times in some culture-specific formats | `12/09/2016`, `12.09.2016`, `112-09-2016`, `12-09-2015 09:29`, `12-09-2015 09:29:02,258`                                 |
+| Log level                                        | `DEBUG`, `INFO`, `INFORMATION`, `WARN`, `WARNING`, `ERROR`, `FAIL`, `FAILURE`                                            |
+| Numeric constants                                | `1`, `234`                                                                                                               |
+| Standard .Net constants                          | `null`, `true`, `false`                                                                                                  |
+| String constants                                 | `"lorem ipsum"`, `'lorem ipsum'`                                                                                         |
+| GUIDs                                            | `859A4209-A82D-4CA1-8468-C2606A3501EE`                                                                                   |
+| MAC addresses                                    | `43:A4:19:A5:AF:C0`, `43-A4-19-A5-AF-C0`, `fde8:e767:269c:0:9425:3477:7c8f:7f1a`, `fde8-e767-269c-0-9425-3477-7c8f-7f1a` |
+| .Net exception type names                        | `ArgumentNullException`, `HttpException`                                                                                 |
+| .Net exception stack traces                      | Lines starting with whitespace characters, followed by `at`                                                              |
+| Urls                                             | `http://www.meadow.se/wordpress/`                                                                                        |
+| Namespaces                                       | `MyApp.MyNameSpace.MyClass`                                                                                              |
 
 ### Visualization of Time Duration and Progress
 If you select multiple lines of a `.log` file, some simple timestamp analysis is performed.
@@ -161,19 +128,21 @@ The patterns are defined in the user settings like in this example:
 ]
 ```
 
-| Setting       | Optional      | Description   | Example 	|
-|--- 	        |---	        |---	        |---	    |
-| `pattern`     | Mandatory 	| The matching expression. This can be either a string constant or a JavaScript regular expression (remember to **escape special characters**).|  `foobar`<br>`(todo\|TODO)` 	|
-| `foreground`  | Optional	    | The color to use as foreground color for the matched pattern. Hex colors are preferred since they can be selected with the VS Code color picker but predefined VS Code color names work as well. 	| `yellow`<br>`#ff5588` |
-| `background`  | Optional	    | The color to use as background color for the matched pattern. | `yellow`<br>`#ff5588` |
-| `fontWeight`  | Optional	    | Used to change the weight of the font. | `bold`   |
-| `fontStyle`   | Optional	    | Used to change the style of the font.  | `italic` |
-| `border`      | Optional	    | Can be used for adding a border around matched text. | `2px solid yellow` |
-| `borderRadius`| Optional	    | Can be used together with the `border` setting to make the border corners rounded. | `3px` |
-| `letterSpacing`| Optional	    | Can be used to increase or decrease the horizontsl spacing between characters in the matched text. | `5px` <br> `-1px` |
-| `overviewColor`| Optional	    | If set, this enables matched text to be indicated in the overview ruler to the right of the text editor window in Code. | `yellow`<br>`#ff5588` |
-| `overviewRulerLane`| Optional	| If `overviewColor` is set, then this setting controls the placement of the marker in the ruler.| `Left`<br>`Right`<br>`Center`<br>`Full`|
-| `textDecoration`| Optional	| Used for adding additional CSS text decorations. |`red underline overline dotted`<br>`red wavy underline`|
+| Setting             | Optional  | Description                                                                                                                                                                                      | Examples                                                                          |
+| ------------------- | --------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | --------------------------------------------------------------------------------- |
+| `pattern`           | Mandatory | The matching expression.This can be either a string constant or a JavaScript regular expression (remember to **escape special characters**).                                                     | `foobar`, `(TODO)`                                                                |
+| `patternFlags`      | Optional  | Flags to use with the regular expression, in addition to the `gm` flags that are set by default.                                                                                                 | `i` (case insensitive)<br>`is` (case insensitive + '.' matches newline characters |
+| `foreground`        | Optional  | The color to use as foreground color for the matched pattern. Hex colors are preferred since they can be selected with the VS Code color picker but predefined VS Code color names work as well. | `yellow`, `#ff5588`                                                               |
+| `background`        | Optional  | The color to use as background color for the matched pattern.                                                                                                                                    | `yellow`, `#ff5588`                                                               |
+| `fontWeight`        | Optional  | Used to change the weight of the font.                                                                                                                                                           | `bold`                                                                            |
+| `fontStyle`         | Optional  | Used to change the style of the font.                                                                                                                                                            | `italic`                                                                          |
+| `border`            | Optional  | Can be used for adding a border around matched text.                                                                                                                                             | `2px solid yellow`                                                                |
+| `borderRadius`      | Optional  | Can be used together with the `border` setting to make the border corners rounded.                                                                                                               | `3px`                                                                             |
+| `letterSpacing`     | Optional  | Can be used to increase or decrease the horizontsl spacing between characters in the matched text.                                                                                               | `5px` <br> `-1px`                                                                 |
+| `overviewColor`     | Optional  | If set, this enables matched text to be indicated in the overview ruler to the right of the text editor window in Code.                                                                          | `yellow`, `#ff5588`                                                               |
+| `overviewRulerLane` | Optional  | If `overviewColor` is set, then this setting controls the placement of the marker in the ruler.                                                                                                  | `Left`, `Right`, `Center`, `Full`                                                 |
+| `textDecoration`    | Optional  | Used for adding additional CSS text decorations.                                                                                                                                                 | `red underline overline dotted`, `red wavy underline`                             |
+
 
 
 **Note**: Both `foreground` and `background` are optional individually but *at least* one of them must be set for the custom pattern to be activated.
@@ -188,15 +157,46 @@ The patterns are defined in the user settings like in this example:
 
 To make VS Code treat other file extensions than the default `.log` as log files, add the following to the user settings:
 
-```JSON
+```json
 "files.associations": {
     "*.log.*": "log"
 },
 ```
 The example above associates extensions such as `.log.1` and `.log.2` with the Log File highlighter extension.
 
+### Case sensitivity
 
-[sample]: https://raw.githubusercontent.com/emilast/vscode-logfile-highlighter/master/content/sample.png
+The custom patterns are case sensitive by default. To make a pattern case-insensitive, set **patternFlags** to "i".
+
+Here's and example that matches both "todo" and "TODO":
+
+```json
+{
+    "pattern": "todo",
+    "patternFlags": "i",
+    "foreground": "#ff0000"
+},
+```
+
+### Multiline custom patterns
+
+The custom patterns can be multiline patterns. This can be useful for example when you want to highlight SQL statements, stack traces, etc. To match multiple lines, use the `s` flag in the **patternFlags** setting. This flag makes the `.` character match newline characters as well. Here is an example that highlights SQL statements:
+
+```json
+{
+    "pattern": "SELECT.*?FROM.*?WHERE.*?$",
+    "patternFlags": "si",
+    "foreground": "#eeff05",
+},
+```
+
+Notes:
+* The **patternFlags** setting is used to set the `s` flag which makes the `.` character match newline characters (and `i` for case insensitivity).
+* The **pattern** uses `?` after the `*` quantifier to make the match **non-greedy**. This is important to make the pattern match only one SQL statement at a time and not extend to the next `WHERE` clause of a later log entry.
+
+Result:
+
+![alt text](content/MultilinePattern.png)
 
 ### Syntax highlighting of large files
 
@@ -207,3 +207,5 @@ VS Code disables color highlighting for large files by default. This can be disa
     "editor.largeFileOptimizations": false,
 }
 ```
+
+[sample]: https://raw.githubusercontent.com/emilast/vscode-logfile-highlighter/master/content/sample.png

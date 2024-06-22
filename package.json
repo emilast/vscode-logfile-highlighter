@@ -74,6 +74,11 @@
 								"title": "The pattern that will be highlighted.",
 								"description": "Either the exact string to highlight, or a regular expression pattern."
 							},
+							"patternFlags": {
+								"type": "string",
+								"title": "Optional extra RegExp flags",
+								"description": "By default, the 'gm' flags are automatically used for all custom pattern in Log File Highlighter. This setting allows you to extend those flags. Example: 'i' for case-insensitive matching or 's' for making '.' match newline characters."
+							},
 							"foreground": {
 								"format": "color-hex",
 								"type": "string",

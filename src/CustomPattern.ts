@@ -10,7 +10,7 @@ export class CustomPattern {
     public readonly decoration: vscode.TextEditorDecorationType;
 
     public constructor(
-        pattern: string, foreground: string, background: string, fontWeight: string,
+        pattern: string, patternFlags: string, foreground: string, background: string, fontWeight: string,
         fontStyle: string, border: string, borderRadius: string, borderSpacing: string,
         letterSpacing: string, overviewRulerColor: string, overviewRulerLane: vscode.OverviewRulerLane,
         textDecoration: string)
@@ -18,7 +18,7 @@ export class CustomPattern {
         this.pattern = pattern;
         this.foreground = foreground;
         this.background = background;
-        this.regexes = this.createRegex(pattern);
+        this.regexes = this.createRegex(pattern, patternFlags);
         this.decoration = vscode.window.createTextEditorDecorationType({
             backgroundColor: this.background,
             color: this.foreground,
@@ -38,11 +38,11 @@ export class CustomPattern {
         this.decoration.dispose();
     }
 
-    private createRegex(pattern: string): RegExp[] {
+    private createRegex(pattern: string, patternFlags: string): RegExp[] {
         const result: RegExp[] = [];
 
         try {
-            result.push(new RegExp(pattern, 'gm'));
+            result.push(new RegExp(pattern, 'gm' + patternFlags));
         } catch (err) {
             vscode.window.showErrorMessage('Regex of custom log level is invalid. Error: ' + err);
         }
