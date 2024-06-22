@@ -67,6 +67,7 @@ If you select multiple lines of a `.log` file, some simple timestamp analysis is
 
 * A status bar item is displayed that indicates how many days, hours, minutes, seconds and milliseconds that is selected.
 * A progress bar is also drawn under the timestamps in the selection to give a visual representation of each line's point in time within the selection.
+* Press <kbd>Escape</kbd> to clear the progress bars.
 
 ![Time Duration Sample](content/TimeAnalysis.gif)  
 

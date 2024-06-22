@@ -1,5 +1,11 @@
 # Change Log
 
+### 3.0.3 - 22 June 2024
+
+**Bug fixes**
+
+* Time progress indicator: Add condition to the Escape key binding so it only applies when there are rendered progress indicators. This should fix issue #588 where the key event is not propagated to the Vim VS Code extension, even when no log file operation is performed.
+
 ### 3.0.2 - 21 June 2024
 
 **Bug fixes**
