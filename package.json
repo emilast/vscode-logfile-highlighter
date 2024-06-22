@@ -54,7 +54,7 @@
 			{
 				"command": "logFileHighlighter.removeProgressIndicatorDecorations",
 				"key": "Escape",
-				"when": "editorTextFocus && editorLangId == log"
+				"when": "editorTextFocus && editorLangId == log && logFileHighlighterIsShowingProgressIndicators"
 			}
 		],
 		"configuration": {

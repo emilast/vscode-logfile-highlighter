@@ -3,6 +3,8 @@ import { TimePeriodCalculator } from './TimePeriodCalculator';
 import { SelectionHelper } from './SelectionHelper';
 import moment = require('moment');
 
+const ContextNameIsShowingProgressIndicators = 'logFileHighlighterIsShowingProgressIndicators';
+
 export class ProgressIndicator {
 
     private decoration: vscode.TextEditorDecorationType;
@@ -67,6 +69,8 @@ export class ProgressIndicator {
                 }
 
                 editor.setDecorations(this.decoration, ranges);
+
+                vscode.commands.executeCommand('setContext', ContextNameIsShowingProgressIndicators, true);
             }
         }
     }
@@ -77,5 +81,7 @@ export class ProgressIndicator {
                 editor.setDecorations(this.decoration, []);
             });
         }
+
+        vscode.commands.executeCommand('setContext', ContextNameIsShowingProgressIndicators, false);
     }
 }

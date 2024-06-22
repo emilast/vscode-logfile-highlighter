@@ -74,6 +74,7 @@ export class ProgressIndicatorController {
         }
     }
 
+    /// Decorates the lines in the specified range of the given text editor.
     private decorateLines(event: vscode.TextEditorSelectionChangeEvent) {
         if (event.textEditor === vscode.window.activeTextEditor) {
             for (const selection of event.selections) {
