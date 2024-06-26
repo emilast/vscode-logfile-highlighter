@@ -19,8 +19,19 @@ export class ProgressIndicatorController {
 
     public removeDecorations() {
         this._progressIndicator.removeAllDecorations();
+        this.clearEditorSelections();
     }
     
+    private clearEditorSelections() {
+        const editor = vscode.window.activeTextEditor;
+        if (editor) {
+            // Get the current active cursor position
+            const currentPosition = editor.selection.active;
+            // Clear selections by setting the selection to the current cursor position
+            editor.selection = new vscode.Selection(currentPosition, currentPosition);
+        }
+    }
+
     private getConfiguration(): { enableProgressIndicator: boolean, progressIndicatorUnderlineColor: string } {
         const config = vscode.workspace.getConfiguration('logFileHighlighter');
 
