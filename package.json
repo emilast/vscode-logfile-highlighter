@@ -149,6 +149,11 @@
 					"type": "string",
 					"default": "#00ff1f8f",
 					"description": "The color to use for drawing the timestamp progress indicator underline"
+				},
+				"logFileHighlighter.enableTailMode": {
+					"type": "boolean",
+					"default": true,
+					"description": "Enable or disable the tail mode in log files. Scroll to the end of a file to activate it. The status bar will show 'Log File Tail Mode' when it is active."
 				}
 			}
 		}
