@@ -7,7 +7,14 @@
 ## Description
 A Visual Studio Code extension for adding color highlighting to log files. It is based on standard conventions for log4net log files but it's general enough to be useful for other variations of log files as well. The colors are customizable but by default the current color theme's colors are used.
 
-**Note**
+### Open Source
+This extension is open source under the MIT License and completely free but if you like it and want to encourage further development, then you might want to consider supporting it using the link below:
+
+<a href="https://www.buymeacoffee.com/emilast" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" style="height: 60px !important;width: 217px !important;" ></a>
+
+But that's completely optional, of course 😊
+
+### Note
 An earlier version of the syntax highlighting definition from this extension was included into Visual Studio Code [version 1.20](https://code.visualstudio.com/updates/v1_20#_output-panel). If the default behavior of log files in VS Code is good enough for you, then you don't need this extension. However, if you want additional highlighting, customizable patterns and time duration calculation and visualization, then keep reading :-)
 
 ## Features
