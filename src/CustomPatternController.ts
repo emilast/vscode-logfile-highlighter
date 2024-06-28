@@ -2,9 +2,9 @@
 
 import * as vscode from 'vscode';
 import { CustomPatternDecorator } from './CustomPatternDecorator';
+import { Constants } from './Constants';
 
 export class CustomPatternController {
-    private readonly LOG_ID: string = 'log';
 
     private _disposable: vscode.Disposable;
     private _decorator: CustomPatternDecorator;
@@ -39,7 +39,7 @@ export class CustomPatternController {
     private onDidChangeConfiguration(): void {
         this._decorator.updateConfiguration();
         const logEditors = vscode.window.visibleTextEditors.filter((editor) => {
-            return editor.document.languageId === this.LOG_ID;
+            return editor.document.languageId === Constants.LOG_ID;
         });
 
         if (logEditors.length !== 0) {
@@ -48,14 +48,14 @@ export class CustomPatternController {
     }
 
     private onDidChangeTextDocument(changedEvent: vscode.TextDocumentChangeEvent) {
-        if (changedEvent.document.languageId === this.LOG_ID) {
+        if (changedEvent.document.languageId === Constants.LOG_ID) {
             this._decorator.decorateDocument(changedEvent);
         }
     }
 
     private onDidChangeVisibleTextEditors(editors: readonly vscode.TextEditor[]) {
         const logEditors = editors.filter((editor) => {
-            return editor.document.languageId === this.LOG_ID;
+            return editor.document.languageId === Constants.LOG_ID;
         });
 
         if (logEditors.length !== 0) {

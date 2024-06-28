@@ -1,6 +1,7 @@
 'use strict';
 
 import * as vscode from 'vscode';
+import { Constants } from './Constants';
 
 export class TailController {
 
@@ -74,7 +75,7 @@ export class TailController {
         const textEditor = vscode.window.activeTextEditor;
         const visibleRanges = vscode.window.activeTextEditor.visibleRanges
 
-        if (textEditor?.document.languageId === 'log') {
+        if (textEditor?.document.languageId === Constants.LOG_ID) {
             const lastLine = textEditor.document.lineCount - 1;
             const lastVisibleRange = visibleRanges[0].end.line;
 
