@@ -50,7 +50,7 @@ export class TimePeriodController {
         const doc = editor.document;
 
         // Only update status if an log file
-        if (doc.languageId === Constants.LOG_ID) {
+        if (doc.languageId === Constants.LogLanguageId) {
 
             this._statusBarItem.text = '';
 

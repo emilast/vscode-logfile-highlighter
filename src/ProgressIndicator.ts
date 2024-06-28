@@ -80,7 +80,7 @@ export class ProgressIndicator {
                 editor.setDecorations(this._decoration, []);
             });
         }
-    
+
         vscode.commands.executeCommand('setContext', Constants.ContextNameIsShowingProgressIndicators, false);
     }
 }
