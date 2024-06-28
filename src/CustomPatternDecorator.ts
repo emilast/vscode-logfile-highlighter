@@ -62,6 +62,7 @@ export class CustomPatternDecorator {
         }
     }
 
+    // As a reaction to a document change, decorate the changed parts with the configured custom patterns.
     public decorateDocument(changedEvent: vscode.TextDocumentChangeEvent): void {
         if (this._configPattern.length === 0 || changedEvent.contentChanges.length === 0) {
             return;
@@ -82,42 +83,47 @@ export class CustomPatternDecorator {
         const contentToEnd: string =
             doc.getText(new vscode.Range(startPos, doc.lineAt(doc.lineCount - 1).range.end));
 
-        for (const logLevel of this._configPattern) {
-            const patternCache = docCache.get(logLevel);
+        for (const pattern of this._configPattern) {
+            const patternCache = docCache.get(pattern);
 
             // Remove all ranges from the cache that occur after the changed range (change.range).
-            const logLevelRanges = patternCache.filter((range) => {
+            const patternRanges = patternCache.filter((range) => {
                 return range.end.isBefore(change.range.start);
             });
 
-            for (const regex of logLevel.regexes) {
+            for (const regex of pattern.regexes) {
                 let matches = regex.exec(contentToEnd);
 
                 while (matches) {
                     var { start, end } = this.getMatchPositions(doc, matches);
-                    logLevelRanges.push(new vscode.Range(start, end));
+                    // Adjust start and end positions to be relative to the whole document.
+                    start = new vscode.Position(start.line + startPos.line, start.character);
+                    end = new vscode.Position(end.line + startPos.line, end.character);
+
+                    patternRanges.push(new vscode.Range(start, end));
                     matches = regex.exec(contentToEnd);
                 }
             }
 
             // Update cache and set decorations.
-            docCache.set(logLevel, logLevelRanges);
-            editors[0].setDecorations(logLevel.decoration, logLevelRanges);
+            docCache.set(pattern, patternRanges);
+            editors[0].setDecorations(pattern.decoration, patternRanges);
         }
 
         this._cache.set(doc.uri, docCache);
     }
 
+    // Apply custom patterns on an array of open files.
     public decorateEditors(editors: vscode.TextEditor[], changes?: vscode.TextDocumentContentChangeEvent[]): void {
         if (editors.length >= 1) {
             for (const editor of editors) {
                 const content = editor.document.getText();
 
                 const docRanges = new Map<CustomPattern, vscode.Range[]>();
-                for (const logLevel of this._configPattern) {
+                for (const pattern of this._configPattern) {
                     const logLevelRanges = [];
 
-                    for (const regex of logLevel.regexes) {
+                    for (const regex of pattern.regexes) {
                         let matches = regex.exec(content);
 
                         while (matches) {
@@ -128,8 +134,8 @@ export class CustomPatternDecorator {
                     }
 
                     // Update cache and set decorations.
-                    editor.setDecorations(logLevel.decoration, logLevelRanges);
-                    docRanges.set(logLevel, logLevelRanges);
+                    editor.setDecorations(pattern.decoration, logLevelRanges);
+                    docRanges.set(pattern, logLevelRanges);
                 }
 
                 this._cache.set(editor.document.uri, docRanges);
