@@ -91,6 +91,11 @@
 								"title": "Background color",
 								"description": "The background color that will be used for highlighting."
 							},
+							"highlightEntireLine": {
+								"type": "boolean",
+								"title": "Highlight Entire Line",
+								"description": "If true, then the entire line is highlighted and not just the pattern."
+							},
 							"fontWeight": {
 								"type": "string",
 								"title": "CSS font weight",
