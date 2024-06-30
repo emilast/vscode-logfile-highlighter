@@ -21,7 +21,7 @@ export class ProgressIndicatorController {
         this._progressIndicator.removeAllDecorations();
         this.clearEditorSelections();
     }
-    
+
     private clearEditorSelections() {
         const editor = vscode.window.activeTextEditor;
         if (editor) {

@@ -8,6 +8,7 @@ import { ProgressIndicatorController } from './ProgressIndicatorController';
 import { SelectionHelper } from './SelectionHelper';
 import { TimePeriodCalculator } from './TimePeriodCalculator';
 import { TimePeriodController } from './TimePeriodController';
+import { TailController } from './TailController';
 
 // this method is called when the extension is activated
 export function activate(context: vscode.ExtensionContext) {
@@ -26,6 +27,9 @@ export function activate(context: vscode.ExtensionContext) {
     const progressIndicator = new ProgressIndicator(timeCalculator, selectionHelper);
     const progressIndicatorController = new ProgressIndicatorController(progressIndicator);
 
+    // tail log files
+    const tailController = new TailController();
+
     // register commands
     context.subscriptions.push(
         vscode.commands.registerCommand(
@@ -35,7 +39,7 @@ export function activate(context: vscode.ExtensionContext) {
             }));
 
     // Add to a list of disposables which are disposed when this extension is deactivated.
-    context.subscriptions.push(timeController, customPatternController, progressIndicatorController);
+    context.subscriptions.push(timeController, customPatternController, progressIndicatorController, tailController);
 }
 
 // this method is called when your extension is deactivated

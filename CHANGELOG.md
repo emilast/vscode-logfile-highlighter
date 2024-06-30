@@ -2,7 +2,15 @@
 
 **New feature**
 
+* There is now a new **tail mode** feature that is automatically activated by scrolling to the end of a log file. When active, a message will be shown in the status bar: `Log File Tail Mode`. To deactivate, simply scroll up. Fixes feature request #21.
+
+  To disable this feature altogether, set the `logFileHighlighter.enableTailMode` setting to `false`.
+
+* Also fixed multiple bugs with custom patterns that occurred when a log file was modified, either externally (new log lines being added at the end) or interactive editing of log files (which is an edge case for sure, as log files are generally not modified). The issue was out-of-sync pattern positions.
+
 ### 3.1.0 - 22 Juni 2024
+
+**New feature**
 
 * There is now a new option for modifying the behavior of custom patterns, the **patternFlags** setting. This setting allows for the use of regular expression flags such as "i" for case-insensitive matching or "s" for multiline matching. Fixes feature requests #87 and #276.
 

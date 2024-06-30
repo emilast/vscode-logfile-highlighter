@@ -45,6 +45,26 @@ If you select multiple lines of a `.log` file, some simple timestamp analysis is
 
 ![Time Duration Sample](content/TimeAnalysis.gif)  
 
+Settings
+
+* **enableProgressIndicator** can be used to disable the progress indicator feature. The default value is `true`. Set it to `false` to disable the feature.
+
+* **progressIndicatorUnderlineColor** can be used to set the color of the progress indicator. The default value is `#00ff1f8f`. Note the alpha channel value at the end of the color value (`8f`). This can be used to make the color semi-transparent for mixing with the background color.
+
+Example:
+```JSON
+"logFileHighlighter.enableProgressIndicator": true,
+"logFileHighlighter.progressIndicatorUnderlineColor": "#ffee00",
+```
+
+### Tail Mode
+
+The extension also supports a tail mode where the end of the log file is kept in view as new lines are added. To activate it, scroll to the end of the log file until a message is shown in the status bar: `Log File Tail Mode`
+
+To deactivate tail mode for the current file, scroll up again.
+
+This feature can be disabled by setting the `logFileHighlighter.enableTailMode` setting to `false`.
+
 ## Customization
 
 ### Customizing the colors
@@ -88,19 +108,6 @@ To override the color for one of these, use the `editor.tokenColorCustomizations
     ]
 }
 ```
-
-### Time Analysis settings
-
-* **enableProgressIndicator** can be used to disable the progress indicator feature. The default value is `true`. Set it to `false` to disable the feature.
-
-* **progressIndicatorUnderlineColor** can be used to set the color of the progress indicator. The default value is `#00ff1f8f`. Note the alpha channel value at the end of the color value (`8f`). This can be used to make the color semi-transparent for mixing with the background color.
-
-Example:
-```JSON
-"logFileHighlighter.enableProgressIndicator": true,
-"logFileHighlighter.progressIndicatorUnderlineColor": "#ffee00",
-```
-
 
 ### Defining custom highlighting patterns
 

@@ -3,6 +3,7 @@
 import * as vscode from 'vscode';
 import { TimePeriodCalculator } from './TimePeriodCalculator';
 import { SelectionHelper } from './SelectionHelper';
+import { Constants } from './Constants';
 
 export class TimePeriodController {
 
@@ -49,7 +50,7 @@ export class TimePeriodController {
         const doc = editor.document;
 
         // Only update status if an log file
-        if (doc.languageId === 'log') {
+        if (doc.languageId === Constants.LogLanguageId) {
 
             this._statusBarItem.text = '';
 
