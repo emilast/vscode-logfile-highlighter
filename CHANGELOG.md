@@ -1,18 +1,20 @@
 # Change Log
 
+### 3.2.0 - 30 June 2024
+
 **New features**
 
 * There is now a new **tail mode** feature that is automatically activated by scrolling to the end of a log file. When active, a message will be shown in the status bar: `Log File Tail Mode`. To deactivate, simply scroll up. Fixes feature request #21.
 
   To disable this feature altogether, set the `logFileHighlighter.enableTailMode` setting to `false`.
 
-* Custom patterns can now be set to highlight the entire line where a match is found. This is done by setting the `highlightEntireLine` setting to `true`. Fixes feature request #535.
+* Custom patterns can now be set to **highlight the entire line** where a match is found. This is done by setting the `highlightEntireLine` setting to `true`. Fixes feature request #535.
 
 **Bug fixes**
 
 * Also fixed multiple bugs with custom patterns that occurred when a log file was modified, either externally (new log lines being added at the end) or interactive editing of log files (which is an edge case for sure, as log files are generally not modified). The issue was out-of-sync pattern positions.
 
-### 3.1.0 - 22 Juni 2024
+### 3.1.0 - 22 June 2024
 
 **New feature**
 
