@@ -21,6 +21,7 @@ export class CustomPatternDecorator {
             'customPatterns') as {
                 pattern: string,
                 patternFlags: string,
+                highlightEntireLine: boolean,
                 foreground?: string,
                 background?: string,
                 fontWeight?: string,
@@ -52,7 +53,7 @@ export class CustomPatternDecorator {
                 )
                 && item.pattern !== undefined) {
                 var pattern = new CustomPattern(
-                    item.pattern, item.patternFlags ?? '', item.foreground, item.background,
+                    item.pattern, item.patternFlags ?? '', item.highlightEntireLine, item.foreground, item.background,
                     item.fontWeight, item.fontStyle, item.border, item.borderRadius,
                     item.borderSpacing, item.letterSpacing,
                     item.overviewColor, vscode.OverviewRulerLane[item.overviewRulerLane],

@@ -142,28 +142,28 @@ The patterns are defined in the user settings like in this example:
 ]
 ```
 
-| Setting             | Optional  | Description                                                                                                                                                                                      | Examples                                                                          |
-| ------------------- | --------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | --------------------------------------------------------------------------------- |
-| `pattern`           | Mandatory | The matching expression.This can be either a string constant or a JavaScript regular expression (remember to **escape special characters**).                                                     | `foobar`, `(TODO)`                                                                |
-| `patternFlags`      | Optional  | Flags to use with the regular expression, in addition to the `gm` flags that are set by default.                                                                                                 | `i` (case insensitive)<br>`is` (case insensitive + '.' matches newline characters |
-| `foreground`        | Optional  | The color to use as foreground color for the matched pattern. Hex colors are preferred since they can be selected with the VS Code color picker but predefined VS Code color names work as well. | `yellow`, `#ff5588`                                                               |
-| `background`        | Optional  | The color to use as background color for the matched pattern.                                                                                                                                    | `yellow`, `#ff5588`                                                               |
-| `fontWeight`        | Optional  | Used to change the weight of the font.                                                                                                                                                           | `bold`                                                                            |
-| `fontStyle`         | Optional  | Used to change the style of the font.                                                                                                                                                            | `italic`                                                                          |
-| `border`            | Optional  | Can be used for adding a border around matched text.                                                                                                                                             | `2px solid yellow`                                                                |
-| `borderRadius`      | Optional  | Can be used together with the `border` setting to make the border corners rounded.                                                                                                               | `3px`                                                                             |
-| `letterSpacing`     | Optional  | Can be used to increase or decrease the horizontsl spacing between characters in the matched text.                                                                                               | `5px` <br> `-1px`                                                                 |
-| `overviewColor`     | Optional  | If set, this enables matched text to be indicated in the overview ruler to the right of the text editor window in Code.                                                                          | `yellow`, `#ff5588`                                                               |
-| `overviewRulerLane` | Optional  | If `overviewColor` is set, then this setting controls the placement of the marker in the ruler.                                                                                                  | `Left`, `Right`, `Center`, `Full`                                                 |
-| `textDecoration`    | Optional  | Used for adding additional CSS text decorations.                                                                                                                                                 | `red underline overline dotted`, `red wavy underline`                             |
+| Setting               | Optional  | Description                                                                                                                                                                                      | Examples                                                                          |
+| --------------------- | --------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | --------------------------------------------------------------------------------- |
+| `pattern`             | Mandatory | The matching expression.This can be either a string constant or a JavaScript regular expression (remember to **escape special characters**).                                                     | `foobar`, `(TODO)`                                                                |
+| `patternFlags`        | Optional  | Flags to use with the regular expression, in addition to the `gm` flags that are set by default.                                                                                                 | `i` (case insensitive)<br>`is` (case insensitive + '.' matches newline characters |
+| `highlightEntireLine` | Optional  | If true, then the entire line where match is found is highlighted.                                                                                                                               | `false` (default), `true`                                                         |
+| `foreground`          | Optional  | The color to use as foreground color for the matched pattern. Hex colors are preferred since they can be selected with the VS Code color picker but predefined VS Code color names work as well. | `yellow`, `#ff5588`                                                               |
+| `background`          | Optional  | The color to use as background color for the matched pattern.                                                                                                                                    | `yellow`, `#ff5588`                                                               |
+| `fontWeight`          | Optional  | Used to change the weight of the font.                                                                                                                                                           | `bold`                                                                            |
+| `fontStyle`           | Optional  | Used to change the style of the font.                                                                                                                                                            | `italic`                                                                          |
+| `border`              | Optional  | Can be used for adding a border around matched text.                                                                                                                                             | `2px solid yellow`                                                                |
+| `borderRadius`        | Optional  | Can be used together with the `border` setting to make the border corners rounded.                                                                                                               | `3px`                                                                             |
+| `letterSpacing`       | Optional  | Can be used to increase or decrease the horizontsl spacing between characters in the matched text.                                                                                               | `5px` <br> `-1px`                                                                 |
+| `overviewColor`       | Optional  | If set, this enables matched text to be indicated in the overview ruler to the right of the text editor window in Code.                                                                          | `yellow`, `#ff5588`                                                               |
+| `overviewRulerLane`   | Optional  | If `overviewColor` is set, then this setting controls the placement of the marker in the ruler.                                                                                                  | `Left`, `Right`, `Center`, `Full`                                                 |
+| `textDecoration`      | Optional  | Used for adding additional CSS text decorations.                                                                                                                                                 | `red underline overline dotted`, `red wavy underline`                             |
 
 
 
 **Note**: Both `foreground` and `background` are optional individually but *at least* one of them must be set for the custom pattern to be activated.
 
-**Tip**: By only setting the `background` a custom pattern can be combined with the built-in patterns that control the foreground color. This is shown in the last pattern in the example above.
-
 ![Custom Pattern Sample](content/CustomPattern-Sample.gif)  
+
 
 ## Tips
 
@@ -178,7 +178,29 @@ To make VS Code treat other file extensions than the default `.log` as log files
 ```
 The example above associates extensions such as `.log.1` and `.log.2` with the Log File highlighter extension.
 
-### Case sensitivity
+### Custom pattern tips
+
+#### Multiple styles for the same pattern
+
+The same pattern can be used in multiple style configurations, which can be useful if you want to highlight the same pattern in different ways. Example:
+```json
+{
+    "pattern": "todo",
+    "patternFlags": "i",
+    "foreground": "#000000",
+    "background": "#7d8aff",
+},
+{
+    "pattern": "todo",
+    "patternFlags": "i",
+    "highlightEntireLine": true,
+    "background": "#7d8aff50",
+},
+```
+
+![Multiple Styles for the Same pattern](content/MultiplePatterns.png)  
+
+#### Case sensitivity
 
 The custom patterns are case sensitive by default. To make a pattern case-insensitive, set **patternFlags** to "i".
 
@@ -192,7 +214,7 @@ Here's and example that matches both "todo" and "TODO":
 },
 ```
 
-### Multiline custom patterns
+#### Multiline custom patterns
 
 The custom patterns can be multiline patterns. This can be useful for example when you want to highlight SQL statements, stack traces, etc. To match multiple lines, use the `s` flag in the **patternFlags** setting. This flag makes the `.` character match newline characters as well. Here is an example that highlights SQL statements:
 
