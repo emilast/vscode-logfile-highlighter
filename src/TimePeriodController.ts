@@ -12,7 +12,7 @@ export class TimePeriodController {
     private _disposable: vscode.Disposable;
     private _statusBarItem: vscode.StatusBarItem;
 
-    constructor(timeCalculator: TimePeriodCalculator, selectionHelper: SelectionHelper ) {
+    constructor(timeCalculator: TimePeriodCalculator, selectionHelper: SelectionHelper) {
         this._timeCalculator = timeCalculator;
         this._selectionHelper = selectionHelper;
 
@@ -61,7 +61,7 @@ export class TimePeriodController {
                 if (timePeriod !== undefined) {
 
                     // Update the status bar
-                    this._statusBarItem.text = this._timeCalculator.convertToDisplayString(timePeriod.duration);
+                    this._statusBarItem.text = this._timeCalculator.convertToDisplayString(timePeriod);
                     this._statusBarItem.show();
 
                 } else {

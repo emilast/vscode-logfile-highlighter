@@ -42,6 +42,9 @@ export class ProgressIndicator {
                 let timestampStartIndex = this._timeCalculator.getTimestampFromText(texts.endLine).matchIndex;
                 let timestampWidth = this._timeCalculator.getTimestampFromText(texts.endLine).original.length;
 
+                const totalPeriodDurationInMicroseconds = timePeriod.duration.asMilliseconds() * 1000 + timePeriod.durationMicroseconds;
+                const startTimeInMicroseconds = timePeriod.startTime.time.valueOf() * 1000 + timePeriod.startTime.microseconds;
+
                 // Iterate over all lines in the selection and decorate them according to their progress
                 // (i.e. how far they are from the start time of the selection to the end time of the selection)
                 let ranges: vscode.Range[] = [];
@@ -50,9 +53,8 @@ export class ProgressIndicator {
 
                     var timestamp = this._timeCalculator.getTimestampFromText(lineText);
                     if (timestamp) {
-
-                        var ts = moment(timestamp.iso);
-                        var progress = ts.diff(timePeriod.startTime) / timePeriod.duration.asMilliseconds();
+                        var timestampInMicroseconds = moment(timestamp.iso).valueOf() * 1000 + timestamp.microseconds;
+                        var progress = (timestampInMicroseconds - startTimeInMicroseconds) / totalPeriodDurationInMicroseconds;
 
                         // Max progress = length of timestamp
                         var decorationCharacterCount = Math.floor(timestampWidth * progress);

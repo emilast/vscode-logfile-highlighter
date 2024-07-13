@@ -2,6 +2,7 @@
 
 import * as moment from 'moment';
 import { TimePeriodCalculator } from '../../src/TimePeriodCalculator';
+import { TimePeriod } from '../../src/TimePeriod';
 
 describe('TimePeriodCalculator', () => {
     let testObject: TimePeriodCalculator;
@@ -111,7 +112,7 @@ describe('TimePeriodCalculator', () => {
             const expected = PREFIX + input.asMilliseconds() + 'ms';
 
             // Act
-            const result = testObject.convertToDisplayString(input);
+            const result = testObject.convertToDisplayString(new TimePeriod(undefined, undefined, input));
 
             // Assert
             expect(result).toBe(expected);
@@ -123,7 +124,7 @@ describe('TimePeriodCalculator', () => {
             const expected = PREFIX + input.asMilliseconds() + 'ms';
 
             // Act
-            const result = testObject.convertToDisplayString(input);
+            const result = testObject.convertToDisplayString(new TimePeriod(undefined, undefined, input));
 
             // Assert
             expect(result).toBe(expected);
@@ -136,7 +137,7 @@ describe('TimePeriodCalculator', () => {
                 + input.milliseconds() + 'ms';
 
             // Act
-            const result = testObject.convertToDisplayString(input);
+            const result = testObject.convertToDisplayString(new TimePeriod(undefined, undefined, input));
 
             // Assert
             expect(result).toBe(expected);
@@ -150,7 +151,7 @@ describe('TimePeriodCalculator', () => {
                 + input.milliseconds() + 'ms';
 
             // Act
-            const result = testObject.convertToDisplayString(input);
+            const result = testObject.convertToDisplayString(new TimePeriod(undefined, undefined, input));
 
             // Assert
             expect(result).toBe(expected);
@@ -165,7 +166,7 @@ describe('TimePeriodCalculator', () => {
                 + input.milliseconds() + 'ms';
 
             // Act
-            const result = testObject.convertToDisplayString(input);
+            const result = testObject.convertToDisplayString(new TimePeriod(undefined, undefined, input));
 
             // Assert
             expect(result).toBe(expected);
@@ -181,7 +182,7 @@ describe('TimePeriodCalculator', () => {
                 + input.milliseconds() + 'ms';
 
             // Act
-            const result = testObject.convertToDisplayString(input);
+            const result = testObject.convertToDisplayString(new TimePeriod(undefined, undefined, input));
 
             // Assert
             expect(result).toBe(expected);
