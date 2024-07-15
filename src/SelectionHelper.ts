@@ -1,7 +1,5 @@
 'use strict';
 import * as vscode from 'vscode';
-import { TimePeriod } from './TimePeriod';
-
 
 export class SelectionHelper {
     getFirstAndLastLines(editor: vscode.TextEditor, doc: vscode.TextDocument) {

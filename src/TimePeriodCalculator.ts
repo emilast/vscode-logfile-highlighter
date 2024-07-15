@@ -33,9 +33,12 @@ export class TimePeriodCalculator {
             text += selectedDuration.duration.milliseconds() + 'ms';
         }
         if (text !== '') {
-            text += ', ' + selectedDuration.durationMicroseconds + 'μs';
+            // In most cases the microseconds are 0, so we don't need to display them
+            if (selectedDuration.durationPartMicroseconds !== 0) {
+                text += ', ' + selectedDuration.durationPartMicroseconds + 'μs';
+            }
         } else {
-            text += selectedDuration.durationMicroseconds + 'μs';
+            text += selectedDuration.durationPartMicroseconds + 'μs';
         }
         text = 'Selected: ' + text;
 
@@ -43,7 +46,7 @@ export class TimePeriodCalculator {
     }
 
     public getTimestampFromText(text: string): { original: string, matchIndex: number, iso: string, microseconds: number } {
-        const clockPattern = '\\d{2}:\\d{2}(?::\\d{2}(?:[.,]\\d{3}(\\d{3})?)?)?(?:Z| ?[+-]\\d{2}:\\d{2})?\\b';
+        const clockPattern = '\\d{2}:\\d{2}(?::\\d{2}(?:[.,]\\d{3}(?<microseconds>\\d{3})?)?)?(?:Z| ?[+-]\\d{2}:\\d{2})?\\b';
 
         // ISO dates ("2016-08-23")
         const isoDatePattern = '\\d{4}-\\d{2}-\\d{2}(?:T|\\b)';
@@ -63,14 +66,12 @@ export class TimePeriodCalculator {
         const rankedPattern = [dateTimePattern, clockPattern, datesPattern];
 
         for (const item of rankedPattern) {
-            const timeRegEx = new RegExp(item);
-
             // Get the first match for both lines
+            const timeRegEx = new RegExp(item);
             const match = timeRegEx.exec(text);
 
-            const microsecondsMatch = match[2];
-
             if (match) {
+                const microsecondsMatch = match.groups?.microseconds;
                 let microseconds = 0;
 
                 if (microsecondsMatch) {
