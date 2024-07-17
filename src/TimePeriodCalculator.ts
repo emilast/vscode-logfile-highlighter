@@ -93,33 +93,11 @@ export class TimePeriodCalculator {
         let firstLineMatch = this.getTimestampFromText(firstLine);
         let lastLineMatch = this.getTimestampFromText(lastLine);
 
-        let duration: moment.Duration;
-        duration = undefined;
-
         if (firstLineMatch && lastLineMatch) {
-            const firstMoment = moment(firstLineMatch.iso);
-            const lastMoment = moment(lastLineMatch.iso);
-
-            if (firstMoment.isValid() && lastMoment.isValid()) {
-                // used for ISO Dates like '2018-09-29' and '2018-09-29 13:12:11.001'
-                duration = moment.duration(lastMoment.diff(firstMoment));
-            } else {
-                const firstDuration = moment.duration(firstLineMatch.iso);
-                const lastDuration = moment.duration(lastLineMatch.iso);
-
-                if (moment.isDuration(firstDuration) && moment.isDuration(lastDuration)) {
-                    // Used for non ISO dates like '13:12:11.001'
-                    duration = moment.duration(lastDuration.asMilliseconds() - firstDuration.asMilliseconds());
-                }
-            }
-
-            return new TimePeriod(
-                new TimeWithMicroseconds(firstMoment, firstLineMatch.microseconds),
-                new TimeWithMicroseconds(lastMoment, lastLineMatch.microseconds),
-                duration);
+            return new TimePeriod(firstLineMatch, lastLineMatch);
         }
 
-        return undefined
+        return undefined;
     }
 
     // Converts a given date string to an iso string.

@@ -259,110 +259,96 @@ describe('TimePeriodCalculator', () => {
 
     describe('convertToDisplayString', () => {
         const PREFIX = 'Selected: ';
+
         it('should only consist of "0μs".', () => {
             // Arrange
-            const input = moment.duration({ seconds: 0 });
-            const expected = PREFIX + input.asMilliseconds() + 'ms';
 
             // Act
             const result = testObject.convertToDisplayString(
                 new TimePeriod(
-                    new TimeWithMicroseconds(moment('2024-02-03 12:13:14'), 0),
-                    new TimeWithMicroseconds(moment('2024-02-03 12:13:14'), 0),
-                    input));
+                    {iso:'2024-02-03 12:13:14', microseconds: 0},
+                    {iso:'2024-02-03 12:13:14', microseconds: 0}));
 
             // Assert
             expect(result).toBe(PREFIX + '0μs');
         });
 
-        it('should only consist of "ms".', () => {
+        it('should only consist of "μs".', () => {
             // Arrange
-            const input = moment.duration({ seconds: 0.123 });
-            const expected = PREFIX + input.asMilliseconds() + 'ms';
 
             // Act
             const result = testObject.convertToDisplayString(
                 new TimePeriod(
-                    new TimeWithMicroseconds(moment('2024-02-03 12:13:14'), 0),
-                    new TimeWithMicroseconds(moment('2024-02-03 12:13:14'), 0),
-                    input));
+                    {iso:'2024-02-03 12:13:14', microseconds: 10},
+                    {iso:'2024-02-03 12:13:14', microseconds: 30}));
 
             // Assert
-            expect(result).toBe(expected);
+            expect(result).toBe(PREFIX + '20μs');
+        });
+
+        it('should only consist of "ms".', () => {
+            // Arrange
+
+            // Act
+            const result = testObject.convertToDisplayString(
+                new TimePeriod(
+                    {iso:'2024-02-03 12:13:14.000', microseconds: 0},
+                    {iso:'2024-02-03 12:13:14.123', microseconds: 0}));
+
+            // Assert
+            expect(result).toBe(PREFIX + '123ms');
         });
 
         it('should only consist of "s" and "ms".', () => {
             // Arrange
-            const input = moment.duration({ seconds: 6.123 });
-            const expected = PREFIX + input.seconds() + 's, '
-                + input.milliseconds() + 'ms';
 
             // Act
             const result = testObject.convertToDisplayString(
                 new TimePeriod(
-                    new TimeWithMicroseconds(moment('2024-02-03 12:13:14'), 0),
-                    new TimeWithMicroseconds(moment('2024-02-03 12:13:14'), 0),
-                    input));
+                    {iso:'2024-02-03 12:13:14.000', microseconds: 0},
+                    {iso:'2024-02-03 12:13:20.123', microseconds: 0}));
 
             // Assert
-            expect(result).toBe(expected);
+            expect(result).toBe(PREFIX + '6s, 123ms');
         });
 
         it('should only consist of "min", "s" and "ms".', () => {
             // Arrange
-            const input = moment.duration({ seconds: 6.123, minutes: 3 });
-            const expected = PREFIX + input.minutes() + 'min, '
-                + input.seconds() + 's, '
-                + input.milliseconds() + 'ms';
 
             // Act
             const result = testObject.convertToDisplayString(
                 new TimePeriod(
-                    new TimeWithMicroseconds(moment('2024-02-03 12:13:14'), 0),
-                    new TimeWithMicroseconds(moment('2024-02-03 12:13:14'), 0),
-                    input));
+                    {iso:'2024-02-03 12:13:14.000', microseconds: 0},
+                    {iso:'2024-02-03 12:16:20.123', microseconds: 0},));
 
             // Assert
-            expect(result).toBe(expected);
+            expect(result).toBe(PREFIX + '3min, 6s, 123ms');
         });
 
         it('should only consist of "h", "min", "s" and "ms".', () => {
             // Arrange
-            const input = moment.duration({ seconds: 6.123, minutes: 0, hours: 5 });
-            const expected = PREFIX + input.hours() + 'h, '
-                + input.minutes() + 'min, '
-                + input.seconds() + 's, '
-                + input.milliseconds() + 'ms';
 
             // Act
             const result = testObject.convertToDisplayString(
                 new TimePeriod(
-                    new TimeWithMicroseconds(moment('2024-02-03 12:13:14'), 0),
-                    new TimeWithMicroseconds(moment('2024-02-03 12:13:14'), 0),
-                    input));
+                    {iso:'2024-02-03 12:13:14.000', microseconds: 0},
+                    {iso:'2024-02-03 17:13:20.123', microseconds: 0}));
 
             // Assert
-            expect(result).toBe(expected);
+            expect(result).toBe(PREFIX + '5h, 0min, 6s, 123ms');
         });
 
         it('should consist of "d", "h", "min", "s" and "ms".', () => {
             // Arrange
-            const input = moment.duration({ seconds: 6.123, minutes: 0, hours: 5, days: 15, years: 2 });
-            const expected = PREFIX + Math.floor(input.asDays()) + 'd, '
-                + input.hours() + 'h, '
-                + input.minutes() + 'min, '
-                + input.seconds() + 's, '
-                + input.milliseconds() + 'ms';
 
             // Act
             const result = testObject.convertToDisplayString(
                 new TimePeriod(
-                    new TimeWithMicroseconds(moment('2024-02-03 12:13:14'), 0),
-                    new TimeWithMicroseconds(moment('2024-02-03 12:13:14'), 0),
-                    input));
+                    {iso:'2022-02-03 12:13:14', microseconds: 0},
+                    {iso:'2024-02-18 17:13:20', microseconds: 0}));
 
             // Assert
-            expect(result).toBe(expected);
+            expect(result).toBe(PREFIX + '745d, 5h, 0min, 6s, 0ms');
         });
     });
 });
