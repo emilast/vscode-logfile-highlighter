@@ -1,5 +1,6 @@
 'use strict';
 import * as moment from 'moment';
+import { TimeWithMicroseconds } from './TimeWithMicroseconds';
 
 export class TimePeriod {
     startTime: TimeWithMicroseconds;
@@ -13,37 +14,44 @@ export class TimePeriod {
         startTimeMatch: { iso: string, microseconds: number },
         endTimeMatch: { iso: string, microseconds: number }) {
 
-        this.startTime = new TimeWithMicroseconds(moment(startTimeMatch.iso), startTimeMatch.microseconds);
-        this.endTime = new TimeWithMicroseconds(moment(endTimeMatch.iso), endTimeMatch.microseconds);
-        this.duration = this.calculateDuration(startTimeMatch, endTimeMatch);
-
+        this.processStartAndEndTimes(startTimeMatch, endTimeMatch);
         this.adjustDurationWithMicroseconds();
     }
 
-    private calculateDuration(
-        startTime: { iso: string; microseconds: number; },
-        endTime: { iso: string; microseconds: number; })
-        : moment.Duration {
+    private processStartAndEndTimes(
+        startTimeMatch: { iso: string; microseconds: number; },
+        endTimeMatch: { iso: string; microseconds: number; }) {
 
-        let duration: moment.Duration;
+        const firstMoment = moment(startTimeMatch.iso);
+        const lastMoment = moment(endTimeMatch.iso);
 
-        const firstMoment = moment(startTime.iso);
-        const lastMoment = moment(endTime.iso);
+        // If not valid date times, clear startTime and endTime, in order to avoid strange bugs
+        if (firstMoment.isValid()) {
+            this.startTime = new TimeWithMicroseconds(moment(startTimeMatch.iso), startTimeMatch.microseconds);
+        } else {
+            this.startTime = new TimeWithMicroseconds(undefined, startTimeMatch.microseconds);
+        }
 
+        if (lastMoment.isValid()) {
+            this.endTime = new TimeWithMicroseconds(moment(endTimeMatch.iso), endTimeMatch.microseconds);
+        } else {
+            this.endTime = new TimeWithMicroseconds(undefined, endTimeMatch.microseconds);
+        }
+
+        // Calculate the duration
         if (firstMoment.isValid() && lastMoment.isValid()) {
             // used for ISO Dates like '2018-09-29' and '2018-09-29 13:12:11.001'
-            duration = moment.duration(lastMoment.diff(firstMoment));
+            this.duration = moment.duration(lastMoment.diff(firstMoment));
         } else {
             // Handle the case where only times are present (no dates) by treating them as durations
-            const firstDuration = moment.duration(startTime.iso);
-            const lastDuration = moment.duration(endTime.iso);
+            const firstDuration = moment.duration(startTimeMatch.iso);
+            const lastDuration = moment.duration(endTimeMatch.iso);
 
             if (moment.isDuration(firstDuration) && moment.isDuration(lastDuration)) {
                 // Used for non ISO dates like '13:12:11.001'
-                duration = moment.duration(lastDuration.asMilliseconds() - firstDuration.asMilliseconds());
+                this.duration = moment.duration(lastDuration.asMilliseconds() - firstDuration.asMilliseconds());
             }
         }
-        return duration;
     }
 
     private adjustDurationWithMicroseconds() {
@@ -58,20 +66,5 @@ export class TimePeriod {
 
     public getDurationAsMicroseconds(): number {
         return this.duration.asMilliseconds() * 1000 + this.durationPartMicroseconds;
-    }
-
-}
-
-export class TimeWithMicroseconds {
-    time: moment.Moment;
-    microseconds: number;
-
-    constructor(time: moment.Moment, microseconds: number | undefined) {
-        this.time = time;
-        this.microseconds = microseconds || 0;
-    }
-
-    public getTimeAsEpoch(): number {
-        return this.time.valueOf() * 1000 + this.microseconds;
     }
 }

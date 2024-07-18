@@ -1,5 +1,15 @@
 # Change Log
 
+**New features**
+
+* Added support for microsecond precision for timestamps.
+
+  Example timestamp: `2023-09-26 18:24:17.035169`
+
+  Before this change, only millisecond precision was supported, so the last three digits in the timestamp above was lost. This was caused by limited time precision support in Javascript and the new microsecond precision has required explicit handling in the extension to keep track of the number of microseconds.
+
+  Fixes #65 and #594.
+
 ### 3.2.0 - 30 June 2024
 
 **New features**

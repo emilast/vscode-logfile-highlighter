@@ -1,7 +1,7 @@
 'use strict';
 
 import * as moment from 'moment';
-import { TimePeriod, TimeWithMicroseconds } from './TimePeriod';
+import { TimePeriod } from './TimePeriod';
 
 export class TimePeriodCalculator {
 

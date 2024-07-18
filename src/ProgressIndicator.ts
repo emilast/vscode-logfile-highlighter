@@ -3,7 +3,7 @@ import { TimePeriodCalculator } from './TimePeriodCalculator';
 import { SelectionHelper } from './SelectionHelper';
 import moment = require('moment');
 import { Constants } from './Constants';
-import { TimeWithMicroseconds } from './TimePeriod';
+import { TimeWithMicroseconds } from './TimeWithMicroseconds';
 
 export class ProgressIndicator {
 
