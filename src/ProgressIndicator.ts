@@ -3,6 +3,7 @@ import { TimePeriodCalculator } from './TimePeriodCalculator';
 import { SelectionHelper } from './SelectionHelper';
 import moment = require('moment');
 import { Constants } from './Constants';
+import { TimeWithMicroseconds } from './TimeWithMicroseconds';
 
 export class ProgressIndicator {
 
@@ -42,6 +43,9 @@ export class ProgressIndicator {
                 let timestampStartIndex = this._timeCalculator.getTimestampFromText(texts.endLine).matchIndex;
                 let timestampWidth = this._timeCalculator.getTimestampFromText(texts.endLine).original.length;
 
+                const durationInMicroseconds = timePeriod.getDurationAsMicroseconds();
+                const startTimeAsEpoch = timePeriod.startTime.getTimeAsEpoch();
+
                 // Iterate over all lines in the selection and decorate them according to their progress
                 // (i.e. how far they are from the start time of the selection to the end time of the selection)
                 let ranges: vscode.Range[] = [];
@@ -50,9 +54,8 @@ export class ProgressIndicator {
 
                     var timestamp = this._timeCalculator.getTimestampFromText(lineText);
                     if (timestamp) {
-
-                        var ts = moment(timestamp.iso);
-                        var progress = ts.diff(timePeriod.startTime) / timePeriod.duration.asMilliseconds();
+                        let timestampWithMicroseconds = new TimeWithMicroseconds(moment(timestamp.iso), timestamp.microseconds);
+                        var progress = (timestampWithMicroseconds.getTimeAsEpoch() - startTimeAsEpoch) / durationInMicroseconds;
 
                         // Max progress = length of timestamp
                         var decorationCharacterCount = Math.floor(timestampWidth * progress);

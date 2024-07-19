@@ -6,40 +6,47 @@ import { TimePeriod } from './TimePeriod';
 export class TimePeriodCalculator {
 
     // Converts a given moment.Duration to a string that can be displayed.
-    public convertToDisplayString(selectedDuration: moment.Duration): string {
+    public convertToDisplayString(selectedDuration: TimePeriod): string {
         let text = '';
 
-        if (selectedDuration.asDays() >= 1) {
-            text += Math.floor(selectedDuration.asDays()) + 'd';
+        if (selectedDuration.duration.asDays() >= 1) {
+            text += Math.floor(selectedDuration.duration.asDays()) + 'd';
         }
         if (text !== '') {
-            text += ', ' + selectedDuration.hours() + 'h';
-        } else if (selectedDuration.hours() !== 0) {
-            text += selectedDuration.hours() + 'h';
+            text += ', ' + selectedDuration.duration.hours() + 'h';
+        } else if (selectedDuration.duration.hours() !== 0) {
+            text += selectedDuration.duration.hours() + 'h';
         }
         if (text !== '') {
-            text += ', ' + selectedDuration.minutes() + 'min';
-        } else if (selectedDuration.minutes() !== 0) {
-            text += selectedDuration.minutes() + 'min';
+            text += ', ' + selectedDuration.duration.minutes() + 'min';
+        } else if (selectedDuration.duration.minutes() !== 0) {
+            text += selectedDuration.duration.minutes() + 'min';
         }
         if (text !== '') {
-            text += ', ' + selectedDuration.seconds() + 's';
-        } else if (selectedDuration.seconds() !== 0) {
-            text += selectedDuration.seconds() + 's';
+            text += ', ' + selectedDuration.duration.seconds() + 's';
+        } else if (selectedDuration.duration.seconds() !== 0) {
+            text += selectedDuration.duration.seconds() + 's';
         }
         if (text !== '') {
-            text += ', ' + selectedDuration.milliseconds() + 'ms';
+            text += ', ' + selectedDuration.duration.milliseconds() + 'ms';
+        } else if (selectedDuration.duration.milliseconds() !== 0) {
+            text += selectedDuration.duration.milliseconds() + 'ms';
+        }
+        if (text !== '') {
+            // In most cases the microseconds are 0, so we don't need to display them
+            if (selectedDuration.durationPartMicroseconds !== 0) {
+                text += ', ' + selectedDuration.durationPartMicroseconds + 'μs';
+            }
         } else {
-            text += selectedDuration.milliseconds() + 'ms';
+            text += selectedDuration.durationPartMicroseconds + 'μs';
         }
-
         text = 'Selected: ' + text;
 
         return text;
     }
 
-    public getTimestampFromText(text: string) : { original: string, matchIndex: number, iso: string } {
-        const clockPattern = '\\d{2}:\\d{2}(?::\\d{2}(?:[.,]\\d{3,})?)?(?:Z| ?[+-]\\d{2}:\\d{2})?\\b';
+    public getTimestampFromText(text: string): { original: string, matchIndex: number, iso: string, microseconds: number } {
+        const clockPattern = '\\d{2}:\\d{2}(?::\\d{2}(?:[.,]\\d{3}(?<microseconds>\\d{3})?)?)?(?:Z| ?[+-]\\d{2}:\\d{2})?\\b';
 
         // ISO dates ("2016-08-23")
         const isoDatePattern = '\\d{4}-\\d{2}-\\d{2}(?:T|\\b)';
@@ -59,13 +66,23 @@ export class TimePeriodCalculator {
         const rankedPattern = [dateTimePattern, clockPattern, datesPattern];
 
         for (const item of rankedPattern) {
-            const timeRegEx = new RegExp(item);
-
             // Get the first match for both lines
+            const timeRegEx = new RegExp(item);
             const match = timeRegEx.exec(text);
 
             if (match) {
-                return { original: match[0], matchIndex: match.index, iso: this._convertToIso(match[0]) };
+                const microsecondsMatch = match.groups?.microseconds;
+                let microseconds = 0;
+
+                if (microsecondsMatch) {
+                    microseconds = parseInt(microsecondsMatch);
+                }
+                return {
+                    original: match[0],
+                    matchIndex: match.index,
+                    iso: this._convertToIso(match[0]),
+                    microseconds: microseconds
+                };
             }
         }
 
@@ -73,38 +90,14 @@ export class TimePeriodCalculator {
     }
 
     public getTimePeriod(firstLine: string, lastLine: string): TimePeriod {
-        let firstLineMatch = this.getTimestampFromText(firstLine).iso;
-        let lastLineMatch = this.getTimestampFromText(lastLine).iso;
-
-        let timePeriod: moment.Duration;
-        timePeriod = undefined;
+        let firstLineMatch = this.getTimestampFromText(firstLine);
+        let lastLineMatch = this.getTimestampFromText(lastLine);
 
         if (firstLineMatch && lastLineMatch) {
-            const firstMoment = moment(firstLineMatch);
-            const lastMoment = moment(lastLineMatch);
-        
-            if (firstMoment.isValid() && lastMoment.isValid()) {
-                // used for ISO Dates like '2018-09-29' and '2018-09-29 13:12:11.001'
-                timePeriod = moment.duration(lastMoment.diff(firstMoment));
-            } else {
-                const firstDuration = moment.duration(firstLineMatch);
-                const lastDuration = moment.duration(lastLineMatch);
-        
-                if (moment.isDuration(firstDuration) && moment.isDuration(lastDuration)) {
-                    // Used for non ISO dates like '13:12:11.001'
-                    timePeriod = moment.duration(lastDuration.asMilliseconds() - firstDuration.asMilliseconds());
-                }
-            }
-
-            return {
-                startTime: firstMoment,
-                endTime: lastMoment,
-                duration: timePeriod
-            };
-
+            return new TimePeriod(firstLineMatch, lastLineMatch);
         }
 
-        return undefined
+        return undefined;
     }
 
     // Converts a given date string to an iso string.
