@@ -179,7 +179,7 @@
 		"@types/node": "^20.14.11",
 		"@types/vscode": "^1.91.0",
 		"@vscode/test-electron": "^2.4.1",
-		"jasmine": "^5.0.2",
+		"jasmine": "^5.2.0",
 		"jasmine-core": "^5.2.0",
 		"minimist": "^1.2.8",
 		"tslint": "^6.1.3",
