@@ -1,5 +1,9 @@
 # Change Log
 
+### 3.3.1 - 17 August 2024
+
+* Bug fix for tail mode. It could throw an exception in some cases that was logged to the extension host. No visible problem but unnecessary nonetheless. Fixes #613.
+
 ### 3.3.0 - 19 July 2024
 
 **New feature**
