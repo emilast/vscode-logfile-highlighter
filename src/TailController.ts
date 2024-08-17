@@ -73,19 +73,21 @@ export class TailController {
     }
     private checkEndOfFileVisibilityInActiveEditor() {
         const textEditor = vscode.window.activeTextEditor;
-        const visibleRanges = vscode.window.activeTextEditor.visibleRanges
+        if (textEditor) {
+            const visibleRanges = textEditor.visibleRanges
 
-        if (visibleRanges && textEditor?.document.languageId === Constants.LogLanguageId) {
-            const lastLine = textEditor.document.lineCount - 1;
-            const lastVisibleRange = visibleRanges[0].end.line;
+            if (visibleRanges && textEditor?.document.languageId === Constants.LogLanguageId) {
+                const lastLine = textEditor.document.lineCount - 1;
+                const lastVisibleRange = visibleRanges[0].end.line;
 
-            if (lastVisibleRange >= lastLine) {
-                // The end of the file is visible
-                this._tailModeActive = true;
-                this._statusBarItem.text = 'Log File Tail Mode';
-                this._statusBarItem.show();
+                if (lastVisibleRange >= lastLine) {
+                    // The end of the file is visible
+                    this._tailModeActive = true;
+                    this._statusBarItem.text = 'Log File Tail Mode';
+                    this._statusBarItem.show();
 
-                return;
+                    return;
+                }
             }
         }
 
