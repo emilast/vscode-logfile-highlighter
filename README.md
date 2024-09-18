@@ -8,9 +8,11 @@
 A Visual Studio Code extension for adding color highlighting to log files. It is based on standard conventions for log4net log files but it's general enough to be useful for other variations of log files as well. The colors are customizable but by default the current color theme's colors are used.
 
 ### Open Source
-This extension is open source under the MIT License and completely free but if you like it and want to encourage further development, then you might want to consider supporting it using the link below:
+This extension is open source under the MIT License and completely free but if you like it and want to encourage further development, then you might want to consider supporting it using one of the links below:
 
-<a href="https://www.buymeacoffee.com/emilast" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" style="height: 60px !important;width: 217px !important;" ></a>
+[![](https://img.shields.io/static/v1?label=Sponsor&message=%E2%9D%A4&logo=GitHub&color=%23fe8e86)](https://github.com/sponsors/emilast)
+
+<a href="https://www.buymeacoffee.com/emilast" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" style="height: 30px !important;width: 108px !important;" ></a>
 
 But that's completely optional, of course 😊
 
