@@ -118,7 +118,10 @@ export class CustomPatternDecorator {
 
             // Update cache and set decorations.
             docCache.set(pattern, patternRanges);
-            editors[0].setDecorations(pattern.decoration, patternRanges);
+
+            if (editors.length > 0) {
+                editors[0].setDecorations(pattern.decoration, patternRanges);
+            }
         }
 
         this._cache.set(doc.uri, docCache);
