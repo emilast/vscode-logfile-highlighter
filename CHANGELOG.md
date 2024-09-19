@@ -1,5 +1,11 @@
 # Change Log
 
+### 3.3.3 - 19 September 2024
+
+* Added condition to guard a call to setDecorations, hopefully fixes #627.
+
+* Updated dependencies.
+
 ### 3.3.2 - 17 August 2024
 
 * Second bug fix for tail mode. The previous one seemingly was not enough... Fixes #613 again...
