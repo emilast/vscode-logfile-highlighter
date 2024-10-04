@@ -19,6 +19,13 @@
 		"vscode": "^1.93.0"
 	},
 	"publisher": "emilast",
+	"sponsor": {
+		"url": "https://github.com/sponsors/emilast"
+	},
+	"galleryBanner": {
+		"color": "#e7e0d7",
+		"theme": "light"
+	},
 	"extensionKind": [
 		"ui",
 		"workspace"
@@ -129,7 +136,7 @@
 							"overviewRulerLane": {
 								"type": "string",
 								"title": "Placement of the ruler marker",
-								"description": "Allows for configuring the placement of the ruler marker, if 'overviewColor' is set. Allowed dalues: Example: 'Left', 'Right', 'Center', 'Full'"
+								"description": "Allows for configuring the placement of the ruler marker, if 'overviewColor' is set. Allowed values: Example: 'Left', 'Right', 'Center', 'Full'"
 							},
 							"textDecoration": {
 								"type": "string",
