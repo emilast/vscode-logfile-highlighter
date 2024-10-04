@@ -1,5 +1,9 @@
 # Change Log
 
+### 3.3.4 - 4 October 2024
+
+* Maintenance release with updated dependencies.
+
 ### 3.3.3 - 19 September 2024
 
 * Added condition to guard a call to setDecorations, hopefully fixes #627.
