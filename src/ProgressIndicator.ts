@@ -4,16 +4,19 @@ import { SelectionHelper } from './SelectionHelper';
 import moment = require('moment');
 import { Constants } from './Constants';
 import { TimeWithMicroseconds } from './TimeWithMicroseconds';
+import { TimestampParser } from './TimestampParser';
 
 export class ProgressIndicator {
 
     private _decoration: vscode.TextEditorDecorationType;;
     private _timeCalculator: TimePeriodCalculator;
     private _selectionHelper: SelectionHelper;
+    private _timestampParser: TimestampParser;
 
-    constructor(timeCalculator: TimePeriodCalculator, selectionHelper: SelectionHelper) {
+    constructor(timeCalculator: TimePeriodCalculator, selectionHelper: SelectionHelper, timestampParser: TimestampParser) {
         this._timeCalculator = timeCalculator;
         this._selectionHelper = selectionHelper;
+        this._timestampParser = timestampParser;
     }
 
     public setUnderlineColor(color: string) {
@@ -40,8 +43,8 @@ export class ProgressIndicator {
 
             if (timePeriod !== undefined) {
 
-                let timestampStartIndex = this._timeCalculator.getTimestampFromText(texts.endLine).matchIndex;
-                let timestampWidth = this._timeCalculator.getTimestampFromText(texts.endLine).original.length;
+                let timestampStartIndex = this._timestampParser.getTimestampFromText(texts.endLine).matchIndex;
+                let timestampWidth = this._timestampParser.getTimestampFromText(texts.endLine).original.length;
 
                 const durationInMicroseconds = timePeriod.getDurationAsMicroseconds();
                 const startTimeAsEpoch = timePeriod.startTime.getTimeAsEpoch();
@@ -52,7 +55,7 @@ export class ProgressIndicator {
                 for (let line = startLine; line <= endLine; line++) {
                     var lineText = editor.document.lineAt(line).text;
 
-                    var timestamp = this._timeCalculator.getTimestampFromText(lineText);
+                    var timestamp = this._timestampParser.getTimestampFromText(lineText);
                     if (timestamp) {
                         let timestampWithMicroseconds = new TimeWithMicroseconds(moment(timestamp.iso), timestamp.microseconds);
                         var progress = (timestampWithMicroseconds.getTimeAsEpoch() - startTimeAsEpoch) / durationInMicroseconds;

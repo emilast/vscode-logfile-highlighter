@@ -9,14 +9,17 @@ import { SelectionHelper } from './SelectionHelper';
 import { TimePeriodCalculator } from './TimePeriodCalculator';
 import { TimePeriodController } from './TimePeriodController';
 import { TailController } from './TailController';
+import { TimestampParser } from './TimestampParser';
 
 // this method is called when the extension is activated
 export function activate(context: vscode.ExtensionContext) {
 
     const selectionHelper = new SelectionHelper();
 
+    var timestampParser = new TimestampParser()
+
     // create a new time calculator and controller
-    const timeCalculator = new TimePeriodCalculator();
+    const timeCalculator = new TimePeriodCalculator(timestampParser);
     const timeController = new TimePeriodController(timeCalculator, selectionHelper);
 
     // create log level colorizer and -controller
@@ -24,7 +27,7 @@ export function activate(context: vscode.ExtensionContext) {
     const customPatternController = new CustomPatternController(customPatternDecorator);
 
     // create progress indicator and -controller
-    const progressIndicator = new ProgressIndicator(timeCalculator, selectionHelper);
+    const progressIndicator = new ProgressIndicator(timeCalculator, selectionHelper, timestampParser);
     const progressIndicatorController = new ProgressIndicatorController(progressIndicator);
 
     // tail log files
