@@ -1,23 +1,28 @@
 'use strict';
 
-import jasmine = require('jasmine');
+import Jasmine = require('jasmine');
+import JasmineConsoleReporter = require('jasmine-console-reporter');
+
 import * as path from 'path';
 import * as util from 'util';
 
 class TestRunner {
-    public  run(configPath: string, clb: (error: Error) => void): void {
-        const runner = new jasmine(null);
-        runner.projectBaseDir = path.dirname(configPath);
-        runner.configureDefaultReporter({
-            print() {
-                const line = util.format.apply(util.format, arguments);
-                if (line !== '\n') {
-                    console.log(line);
-                }
-            }
+    
+    public run(configPath: string, clb: (error: Error) => void): void {
+        const jasmine = new Jasmine();
+        jasmine.loadConfigFile(configPath);
+
+        const reporter = new JasmineConsoleReporter({
+            colors: 1,           // (0|false)|(1|true)|2 
+            cleanStack: 1,       // (0|false)|(1|true)|2|3 
+            verbosity: 4,        // (0|false)|1|2|(3|true)|4|Object 
+            listStyle: 'indent', // "flat"|"indent" 
+            activity: false
         });
-        runner.loadConfigFile(configPath);
-        runner.execute();
+
+        jasmine.addReporter(reporter);
+
+        jasmine.execute();
     }
 }
 
@@ -43,4 +48,5 @@ if (process.argv.indexOf('-c') === -1) {
         }
     });
 }
-export = TestRunner; 
+
+export = TestRunner;
