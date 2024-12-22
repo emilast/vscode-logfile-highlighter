@@ -22,24 +22,28 @@ export class TimePeriod {
         startTimeMatch: { iso: string; microseconds: number; },
         endTimeMatch: { iso: string; microseconds: number; }) {
 
-        const firstMoment = moment(startTimeMatch.iso);
-        const lastMoment = moment(endTimeMatch.iso);
-
+        // Full dates contain a year part, i.e. 4 digits in a row
+        var startIsFullDate = /\b\d{4}\b/.test(startTimeMatch.iso);
+        var endIsFullDate = /\b\d{4}\b/.test(endTimeMatch.iso);
+        
         // If not valid date times, clear startTime and endTime, in order to avoid strange bugs
-        if (firstMoment.isValid()) {
+        if (startIsFullDate) {
             this.startTime = new TimeWithMicroseconds(moment(startTimeMatch.iso), startTimeMatch.microseconds);
         } else {
             this.startTime = new TimeWithMicroseconds(undefined, startTimeMatch.microseconds);
         }
 
-        if (lastMoment.isValid()) {
+        if (endIsFullDate) {
             this.endTime = new TimeWithMicroseconds(moment(endTimeMatch.iso), endTimeMatch.microseconds);
         } else {
             this.endTime = new TimeWithMicroseconds(undefined, endTimeMatch.microseconds);
         }
 
         // Calculate the duration
-        if (firstMoment.isValid() && lastMoment.isValid()) {
+        if (startIsFullDate && endIsFullDate) {
+            const firstMoment = moment(startTimeMatch.iso);
+            const lastMoment = moment(endTimeMatch.iso);
+
             // used for ISO Dates like '2018-09-29' and '2018-09-29 13:12:11.001'
             this.duration = moment.duration(lastMoment.diff(firstMoment));
         } else {

@@ -107,7 +107,7 @@ describe('TimestampParser', () => {
             expect(result.microseconds).toBe(0);
         });
 
-        it('gets the correct timestamp from "DD/MM/YYY hh:mm:ss,sss".', () => {
+        it('gets the correct timestamp from "DD/MM/YYYY hh:mm:ss,sss".', () => {
             // Arrange
             const text = '28/02/2020 16:51:29,001 first line';
 
@@ -121,7 +121,7 @@ describe('TimestampParser', () => {
             expect(result.microseconds).toBe(0);
         });
 
-        it('gets the correct timestamp from "DD/MM/YYY hh:mm:ss,ssssss".', () => {
+        it('gets the correct timestamp from "DD/MM/YYYY hh:mm:ss,ssssss".', () => {
             // Arrange
             const text = '28/02/2020 16:51:29,001234 first line';
 
