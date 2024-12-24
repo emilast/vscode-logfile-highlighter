@@ -1,10 +1,11 @@
 'use strict';
 
+import moment = require("moment");
+
 export class TimestampParser {
     // Extracts a timestamp from the given text.
     // This method uses multiple regular expressions to identify and extract date and time patterns from the input text.
     // It supports various formats including ISO dates, culture-specific dates, and times with optional milliseconds and timezones.
-    // The returned string is a parsable ISO date string.
     public getTimestampFromText(text: string): ParsedTimestamp {
         // Pattern to match time in HH:MM or HHMM format, with optional seconds, milliseconds, and timezone 
         const clockPattern = '\\d{2}:\\d{2}(?::\\d{2}(?:[.,]\\d{3}(?<microseconds>\\d{3})?)?)?(?:Z| ?[+-]\\d{2}:\\d{2})?\\b';
@@ -40,10 +41,16 @@ export class TimestampParser {
                 if (microsecondsMatch) {
                     microseconds = parseInt(microsecondsMatch);
                 }
+                const matchedString = match[0];
+
+                const normalizedTimestamp = this._convertToIso(matchedString);
+                const containsDate = /\b\d{4}\b/.test(normalizedTimestamp);
+
                 return {
                     original: match[0],
                     matchIndex: match.index,
-                    iso: this._convertToIso(match[0]),
+                    moment: containsDate ? moment(normalizedTimestamp) : undefined,
+                    duration: !containsDate ? moment.duration(normalizedTimestamp) : undefined,
                     microseconds: microseconds
                 } as ParsedTimestamp;
             }
@@ -83,11 +90,16 @@ export class ParsedTimestamp {
      * The index of the match in the input string.
      */
     matchIndex: number;
-    
+
     /**
-     * The matched string converted to an ISO date string, interpretable by momentjs.
+     * The parsed timestamp, if it was a full date. If not, then the 'duration' property is set instead.
      */
-    iso: string;
+    moment?: moment.Moment;
+
+    /**
+     * The parsed duration, if the timestamp did not contain a date. If it did, then the 'moment' property is set instead.
+     */
+    duration?: moment.Duration;
 
     /**
      * The microseconds part of the timestamp.

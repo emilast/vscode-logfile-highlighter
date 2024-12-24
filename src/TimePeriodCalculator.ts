@@ -54,8 +54,8 @@ export class TimePeriodCalculator {
         let firstLineMatch = this._timestampParser.getTimestampFromText(firstLine);
         let lastLineMatch = this._timestampParser.getTimestampFromText(lastLine);
 
-        console.log('firstLineMatch: ', firstLineMatch);
-        console.log('lastLineMatch: ', lastLineMatch);
+        // console.log('firstLineMatch: ', firstLineMatch);
+        // console.log('lastLineMatch: ', lastLineMatch);
 
         if (firstLineMatch && lastLineMatch) {
             return new TimePeriod(firstLineMatch, lastLineMatch);

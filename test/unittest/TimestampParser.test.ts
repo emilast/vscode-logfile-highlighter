@@ -1,5 +1,6 @@
 'use strict';
 
+import moment = require('moment');
 import { TimestampParser } from '../../src/TimestampParser';
 
 describe('TimestampParser', () => {
@@ -17,7 +18,8 @@ describe('TimestampParser', () => {
             const result = testObject.getTimestampFromText(text);
 
             // Assert
-            expect(result.iso).toBe('2024-01-23');
+            expect(result.moment).toEqual(moment('2024-01-23'));
+            expect(result.duration).toBeUndefined();
             expect(result.matchIndex).toBe(0);
             expect(result.original).toBe('2024-01-23');
             expect(result.microseconds).toBe(0);
@@ -31,7 +33,8 @@ describe('TimestampParser', () => {
             const result = testObject.getTimestampFromText(text);
 
             // Assert
-            expect(result.iso).toBe('2024-01-23 10:38');
+            expect(result.moment).toEqual(moment('2024-01-23 10:38'));
+            expect(result.duration).toBeUndefined();
             expect(result.matchIndex).toBe(0);
             expect(result.original).toBe('2024-01-23 10:38');
             expect(result.microseconds).toBe(0);
@@ -45,7 +48,8 @@ describe('TimestampParser', () => {
             const result = testObject.getTimestampFromText(text);
 
             // Assert
-            expect(result.iso).toBe('10:11:12.100123');
+            expect(result.moment).toBeUndefined();
+            expect(result.duration).toEqual(moment.duration('10:11:12.100123'));
             expect(result.matchIndex).toBe(0);
             expect(result.original).toBe('10:11:12.100123');
             expect(result.microseconds).toBe(123);
@@ -59,7 +63,8 @@ describe('TimestampParser', () => {
             const result = testObject.getTimestampFromText(text);
 
             // Assert
-            expect(result.iso).toBe('2024-01-23 10:11:12.100123');
+            expect(result.moment).toEqual(moment('2024-01-23 10:11:12.100123'));
+            expect(result.duration).toBeUndefined();
             expect(result.matchIndex).toBe(0);
             expect(result.original).toBe('2024-01-23 10:11:12.100123');
             expect(result.microseconds).toBe(123);
@@ -73,7 +78,8 @@ describe('TimestampParser', () => {
             const result = testObject.getTimestampFromText(text);
 
             // Assert
-            expect(result.iso).toBe('2020-02-28');
+            expect(result.moment).toEqual(moment('2020-02-28'));
+            expect(result.duration).toBeUndefined();
             expect(result.matchIndex).toBe(0);
             expect(result.original).toBe('28.02.2020');
             expect(result.microseconds).toBe(0);
@@ -87,7 +93,8 @@ describe('TimestampParser', () => {
             const result = testObject.getTimestampFromText(text);
 
             // Assert
-            expect(result.iso).toBe('2020-02-28 16:51');
+            expect(result.moment).toEqual(moment('2020-02-28 16:51'));
+            expect(result.duration).toBeUndefined();
             expect(result.matchIndex).toBe(0);
             expect(result.original).toBe('28.02.2020 16:51');
             expect(result.microseconds).toBe(0);
@@ -101,7 +108,8 @@ describe('TimestampParser', () => {
             const result = testObject.getTimestampFromText(text);
 
             // Assert
-            expect(result.iso).toBe('2018-01-27T10:38:28.935Z');
+            expect(result.moment).toEqual(moment('2018-01-27T10:38:28.935Z'));
+            expect(result.duration).toBeUndefined();
             expect(result.matchIndex).toBe(0);
             expect(result.original).toBe('2018-01-27T10:38:28.935Z');
             expect(result.microseconds).toBe(0);
@@ -115,7 +123,8 @@ describe('TimestampParser', () => {
             const result = testObject.getTimestampFromText(text);
 
             // Assert
-            expect(result.iso).toBe('2020-02-28 16:51:29.001');
+            expect(result.moment).toEqual(moment('2020-02-28 16:51:29.001'));
+            expect(result.duration).toBeUndefined();
             expect(result.matchIndex).toBe(0);
             expect(result.original).toBe('28/02/2020 16:51:29,001');
             expect(result.microseconds).toBe(0);
@@ -129,7 +138,8 @@ describe('TimestampParser', () => {
             const result = testObject.getTimestampFromText(text);
 
             // Assert
-            expect(result.iso).toBe('2020-02-28 16:51:29.001234');
+            expect(result.moment).toEqual(moment('2020-02-28 16:51:29.001234'));
+            expect(result.duration).toBeUndefined();
             expect(result.matchIndex).toBe(0);
             expect(result.original).toBe('28/02/2020 16:51:29,001234');
             expect(result.microseconds).toBe(234);
@@ -143,7 +153,8 @@ describe('TimestampParser', () => {
             const result = testObject.getTimestampFromText(text);
 
             // Assert
-            expect(result.iso).toBe('2024-01-23');
+            expect(result.moment).toEqual(moment('2024-01-23'));
+            expect(result.duration).toBeUndefined();
             expect(result.matchIndex).toBe(4);
             expect(result.original).toBe('2024-01-23');
             expect(result.microseconds).toBe(0);

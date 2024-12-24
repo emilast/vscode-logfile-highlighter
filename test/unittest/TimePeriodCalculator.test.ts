@@ -115,8 +115,8 @@ describe('TimePeriodCalculator', () => {
             // Act
             const result = testObject.convertToDisplayString(
                 new TimePeriod(
-                    { iso: '2024-02-03 12:13:14', microseconds: 0 },
-                    { iso: '2024-02-03 12:13:14', microseconds: 0 }));
+                    { moment: moment('2024-02-03 12:13:14'), microseconds: 0, matchIndex: 0, original: '2024-02-03 12:13:14' },
+                    { moment: moment('2024-02-03 12:13:14'), microseconds: 0, matchIndex: 0, original: '2024-02-03 12:13:14' }));
 
             // Assert
             expect(result).toBe(PREFIX + '0μs');
@@ -128,8 +128,8 @@ describe('TimePeriodCalculator', () => {
             // Act
             const result = testObject.convertToDisplayString(
                 new TimePeriod(
-                    { iso: '2024-02-03 12:13:14', microseconds: 10 },
-                    { iso: '2024-02-03 12:13:14', microseconds: 30 }));
+                    { moment: moment('2024-02-03 12:13:14'), microseconds: 10, matchIndex: 0, original: '2024-02-03 12:13:14' },
+                    { moment: moment('2024-02-03 12:13:14'), microseconds: 30, matchIndex: 0, original: '2024-02-03 12:13:14' }));
 
             // Assert
             expect(result).toBe(PREFIX + '20μs');
@@ -141,8 +141,8 @@ describe('TimePeriodCalculator', () => {
             // Act
             const result = testObject.convertToDisplayString(
                 new TimePeriod(
-                    { iso: '2024-02-03 12:13:14.000', microseconds: 0 },
-                    { iso: '2024-02-03 12:13:14.123', microseconds: 0 }));
+                    { moment: moment('2024-02-03 12:13:14.000'), microseconds: 0, matchIndex: 0, original: '2024-02-03 12:13:14.000' },
+                    { moment: moment('2024-02-03 12:13:14.123'), microseconds: 0, matchIndex: 0, original: '2024-02-03 12:13:14.123' }));
 
             // Assert
             expect(result).toBe(PREFIX + '123ms');
@@ -154,8 +154,8 @@ describe('TimePeriodCalculator', () => {
             // Act
             const result = testObject.convertToDisplayString(
                 new TimePeriod(
-                    { iso: '2024-02-03 12:13:14.000', microseconds: 0 },
-                    { iso: '2024-02-03 12:13:20.123', microseconds: 0 }));
+                    { moment: moment('2024-02-03 12:13:14.000'), microseconds: 0, matchIndex: 0, original: '2024-02-03 12:13:14.000' },
+                    { moment: moment('2024-02-03 12:13:20.123'), microseconds: 0, matchIndex: 0, original: '2024-02-03 12:13:20.123' }));
 
             // Assert
             expect(result).toBe(PREFIX + '6s, 123ms');
@@ -167,8 +167,8 @@ describe('TimePeriodCalculator', () => {
             // Act
             const result = testObject.convertToDisplayString(
                 new TimePeriod(
-                    { iso: '2024-02-03 12:13:14.000', microseconds: 0 },
-                    { iso: '2024-02-03 12:16:20.123', microseconds: 0 },));
+                    { moment: moment('2024-02-03 12:13:14.000'), microseconds: 0, matchIndex: 0, original: '2024-02-03 12:13:14.000' },
+                    { moment: moment('2024-02-03 12:16:20.123'), microseconds: 0, matchIndex: 0, original: '2024-02-03 12:16:20.123' },));
 
             // Assert
             expect(result).toBe(PREFIX + '3min, 6s, 123ms');
@@ -180,8 +180,8 @@ describe('TimePeriodCalculator', () => {
             // Act
             const result = testObject.convertToDisplayString(
                 new TimePeriod(
-                    { iso: '2024-02-03 12:13:14.000', microseconds: 0 },
-                    { iso: '2024-02-03 17:13:20.123', microseconds: 0 }));
+                    { moment: moment('2024-02-03 12:13:14.000'), microseconds: 0, matchIndex: 0, original: '2024-02-03 12:13:14.000' },
+                    { moment: moment('2024-02-03 17:13:20.123'), microseconds: 0, matchIndex: 0, original: '2024-02-03 17:13:20.123' }));
 
             // Assert
             expect(result).toBe(PREFIX + '5h, 0min, 6s, 123ms');
@@ -193,8 +193,8 @@ describe('TimePeriodCalculator', () => {
             // Act
             const result = testObject.convertToDisplayString(
                 new TimePeriod(
-                    { iso: '2022-02-03 12:13:14', microseconds: 0 },
-                    { iso: '2024-02-18 17:13:20', microseconds: 0 }));
+                    { moment: moment('2022-02-03 12:13:14'), microseconds: 0, matchIndex: 0, original: '2022-02-03 12:13:14' },
+                    { moment: moment('2024-02-18 17:13:20'), microseconds: 0, matchIndex: 0, original: '2024-02-18 17:13:20' }));
 
             // Assert
             expect(result).toBe(PREFIX + '745d, 5h, 0min, 6s, 0ms');
