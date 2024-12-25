@@ -25,6 +25,21 @@ describe('TimestampParser', () => {
             expect(result.microseconds).toBe(0);
         });
 
+        it('gets the correct timestamp from "MM/DD/YYYY".', () => {
+            // Arrange
+            const text = '01/23/2024 first line';
+
+            // Act
+            const result = testObject.getTimestampFromText(text);
+
+            // Assert
+            expect(result.moment.toString()).toEqual(moment('2024-01-23').toString());
+            expect(result.duration).toBeUndefined();
+            expect(result.matchIndex).toBe(0);
+            expect(result.original).toBe('01/23/2024');
+            expect(result.microseconds).toBe(0);
+        });
+
         it('gets the correct timestamp from "YYYY-MM-DD hh:mm".', () => {
             // Arrange
             const text = '2024-01-23 10:38 first line';

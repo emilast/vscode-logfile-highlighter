@@ -1,6 +1,5 @@
 'use strict';
 
-import * as moment from 'moment';
 import { TimePeriod } from './TimePeriod';
 import { TimestampParser } from './TimestampParser';
 
@@ -53,9 +52,6 @@ export class TimePeriodCalculator {
     public getTimePeriod(firstLine: string, lastLine: string): TimePeriod {
         let firstLineMatch = this._timestampParser.getTimestampFromText(firstLine);
         let lastLineMatch = this._timestampParser.getTimestampFromText(lastLine);
-
-        // console.log('firstLineMatch: ', firstLineMatch);
-        // console.log('lastLineMatch: ', lastLineMatch);
 
         if (firstLineMatch && lastLineMatch) {
             return new TimePeriod(firstLineMatch, lastLineMatch);

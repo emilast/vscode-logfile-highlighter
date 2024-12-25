@@ -23,40 +23,73 @@ export class TimestampParser {
         // Match 2017-09-29 as well as 29/01/2019
         const datesPattern = '(' + isoDatePattern + '|' + cultureDatesPattern + '){1}';
 
+
+        // Full ISO date and time pattern: '2016-08-23 09:13:16.323' as well as '29.01.2018 09:13:34,001'
+        // Get the first match for both lines
+        const timeRegEx1 = new RegExp(dateTimePattern);
+        const match1 = timeRegEx1.exec(text);
+        if (match1) {
+            return this._createTimestampFromMatch(match1, true);
+        }
+
+        // Full date pattern: '2017-09-29' as well as '29/01/2019'
+        const timeRegEx = new RegExp(datesPattern);
+        const match = timeRegEx.exec(text);
+        if (match) {
+            return this._createTimestampFromMatch(match, true);
+        }
+
+        // Time pattern: '09:13:16.323' as well as '09:13:34,001'
+        const timeRegEx2 = new RegExp(clockPattern);
+        const match2 = timeRegEx2.exec(text);
+        if (match2) {
+            return this._createTimestampFromMatch(match2, false);
+        }
+
+        // TODO: Remove "rankedPattern" list and rewrite with well-defined date formats and context-specific handling
+        // (e.g. reordering day/month/year) before sending to moment.js to avoid errors like
+        // "Deprecation warning: value provided is not in a recognized RFC2822 or ISO format.".
+        // This will also make it possible to insert separators if they are missing.
+
         // Try to match the most specific pattern first (dateTimePattern), then clockPattern, and finally datesPattern)
         // E.g.: The dateTimePattern ('2016-08-23 09:13:16.323') is preferred over the datesPattern ('2017-09-29 and 29/01/2019')
         // TODO: How to avoid the clockPattern to match a date if the colon is optional?
         // Rewrite this function to use full regexes instead of parts?
-        const rankedPattern = [dateTimePattern, clockPattern, datesPattern];
+        // const rankedPattern = [dateTimePattern, clockPattern, datesPattern];
 
-        for (const item of rankedPattern) {
-            // Get the first match for both lines
-            const timeRegEx = new RegExp(item);
-            const match = timeRegEx.exec(text);
+        // for (const item of rankedPattern) {
+        //     // Get the first match for both lines
+        //     const timeRegEx = new RegExp(item);
+        //     const match = timeRegEx.exec(text);
 
-            if (match) {
-                const microsecondsMatch = match.groups?.microseconds;
-                let microseconds = 0;
-
-                if (microsecondsMatch) {
-                    microseconds = parseInt(microsecondsMatch);
-                }
-                const matchedString = match[0];
-
-                const normalizedTimestamp = this._convertToIso(matchedString);
-                const containsDate = /\b\d{4}\b/.test(normalizedTimestamp);
-
-                return {
-                    original: match[0],
-                    matchIndex: match.index,
-                    moment: containsDate ? moment(normalizedTimestamp) : undefined,
-                    duration: !containsDate ? moment.duration(normalizedTimestamp) : undefined,
-                    microseconds: microseconds
-                } as ParsedTimestamp;
-            }
-        }
+        //     if (match) {
+        //         return this._createTimestampFromMatch(match);
+        //     }
+        // }
 
         return undefined;
+    }
+
+    private _createTimestampFromMatch(match: RegExpExecArray, containsDate: boolean)
+    {
+        const microsecondsMatch = match.groups?.microseconds;
+        let microseconds = 0;
+
+        if (microsecondsMatch) {
+            microseconds = parseInt(microsecondsMatch);
+        }
+        const matchedString = match[0];
+
+        const normalizedTimestamp = this._convertToIso(matchedString);
+        // console.log('containsDate', containsDate , matchedString, normalizedTimestamp);
+
+        return {
+            original: match[0],
+            matchIndex: match.index,
+            moment: containsDate ? moment(normalizedTimestamp) : undefined,
+            duration: !containsDate ? moment.duration(normalizedTimestamp) : undefined,
+            microseconds: microseconds
+        } as ParsedTimestamp;
     }
 
     // Converts a given date string to an iso string.
