@@ -4,7 +4,7 @@ import { SelectionHelper } from './SelectionHelper';
 import moment = require('moment');
 import { Constants } from './Constants';
 import { TimeWithMicroseconds } from './TimeWithMicroseconds';
-import { TimestampParser } from './TimestampParser';
+import { TimestampParser } from './TimestampParsers/TimestampParser';
 
 export class ProgressIndicator {
 

@@ -1,7 +1,7 @@
 'use strict';
 import * as moment from 'moment';
 import { TimeWithMicroseconds } from './TimeWithMicroseconds';
-import { ParsedTimestamp } from './TimestampParser';
+import { ParsedTimestamp } from './TimestampParsers/TimestampParser';
 
 export class TimePeriod {
     startTime: TimeWithMicroseconds;

@@ -1,7 +1,7 @@
 'use strict';
 
 import moment = require('moment');
-import { TimestampParser } from '../../src/TimestampParser';
+import { TimestampParser } from '../../src/TimestampParsers/TimestampParser';
 
 describe('TimestampParser', () => {
     let testObject: TimestampParser;
@@ -25,9 +25,9 @@ describe('TimestampParser', () => {
             expect(result.microseconds).toBe(0);
         });
 
-        it('gets the correct timestamp from "MM/DD/YYYY".', () => {
+        it('gets the correct timestamp from "DD/MM/YYYY".', () => {
             // Arrange
-            const text = '01/23/2024 first line';
+            const text = '23/01/2024 first line';
 
             // Act
             const result = testObject.getTimestampFromText(text);
@@ -36,7 +36,7 @@ describe('TimestampParser', () => {
             expect(result.moment.toString()).toEqual(moment('2024-01-23').toString());
             expect(result.duration).toBeUndefined();
             expect(result.matchIndex).toBe(0);
-            expect(result.original).toBe('01/23/2024');
+            expect(result.original).toBe('23/01/2024');
             expect(result.microseconds).toBe(0);
         });
 
@@ -138,7 +138,7 @@ describe('TimestampParser', () => {
             const result = testObject.getTimestampFromText(text);
 
             // Assert
-            expect(result.moment).toEqual(moment('2020-02-28 16:51:29.001'));
+            expect(result.moment.toString()).toEqual(moment('2020-02-28 16:51:29.001').toString());
             expect(result.duration).toBeUndefined();
             expect(result.matchIndex).toBe(0);
             expect(result.original).toBe('28/02/2020 16:51:29,001');

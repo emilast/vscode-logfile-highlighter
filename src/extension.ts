@@ -9,7 +9,7 @@ import { SelectionHelper } from './SelectionHelper';
 import { TimePeriodCalculator } from './TimePeriodCalculator';
 import { TimePeriodController } from './TimePeriodController';
 import { TailController } from './TailController';
-import { TimestampParser } from './TimestampParser';
+import { TimestampParser } from './TimestampParsers/TimestampParser';
 
 // this method is called when the extension is activated
 export function activate(context: vscode.ExtensionContext) {

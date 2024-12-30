@@ -1,7 +1,7 @@
 'use strict';
 
 import { TimePeriod } from './TimePeriod';
-import { TimestampParser } from './TimestampParser';
+import { TimestampParser } from './TimestampParsers/TimestampParser';
 
 export class TimePeriodCalculator {
     private _timestampParser: TimestampParser;

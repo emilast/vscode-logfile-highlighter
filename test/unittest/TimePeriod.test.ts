@@ -2,7 +2,7 @@
 
 import * as moment from 'moment';
 import { TimePeriod } from '../../src/TimePeriod';
-import { ParsedTimestamp } from '../../src/TimestampParser';
+import { ParsedTimestamp } from '../../src/TimestampParsers/TimestampParser';
 
 describe('TimePeriod', () => {
     describe('duration', () => {
