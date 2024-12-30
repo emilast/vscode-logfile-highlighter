@@ -10,7 +10,7 @@ export class USDateFormatParser implements TimestampFormatParser {
     parse(text: string): TimestampMatch | null {
         const match = this.pattern.exec(text);
         if (match) {
-            const normalized = `${match[3]}-${match[2]}-${match[1]}`;
+            const normalized = `${match[3]}-${match[1]}-${match[2]}`;
             return {
                 match: match,
                 normalizedTimestamp: normalized,

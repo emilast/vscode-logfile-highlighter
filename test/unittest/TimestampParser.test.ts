@@ -25,9 +25,9 @@ describe('TimestampParser', () => {
             expect(result.microseconds).toBe(0);
         });
 
-        it('gets the correct timestamp from "DD/MM/YYYY".', () => {
+        it('gets the correct timestamp from "MM/DD/YYYY".', () => {
             // Arrange
-            const text = '23/01/2024 first line';
+            const text = '01/23/2024 first line';
 
             // Act
             const result = testObject.getTimestampFromText(text);
@@ -36,7 +36,7 @@ describe('TimestampParser', () => {
             expect(result.moment.toString()).toEqual(moment('2024-01-23').toString());
             expect(result.duration).toBeUndefined();
             expect(result.matchIndex).toBe(0);
-            expect(result.original).toBe('23/01/2024');
+            expect(result.original).toBe('01/23/2024');
             expect(result.microseconds).toBe(0);
         });
 
@@ -130,9 +130,9 @@ describe('TimestampParser', () => {
             expect(result.microseconds).toBe(0);
         });
 
-        it('gets the correct timestamp from "DD/MM/YYYY hh:mm:ss,sss".', () => {
+        it('gets the correct timestamp from "MM/DD/YYYY hh:mm:ss,sss".', () => {
             // Arrange
-            const text = '28/02/2020 16:51:29,001 first line';
+            const text = '02/28/2020 16:51:29,001 first line';
 
             // Act
             const result = testObject.getTimestampFromText(text);
@@ -141,23 +141,53 @@ describe('TimestampParser', () => {
             expect(result.moment.toString()).toEqual(moment('2020-02-28 16:51:29.001').toString());
             expect(result.duration).toBeUndefined();
             expect(result.matchIndex).toBe(0);
-            expect(result.original).toBe('28/02/2020 16:51:29,001');
+            expect(result.original).toBe('02/28/2020 16:51:29,001');
             expect(result.microseconds).toBe(0);
         });
 
-        it('gets the correct timestamp from "DD/MM/YYYY hh:mm:ss,ssssss".', () => {
+        it('gets the correct timestamp from "MM/DD/YYYY hh:mm:ss,ssssss".', () => {
             // Arrange
-            const text = '28/02/2020 16:51:29,001234 first line';
+            const text = '02/28/2020 16:51:29,001234 first line';
 
             // Act
             const result = testObject.getTimestampFromText(text);
 
             // Assert
-            expect(result.moment).toEqual(moment('2020-02-28 16:51:29.001234'));
+            expect(result.moment.toString()).toEqual(moment('2020-02-28 16:51:29.001234').toString());
             expect(result.duration).toBeUndefined();
             expect(result.matchIndex).toBe(0);
-            expect(result.original).toBe('28/02/2020 16:51:29,001234');
+            expect(result.original).toBe('02/28/2020 16:51:29,001234');
             expect(result.microseconds).toBe(234);
+        });
+
+        it('gets the correct timestamp from "YYYY-MM-DDThh:mm:ss.sss+01:00".', () => {
+            // Arrange
+            const text = '2016-12-09T09:29:02.258+01:00 first line';
+
+            // Act
+            const result = testObject.getTimestampFromText(text);
+
+            // Assert
+            expect(result.moment.toString()).toEqual(moment('2016-12-09T09:29:02.258+01:00').toString());
+            expect(result.duration).toBeUndefined();
+            expect(result.matchIndex).toBe(0);
+            expect(result.original).toBe('2016-12-09T09:29:02.258+01:00');
+            expect(result.microseconds).toBe(0);
+        });
+
+        it('gets the correct timestamp from "YYYY-MM-DDThh:mm:ss.ssssss+01:00".', () => {
+            // Arrange
+            const text = '2016-12-09T09:29:02.258211+01:00 first line';
+
+            // Act
+            const result = testObject.getTimestampFromText(text);
+
+            // Assert
+            expect(result.moment.toString()).toEqual(moment('2016-12-09T09:29:02.258+01:00').toString());
+            expect(result.duration).toBeUndefined();
+            expect(result.matchIndex).toBe(0);
+            expect(result.original).toBe('2016-12-09T09:29:02.258211+01:00');
+            expect(result.microseconds).toBe(211);
         });
 
         it('gets the correct matchIndex.', () => {

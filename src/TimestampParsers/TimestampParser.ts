@@ -47,7 +47,7 @@ export class TimestampParser {
         return {
             original: matchedString,
             matchIndex: match.match.index,
-            moment: match.containsDate ? moment(normalizedTimestamp) : undefined,
+            moment: match.containsDate ? moment(normalizedTimestamp, moment.ISO_8601) : undefined,
             duration: !match.containsDate ? moment.duration(normalizedTimestamp) : undefined,
             microseconds: microseconds
         } as ParsedTimestamp;
