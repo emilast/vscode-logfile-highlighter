@@ -70,6 +70,21 @@ describe('TimestampParser', () => {
             expect(result.microseconds).toBe(0);
         });
 
+        it('gets the correct timestamp from "YYYY-MM-DDThh:mm:ss.sssssssZ" (the 7th sub-second digit is ignored).', () => {
+            // Arrange
+            const text = '2024-09-10T05:49:20.0417722Z VERBOSE: Importing cmdlet Disconnect-AzAccount.';
+
+            // Act
+            const result = testObject.getTimestampFromText(text);
+
+            // Assert
+            expect(result.moment.toString()).toEqual(moment('2024-09-10T05:49:20.0417729Z').toString());
+            expect(result.duration).toBeUndefined();
+            expect(result.matchIndex).toBe(0);
+            expect(result.original).toBe('2024-09-10T05:49:20.0417722Z');
+            expect(result.microseconds).toBe(772);
+        });
+
         it('gets the correct timestamp from "DD.MM-YYYY hh:mm" (little endian).', () => {
             // Arrange
             const text = '23-01-2024 10:38 first line';
