@@ -26,6 +26,21 @@ describe('TimePeriodCalculator', () => {
             expect(result.duration.asMilliseconds()).toBe(expected.asMilliseconds());
         });
 
+        it('gets the correct timePeriod from two dates with time zones.', () => {
+            // Arrange
+            
+
+            const firstLine = '2015-09-21 09:29:02.258+02:00 first line';
+            const lastLine = '2015-09-21 09:29:02.259+01:00 last line';
+
+            // Act
+            const result = testObject.getTimePeriod(firstLine, lastLine);
+
+            // Assert
+            const expected = moment.duration({ hours: 1, milliseconds: 1 });
+            expect(result.duration.asMilliseconds()).toBe(expected.asMilliseconds());
+        });
+
         it('gets the correct timePeriod from two differently formatted dates.', () => {
             // Arrange
             const firstLine = '2018-01-27 first line';

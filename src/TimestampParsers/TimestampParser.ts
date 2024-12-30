@@ -8,6 +8,8 @@ import { USDateFormatParser } from "./USDateFormatParser";
 import { DanishDateTimeFormatParser } from "./DanishDateTimeFormatParser";
 import { IsoDateTimeFormatParser } from "./IsoDateTimeFormatParser";
 import { USDateTimeFormatParser } from "./USDateTimeFormatParser";
+import { LittleEndianDateFormatParser } from "./LittleEndianDateFormatParser";
+import { LittleEndianDateTimeFormatParser } from "./LittleEndianDateTimeFormatParser";
 
 export class TimestampParser {
     private parsers: TimestampFormatParser[];
@@ -17,9 +19,11 @@ export class TimestampParser {
             new IsoDateTimeFormatParser(),
             new USDateTimeFormatParser(),
             new DanishDateTimeFormatParser(),
+            new LittleEndianDateTimeFormatParser(),
             new IsoDateFormatParser(),
             new USDateFormatParser(),
             new DanishDateFormatParser(),
+            new LittleEndianDateFormatParser(),
             new TimeFormatParser()
         ];
     }
@@ -35,6 +39,7 @@ export class TimestampParser {
     }
 
     private _createTimestampFromMatch(match: TimestampMatch): ParsedTimestamp {
+        // console.log('TimestampParser', match);
         const microsecondsMatch = match.match.groups?.microseconds;
         let microseconds = 0;
 

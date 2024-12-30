@@ -40,6 +40,21 @@ describe('TimestampParser', () => {
             expect(result.microseconds).toBe(0);
         });
 
+        it('gets the correct timestamp from "DD-MM-YYYY" (little endian).', () => {
+            // Arrange
+            const text = '23-01-2024 first line';
+
+            // Act
+            const result = testObject.getTimestampFromText(text);
+
+            // Assert
+            expect(result.moment.toString()).toEqual(moment('2024-01-23').toString());
+            expect(result.duration).toBeUndefined();
+            expect(result.matchIndex).toBe(0);
+            expect(result.original).toBe('23-01-2024');
+            expect(result.microseconds).toBe(0);
+        });
+
         it('gets the correct timestamp from "YYYY-MM-DD hh:mm".', () => {
             // Arrange
             const text = '2024-01-23 10:38 first line';
@@ -52,6 +67,21 @@ describe('TimestampParser', () => {
             expect(result.duration).toBeUndefined();
             expect(result.matchIndex).toBe(0);
             expect(result.original).toBe('2024-01-23 10:38');
+            expect(result.microseconds).toBe(0);
+        });
+
+        it('gets the correct timestamp from "DD.MM-YYYY hh:mm" (little endian).', () => {
+            // Arrange
+            const text = '23-01-2024 10:38 first line';
+
+            // Act
+            const result = testObject.getTimestampFromText(text);
+
+            // Assert
+            expect(result.moment).toEqual(moment('2024-01-23 10:38'));
+            expect(result.duration).toBeUndefined();
+            expect(result.matchIndex).toBe(0);
+            expect(result.original).toBe('23-01-2024 10:38');
             expect(result.microseconds).toBe(0);
         });
 
