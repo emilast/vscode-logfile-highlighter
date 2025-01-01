@@ -85,6 +85,66 @@ describe('TimestampParser', () => {
             expect(result.microseconds).toBe(772);
         });
 
+        it('gets the correct timestamp from "YYYY-MM-DDThhmm".', () => {
+            // Arrange
+            const text = '2024-11-13T0910 first line';
+
+            // Act
+            const result = testObject.getTimestampFromText(text);
+
+            // Assert
+            expect(result.moment.toISOString()).toEqual(moment('2024-11-13 09:10').toISOString());
+            expect(result.duration).toBeUndefined();
+            expect(result.matchIndex).toBe(0);
+            expect(result.original).toBe('2024-11-13T0910');
+            expect(result.microseconds).toBe(0);
+        });
+
+        it('gets the correct timestamp from "YYYY-MM-DDThhmmZ".', () => {
+            // Arrange
+            const text = '2024-11-13T0910Z first line';
+
+            // Act
+            const result = testObject.getTimestampFromText(text);
+
+            // Assert
+            expect(result.moment.toISOString()).toEqual(moment('2024-11-13 09:10:00').toISOString());
+            expect(result.duration).toBeUndefined();
+            expect(result.matchIndex).toBe(0);
+            expect(result.original).toBe('2024-11-13T0910Z');
+            expect(result.microseconds).toBe(0);
+        });
+
+        it('gets the correct timestamp from "YYYY-MM-DDThhmm+0200".', () => {
+            // Arrange
+            const text = '2024-11-13T0910+0200 first line';
+
+            // Act
+            const result = testObject.getTimestampFromText(text);
+
+            // Assert
+            expect(result.moment.toISOString()).toEqual(moment('2024-11-13 09:10:00+02:00').toISOString());
+            expect(result.duration).toBeUndefined();
+            expect(result.matchIndex).toBe(0);
+            expect(result.original).toBe('2024-11-13T0910+0200');
+            expect(result.microseconds).toBe(0);
+        });
+
+        it('gets the correct timestamp from "YYYY-MM-DDThhmmss".', () => {
+            // Arrange
+            const text = '2024-11-13T091012 first line';
+
+            // Act
+            const result = testObject.getTimestampFromText(text);
+
+            // Assert
+            expect(result.moment.toISOString()).toEqual(moment('2024-11-13 09:10:12').toISOString());
+            expect(result.duration).toBeUndefined();
+            expect(result.matchIndex).toBe(0);
+            expect(result.original).toBe('2024-11-13T091012');
+            expect(result.microseconds).toBe(0);
+        });
+
         it('gets the correct timestamp from "DD.MM-YYYY hh:mm" (little endian).', () => {
             // Arrange
             const text = '23-01-2024 10:38 first line';

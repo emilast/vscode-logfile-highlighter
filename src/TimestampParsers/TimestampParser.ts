@@ -10,6 +10,7 @@ import { IsoDateTimeFormatParser } from "./IsoDateTimeFormatParser";
 import { USDateTimeFormatParser } from "./USDateTimeFormatParser";
 import { LittleEndianDateFormatParser } from "./LittleEndianDateFormatParser";
 import { LittleEndianDateTimeFormatParser } from "./LittleEndianDateTimeFormatParser";
+import { IsoSlimDateTimeFormatParser } from "./IsoSlimDateTimeFormatParser";
 
 export class TimestampParser {
     private parsers: TimestampFormatParser[];
@@ -17,6 +18,7 @@ export class TimestampParser {
     constructor() {
         this.parsers = [
             new IsoDateTimeFormatParser(),
+            new IsoSlimDateTimeFormatParser(),
             new USDateTimeFormatParser(),
             new DanishDateTimeFormatParser(),
             new LittleEndianDateTimeFormatParser(),
