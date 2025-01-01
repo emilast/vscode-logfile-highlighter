@@ -1,9 +1,13 @@
 # Change Log
 
+### 3.4.0 - 1 January 2025
+
 * Refactored timestamp parsing to be more maintainable and flexible.
 
 * Added support for ISO timestamps without separators.
   Example: `2015-09-21T092901` (same as `2015-09-21 09:29:01`)
+
+* Updated package dependencies.
 
 ### 3.3.4 - 4 October 2024
 
