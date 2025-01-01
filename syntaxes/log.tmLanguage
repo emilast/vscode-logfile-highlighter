@@ -156,7 +156,7 @@
 			<!-- ISO dates ("2016-08-23") -->
 			<dict>
 				<key>match</key>
-				<string>\b\d{4}-\d{2}-\d{2}(T|\b)</string>
+				<string>\b\d{4}-\d{2}-\d{2}(?=T|\b)</string>
 
 				<key>name</key>
 				<string>comment log.date</string>
@@ -175,6 +175,15 @@
 			<dict>
 				<key>match</key>
 				<string>\d{1,2}:\d{2}(:\d{2}([.,]\d{1,})?)?(Z| ?[+-]\d{1,2}:\d{2})?\b</string>
+
+				<key>name</key>
+				<string>comment log.date</string>
+			</dict>
+
+			<!-- Prefixed clock times without separator optional timezone ("T091316", "T091316.323", "T091316+0100") -->
+			<dict>
+				<key>match</key>
+				<string>T\d{2}\d{2}(\d{2}([.,]\d{1,})?)?(Z| ?[+-]\d{1,2}\d{2})?\b</string>
 
 				<key>name</key>
 				<string>comment log.date</string>
