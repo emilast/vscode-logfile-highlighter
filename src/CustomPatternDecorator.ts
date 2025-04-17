@@ -17,6 +17,29 @@ export class CustomPatternDecorator {
     }
 
     public updateConfiguration(): void {
+        // Dispose all custom patterns.
+        for (const pattern of this._configPattern) {
+            pattern.dispose();
+        }
+        this._configPattern = [];
+
+        for (const pattern of this.getTimeAndDatePatterns()) {
+            this._configPattern.push(pattern);
+        }
+
+        for (const pattern of this.getGenericLogLevelPatterns()) {
+            this._configPattern.push(pattern);
+        }
+
+        for (const pattern of this.getSerilogPatterns()) {
+            this._configPattern.push(pattern);
+        }
+
+        for (const pattern of this.getAndroidLogCatPatterns()) {
+            this._configPattern.push(pattern);
+        }
+
+        // Append all custom patterns from the configuration.
         const configPatterns = vscode.workspace.getConfiguration('logFileHighlighter').get(
             'customPatterns') as {
                 pattern: string,
@@ -34,12 +57,6 @@ export class CustomPatternDecorator {
                 overviewRulerLane?: string,
                 textDecoration?: string,
             }[];
-
-        for (const pattern of this._configPattern) {
-            pattern.dispose();
-        }
-
-        this._configPattern = [];
 
         for (const item of configPatterns) {
             // If we have a pattern and either a foreground or background color, then use the pattern
@@ -156,6 +173,354 @@ export class CustomPatternDecorator {
             }
         }
     }
+
+    private getTimeAndDatePatterns(): CustomPattern[] {
+        return [
+            // Dates
+
+            // ISO dates ("2016-08-23") 
+            new CustomPattern(
+                '\\b\\d{4}-\\d{2}-\\d{2}(?=T|\\b)',
+                '',
+                false,
+                '#808080', // Gray for dates
+                undefined,
+                'normal',
+                'italic',
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                '#808080',
+                vscode.OverviewRulerLane.Full,
+                undefined
+            ),
+            // Culture specific dates ("23/08/2016", "23.08.2016") 
+            new CustomPattern(
+                '(?<=(^|\\s))\\d{2}[^\\w\\s]\\d{2}[^\\w\\s]\\d{4}\\b',
+                '',
+                false,
+                '#808080', // Gray for dates
+                undefined,
+                'normal',
+                'italic',
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                '#808080',
+                vscode.OverviewRulerLane.Full,
+                undefined
+            ),
+            // Clock times with optional timezone and optional T prefix ("T09:13:16", "09:13:16", "09:13:16.323", "09:13:16+01:00")
+            new CustomPattern(
+                'T?\\d{1,2}:\\d{2}(:\\d{2}([.,]\\d{1,})?)?(Z| ?[+-]\\d{1,2}:\\d{2})?\\b',
+                '',
+                false,
+                '#808080', // Gray for dates
+                undefined,
+                'normal',
+                'italic',
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                '#808080',
+                vscode.OverviewRulerLane.Full,
+                undefined
+            ),
+            // Clock times without separator and with optional timezone ("T091316", "T091316.323", "T091316+0100")
+            new CustomPattern(
+                'T\\d{2}\\d{2}(\\d{2}([.,]\\d{1,})?)?(Z| ?[+-]\\d{1,2}\\d{2})?\\b',
+                '',
+                false,
+                '#808080', // Gray for dates
+                undefined,
+                'normal',
+                'italic',
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                '#808080',
+                vscode.OverviewRulerLane.Full,
+                undefined
+            ),
+        ];
+    }
+
+    private getGenericLogLevelPatterns(): CustomPattern[] {
+        return [
+            // Trace/Verbose
+            new CustomPattern(
+                '\\b(Trace)\\b:',
+                '',
+                false,
+                '#808080', // Gray for verbose
+                undefined,
+                'normal',
+                'italic',
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                '#808080',
+                vscode.OverviewRulerLane.Full,
+                undefined
+            ),
+
+            // Debug
+            new CustomPattern(
+                '\\b(DEBUG|Debug)\\b|\\b(debug)\\:',
+                'i',
+                false,
+                '#0000FF', // Blue for debug
+                undefined,
+                'bold',
+                'normal',
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                '#0000FF',
+                vscode.OverviewRulerLane.Full,
+                undefined
+            ),
+            // Info
+            new CustomPattern(
+                '\\b(HINT|INFO|INFORMATION|Info|NOTICE|II)\\b|\\b(info|information)\\:',
+                'i',
+                false,
+                '#008000', // Green for info
+                undefined,
+                'bold',
+                'normal',
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                '#008000',
+                vscode.OverviewRulerLane.Full,
+                undefined
+            ),
+            // Warning
+            new CustomPattern(
+                '\\b(WARNING|WARN|Warn|WW)\\b|\\b(warning)\\:',
+                'i',
+                false,
+                '#FFA500', // Orange for warnings
+                undefined,
+                'bold',
+                'normal',
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                '#FFA500',
+                vscode.OverviewRulerLane.Full,
+                undefined
+            ),
+            // Error
+            new CustomPattern(
+                '\\b(ALERT|CRITICAL|EMERGENCY|ERROR|FAILURE|FAIL|Fatal|FATAL|Error|EE)\\b|\\b(error)\\:',
+                'i',
+                false,
+                '#FF0000', // Red for errors
+                undefined,
+                'bold',
+                'normal',
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                '#FF0000',
+                vscode.OverviewRulerLane.Full,
+                undefined
+            ),
+        ];
+    }
+
+    private getSerilogPatterns(): CustomPattern[] {
+        return [
+            // Trace/Verbose
+            new CustomPattern(
+                '\\[(verbose|verb|vrb|vb|v)\\]',
+                'i',
+                false,
+                '#808080', // Gray for verbose
+                undefined,
+                'normal',
+                'italic',
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                '#808080',
+                vscode.OverviewRulerLane.Full,
+                undefined
+            ),
+            // Debug
+            new CustomPattern(
+                '\\[(debug|dbug|dbg|de|d)\\]',
+                'i',
+                false,
+                '#0000FF', // Blue for debug
+                undefined,
+                'bold',
+                'normal',
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                '#0000FF',
+                vscode.OverviewRulerLane.Full,
+                undefined
+            ),
+            // Info
+            new CustomPattern(
+                '\\[(information|info|inf|in|i)\\]',
+                'i',
+                false,
+                '#008000', // Green for info
+                undefined,
+                'bold',
+                'normal',
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                '#008000',
+                vscode.OverviewRulerLane.Full,
+                undefined
+            ),
+            // Warning
+            new CustomPattern(
+                '\\[(warning|warn|wrn|wn|w)\\]',
+                'i',
+                false,
+                '#FFA500', // Orange for warnings
+                undefined,
+                'bold',
+                'normal',
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                '#FFA500',
+                vscode.OverviewRulerLane.Full,
+                undefined
+            ),
+            // Error
+            new CustomPattern(
+                '\\[(error|eror|err|er|e|fatal|fatl|ftl|fa|f)\\]',
+                'i',
+                false,
+                '#FF0000', // Red for errors
+                undefined,
+                'bold',
+                'normal',
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                '#FF0000',
+                vscode.OverviewRulerLane.Full,
+                undefined
+            ),
+        ];
+    }
+
+    private getAndroidLogCatPatterns(): CustomPattern[] {
+        return [
+            // Android logcat /V
+            new CustomPattern(
+                '(?<=^[\\s\\d\\p]*)\\bV\\b',
+                '',
+                false,
+                '#808080', // Gray for verbose
+                undefined,
+                'normal',
+                'italic',
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                '#808080',
+                vscode.OverviewRulerLane.Full,
+                undefined
+            ),
+            // Android logcat /D
+            new CustomPattern(
+                '(?<=^[\\s\\d\\p]*)\\bD\\b',
+                '',
+                false,
+                '#0000FF', // Blue for debug
+                undefined,
+                'bold',
+                'normal',
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                '#0000FF',
+                vscode.OverviewRulerLane.Full,
+                undefined
+            ),
+            // Android logcat /I
+            new CustomPattern(
+                '(?<=^[\\s\\d\\p]*)\\bI\\b',
+                '',
+                false,
+                '#008000', // Green for info
+                undefined,
+                'bold',
+                'normal',
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                '#008000',
+                vscode.OverviewRulerLane.Full,
+                undefined
+            ),
+            // Android logcat /W
+            new CustomPattern(
+                '(?<=^[\\s\\d\\p]*)\\bW\\b',
+                '',
+                false,
+                '#FFA500', // Orange for warnings
+                undefined,
+                'bold',
+                'normal',
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                '#FFA500',
+                vscode.OverviewRulerLane.Full,
+                undefined
+            ),
+            // Android logcat /E
+            new CustomPattern(
+                '(?<=^[\\s\\d\\p]*)\\bE\\b',
+                '',
+                false,
+                '#FF0000', // Red for errors
+                undefined,
+                'bold',
+                'normal',
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                '#FF0000',
+                vscode.OverviewRulerLane.Full,
+                undefined
+            ),
+        ];
+    }
+
+
 
     // Get the start and end positions of a match in a document. Use this if the document is in a
     // settled state, i.e. not changing, as when opening a document.
