@@ -2,41 +2,54 @@
 
 import * as vscode from 'vscode';
 import { CustomPattern } from './CustomPattern';
+import { ConstantsPatterns } from './PatternDefinitions/ConstantsPatterns';
+import { TimeAndDatePatterns } from './PatternDefinitions/TimeAndDatePatterns';
+import { SerilogPatterns } from './PatternDefinitions/SerilogPatterns';
+import { GenericLogLevelPatterns } from './PatternDefinitions/GenericLogLevelPatterns';
+import { AndroidLogCatPatterns } from './PatternDefinitions/AndroidLogCatPatterns';
 
 export class CustomPatternDecorator {
 
     // All custom log level specified in the configuration.
-    private _configPattern: CustomPattern[];
+    private _patterns: CustomPattern[];
 
     // Indicates in which file which log level highlights which ranges.
     private _cache: Map<vscode.Uri, Map<CustomPattern, vscode.Range[]>>;
 
     public constructor() {
-        this._configPattern = [];
+        this._patterns = [];
         this._cache = new Map<vscode.Uri, Map<CustomPattern, vscode.Range[]>>();
     }
 
     public updateConfiguration(): void {
         // Dispose all custom patterns.
-        for (const pattern of this._configPattern) {
-            pattern.dispose();
-        }
-        this._configPattern = [];
-
-        for (const pattern of this.getTimeAndDatePatterns()) {
-            this._configPattern.push(pattern);
+        for (const pattern of this._patterns) {
+            // TODO: Don't dispose builtin patterns since they're not allocated again
+            // pattern.dispose();
         }
 
-        for (const pattern of this.getGenericLogLevelPatterns()) {
-            this._configPattern.push(pattern);
+        // Apply built in patterns
+        this._patterns = [];
+
+        for (const pattern of TimeAndDatePatterns) {
+            this._patterns.push(pattern);
         }
 
-        for (const pattern of this.getSerilogPatterns()) {
-            this._configPattern.push(pattern);
+        for (const pattern of GenericLogLevelPatterns) {
+            this._patterns.push(pattern);
         }
 
-        for (const pattern of this.getAndroidLogCatPatterns()) {
-            this._configPattern.push(pattern);
+        for (const pattern of SerilogPatterns) {
+            this._patterns.push(pattern);
+        }
+
+        for (const pattern of AndroidLogCatPatterns) {
+            this._patterns.push(pattern);
+        }
+
+        // TODO: Avoid highlighting time parts
+        for (const pattern of ConstantsPatterns) {
+            this._patterns.push(pattern);
         }
 
         // Append all custom patterns from the configuration.
@@ -75,14 +88,14 @@ export class CustomPatternDecorator {
                     item.borderSpacing, item.letterSpacing,
                     item.overviewColor, vscode.OverviewRulerLane[item.overviewRulerLane],
                     item.textDecoration);
-                this._configPattern.push(pattern);
+                this._patterns.push(pattern);
             }
         }
     }
 
     // As a reaction to a document change, decorate the changed parts with the configured custom patterns.
-    public decorateDocument(changedEvent: vscode.TextDocumentChangeEvent): void {
-        if (this._configPattern.length === 0 || changedEvent.contentChanges.length === 0) {
+    public decorateEditedDocument(changedEvent: vscode.TextDocumentChangeEvent): void {
+        if (this._patterns.length === 0 || changedEvent.contentChanges.length === 0) {
             return;
         }
 
@@ -92,7 +105,9 @@ export class CustomPatternDecorator {
             return editor.document.fileName === doc.fileName;
         });
 
-        const change = changedEvent.contentChanges.slice().sort((a, b) => Math.abs(a.range.start.line - b.range.start.line))[0];
+        const change = changedEvent.contentChanges
+            .slice()
+            .sort((a, b) => Math.abs(a.range.start.line - b.range.start.line))[0];
 
         // Start always at the beginning of the line.
         const startPos = new vscode.Position(change.range.start.line, 0);
@@ -101,7 +116,10 @@ export class CustomPatternDecorator {
         const contentToEnd: string =
             doc.getText(new vscode.Range(startPos, doc.lineAt(doc.lineCount - 1).range.end));
 
-        for (const pattern of this._configPattern) {
+        // Track applied ranges to avoid overlaps
+        const appliedRanges: vscode.Range[] = [];
+
+        for (const pattern of this._patterns) {
             const patternCache = docCache.get(pattern);
 
             // Remove all ranges from the cache that occur after the changed range (change.range).
@@ -120,15 +138,22 @@ export class CustomPatternDecorator {
                         // First line, so the character position is relative to the start of the change.
                         start = new vscode.Position(start.line + startPos.line, start.character + startPos.character);
                         end = new vscode.Position(end.line + startPos.line, end.character + startPos.character);
-                    }
-                    else {
+                    } else {
                         // Not the first line, so the character position is relative to the start of the line,
                         // which is what getMatchPositionsInContentString() returns.
                         start = new vscode.Position(start.line + startPos.line, start.character);
                         end = new vscode.Position(end.line + startPos.line, end.character);
                     }
 
-                    patternRanges.push(new vscode.Range(start, end));
+                    const newRange = new vscode.Range(start, end);
+                    console.log('Adding range: ', newRange);
+
+                    // Check for overlap with already applied ranges
+                    if (!this.isOverlappingRange(newRange, appliedRanges)) {
+                        patternRanges.push(newRange);
+                        appliedRanges.push(newRange);
+                    }
+
                     matches = regex.exec(contentToEnd);
                 }
             }
@@ -148,25 +173,35 @@ export class CustomPatternDecorator {
     public decorateEditors(editors: vscode.TextEditor[], changes?: vscode.TextDocumentContentChangeEvent[]): void {
         if (editors.length >= 1) {
             for (const editor of editors) {
+                // Track applied ranges to avoid overlaps
+                const appliedRanges: vscode.Range[] = [];
+
                 const content = editor.document.getText();
 
                 const docRanges = new Map<CustomPattern, vscode.Range[]>();
-                for (const pattern of this._configPattern) {
-                    const logLevelRanges = [];
+                for (const pattern of this._patterns) {
+                    const patternRanges = [];
 
                     for (const regex of pattern.regexes) {
                         let matches = regex.exec(content);
 
                         while (matches) {
                             var { start, end } = this.getMatchPositionsInDocument(editor.document, matches);
-                            logLevelRanges.push(new vscode.Range(start, end));
+                            const newRange = new vscode.Range(start, end);
+
+                            // Check for overlap with already applied ranges
+                            if (!this.isOverlappingRange(newRange, appliedRanges)) {
+                                patternRanges.push(newRange);
+                                appliedRanges.push(newRange);
+                            }
+
                             matches = regex.exec(content);
                         }
                     }
 
                     // Update cache and set decorations.
-                    editor.setDecorations(pattern.decoration, logLevelRanges);
-                    docRanges.set(pattern, logLevelRanges);
+                    editor.setDecorations(pattern.decoration, patternRanges);
+                    docRanges.set(pattern, patternRanges);
                 }
 
                 this._cache.set(editor.document.uri, docRanges);
@@ -174,354 +209,16 @@ export class CustomPatternDecorator {
         }
     }
 
-    private getTimeAndDatePatterns(): CustomPattern[] {
-        return [
-            // Dates
-
-            // ISO dates ("2016-08-23") 
-            new CustomPattern(
-                '\\b\\d{4}-\\d{2}-\\d{2}(?=T|\\b)',
-                '',
-                false,
-                '#808080', // Gray for dates
-                undefined,
-                'normal',
-                'italic',
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                '#808080',
-                vscode.OverviewRulerLane.Full,
-                undefined
-            ),
-            // Culture specific dates ("23/08/2016", "23.08.2016") 
-            new CustomPattern(
-                '(?<=(^|\\s))\\d{2}[^\\w\\s]\\d{2}[^\\w\\s]\\d{4}\\b',
-                '',
-                false,
-                '#808080', // Gray for dates
-                undefined,
-                'normal',
-                'italic',
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                '#808080',
-                vscode.OverviewRulerLane.Full,
-                undefined
-            ),
-            // Clock times with optional timezone and optional T prefix ("T09:13:16", "09:13:16", "09:13:16.323", "09:13:16+01:00")
-            new CustomPattern(
-                'T?\\d{1,2}:\\d{2}(:\\d{2}([.,]\\d{1,})?)?(Z| ?[+-]\\d{1,2}:\\d{2})?\\b',
-                '',
-                false,
-                '#808080', // Gray for dates
-                undefined,
-                'normal',
-                'italic',
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                '#808080',
-                vscode.OverviewRulerLane.Full,
-                undefined
-            ),
-            // Clock times without separator and with optional timezone ("T091316", "T091316.323", "T091316+0100")
-            new CustomPattern(
-                'T\\d{2}\\d{2}(\\d{2}([.,]\\d{1,})?)?(Z| ?[+-]\\d{1,2}\\d{2})?\\b',
-                '',
-                false,
-                '#808080', // Gray for dates
-                undefined,
-                'normal',
-                'italic',
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                '#808080',
-                vscode.OverviewRulerLane.Full,
-                undefined
-            ),
-        ];
+    private isOverlappingRange(newRange, appliedRanges) : boolean
+    {
+        // Check for overlap with already applied ranges
+        return appliedRanges.some((range) => {
+            const intersection = range.intersection(newRange);
+            return intersection && !intersection.isEmpty && intersection.end.isAfter(intersection.start);
+        });
     }
 
-    private getGenericLogLevelPatterns(): CustomPattern[] {
-        return [
-            // Trace/Verbose
-            new CustomPattern(
-                '\\b(Trace)\\b:',
-                '',
-                false,
-                '#808080', // Gray for verbose
-                undefined,
-                'normal',
-                'italic',
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                '#808080',
-                vscode.OverviewRulerLane.Full,
-                undefined
-            ),
-
-            // Debug
-            new CustomPattern(
-                '\\b(DEBUG|Debug)\\b|\\b(debug)\\:',
-                'i',
-                false,
-                '#0000FF', // Blue for debug
-                undefined,
-                'bold',
-                'normal',
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                '#0000FF',
-                vscode.OverviewRulerLane.Full,
-                undefined
-            ),
-            // Info
-            new CustomPattern(
-                '\\b(HINT|INFO|INFORMATION|Info|NOTICE|II)\\b|\\b(info|information)\\:',
-                'i',
-                false,
-                '#008000', // Green for info
-                undefined,
-                'bold',
-                'normal',
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                '#008000',
-                vscode.OverviewRulerLane.Full,
-                undefined
-            ),
-            // Warning
-            new CustomPattern(
-                '\\b(WARNING|WARN|Warn|WW)\\b|\\b(warning)\\:',
-                'i',
-                false,
-                '#FFA500', // Orange for warnings
-                undefined,
-                'bold',
-                'normal',
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                '#FFA500',
-                vscode.OverviewRulerLane.Full,
-                undefined
-            ),
-            // Error
-            new CustomPattern(
-                '\\b(ALERT|CRITICAL|EMERGENCY|ERROR|FAILURE|FAIL|Fatal|FATAL|Error|EE)\\b|\\b(error)\\:',
-                'i',
-                false,
-                '#FF0000', // Red for errors
-                undefined,
-                'bold',
-                'normal',
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                '#FF0000',
-                vscode.OverviewRulerLane.Full,
-                undefined
-            ),
-        ];
-    }
-
-    private getSerilogPatterns(): CustomPattern[] {
-        return [
-            // Trace/Verbose
-            new CustomPattern(
-                '\\[(verbose|verb|vrb|vb|v)\\]',
-                'i',
-                false,
-                '#808080', // Gray for verbose
-                undefined,
-                'normal',
-                'italic',
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                '#808080',
-                vscode.OverviewRulerLane.Full,
-                undefined
-            ),
-            // Debug
-            new CustomPattern(
-                '\\[(debug|dbug|dbg|de|d)\\]',
-                'i',
-                false,
-                '#0000FF', // Blue for debug
-                undefined,
-                'bold',
-                'normal',
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                '#0000FF',
-                vscode.OverviewRulerLane.Full,
-                undefined
-            ),
-            // Info
-            new CustomPattern(
-                '\\[(information|info|inf|in|i)\\]',
-                'i',
-                false,
-                '#008000', // Green for info
-                undefined,
-                'bold',
-                'normal',
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                '#008000',
-                vscode.OverviewRulerLane.Full,
-                undefined
-            ),
-            // Warning
-            new CustomPattern(
-                '\\[(warning|warn|wrn|wn|w)\\]',
-                'i',
-                false,
-                '#FFA500', // Orange for warnings
-                undefined,
-                'bold',
-                'normal',
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                '#FFA500',
-                vscode.OverviewRulerLane.Full,
-                undefined
-            ),
-            // Error
-            new CustomPattern(
-                '\\[(error|eror|err|er|e|fatal|fatl|ftl|fa|f)\\]',
-                'i',
-                false,
-                '#FF0000', // Red for errors
-                undefined,
-                'bold',
-                'normal',
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                '#FF0000',
-                vscode.OverviewRulerLane.Full,
-                undefined
-            ),
-        ];
-    }
-
-    private getAndroidLogCatPatterns(): CustomPattern[] {
-        return [
-            // Android logcat /V
-            new CustomPattern(
-                '(?<=^[\\s\\d\\p]*)\\bV\\b',
-                '',
-                false,
-                '#808080', // Gray for verbose
-                undefined,
-                'normal',
-                'italic',
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                '#808080',
-                vscode.OverviewRulerLane.Full,
-                undefined
-            ),
-            // Android logcat /D
-            new CustomPattern(
-                '(?<=^[\\s\\d\\p]*)\\bD\\b',
-                '',
-                false,
-                '#0000FF', // Blue for debug
-                undefined,
-                'bold',
-                'normal',
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                '#0000FF',
-                vscode.OverviewRulerLane.Full,
-                undefined
-            ),
-            // Android logcat /I
-            new CustomPattern(
-                '(?<=^[\\s\\d\\p]*)\\bI\\b',
-                '',
-                false,
-                '#008000', // Green for info
-                undefined,
-                'bold',
-                'normal',
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                '#008000',
-                vscode.OverviewRulerLane.Full,
-                undefined
-            ),
-            // Android logcat /W
-            new CustomPattern(
-                '(?<=^[\\s\\d\\p]*)\\bW\\b',
-                '',
-                false,
-                '#FFA500', // Orange for warnings
-                undefined,
-                'bold',
-                'normal',
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                '#FFA500',
-                vscode.OverviewRulerLane.Full,
-                undefined
-            ),
-            // Android logcat /E
-            new CustomPattern(
-                '(?<=^[\\s\\d\\p]*)\\bE\\b',
-                '',
-                false,
-                '#FF0000', // Red for errors
-                undefined,
-                'bold',
-                'normal',
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                '#FF0000',
-                vscode.OverviewRulerLane.Full,
-                undefined
-            ),
-        ];
-    }
-
-
-
+    // Check if the pattern is already in the cache.
     // Get the start and end positions of a match in a document. Use this if the document is in a
     // settled state, i.e. not changing, as when opening a document.
     private getMatchPositionsInDocument(document: vscode.TextDocument, matches: RegExpExecArray) {
@@ -575,7 +272,7 @@ export class CustomPatternDecorator {
     }
 
     public dispose() {
-        for (const level of this._configPattern) {
+        for (const level of this._patterns) {
             level.dispose();
         }
 

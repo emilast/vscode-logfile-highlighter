@@ -49,7 +49,7 @@ export class CustomPatternController {
 
     private onDidChangeTextDocument(changedEvent: vscode.TextDocumentChangeEvent) {
         if (changedEvent.document.languageId === Constants.LogLanguageId) {
-            this._decorator.decorateDocument(changedEvent);
+            this._decorator.decorateEditedDocument(changedEvent);
         }
     }
 
