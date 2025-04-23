@@ -49,7 +49,7 @@ export class CustomPattern {
         try {
             result.push(new RegExp(pattern, 'gm' + patternFlags));
         } catch (err) {
-            vscode.window.showErrorMessage('Regex of custom log level is invalid. Error: ' + err);
+            vscode.window.showErrorMessage(`Regex is invalid: ${pattern} Error: ${err}`);
         }
 
         return result;
