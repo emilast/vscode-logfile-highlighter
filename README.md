@@ -27,7 +27,7 @@ The extension associates with `.log` files and applies coloring to the different
 | ------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------ |
 | Dates and times in ISO format, such as           | `2015-12-09`, `2015-12-09 09:29`, `2015-12-09 09:29:02.258`                                                              |
 | Dates and times in some culture-specific formats | `12/09/2016`, `12.09.2016`, `12-09-2016`, `12-09-2015 09:29`, `12-09-2015 09:29:02,258`                                 |
-| Log level                                        | `DEBUG`, `INFO`, `INFORMATION`, `WARN`, `WARNING`, `ERROR`, `FAIL`, `FAILURE`                                            |
+| Log level                                        | `TRACE`, `DEBUG`, `INFO`, `INFORMATION`, `WARN`, `WARNING`, `ERROR`, `FAIL`, `FAILURE`                                            |
 | Numeric constants                                | `1`, `234`                                                                                                               |
 | Standard .Net constants                          | `null`, `true`, `false`                                                                                                  |
 | String constants                                 | `"lorem ipsum"`, `'lorem ipsum'`                                                                                         |
