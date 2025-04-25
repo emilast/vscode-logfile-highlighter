@@ -21,7 +21,7 @@
 			<!-- Trace/Verbose -->
 			<dict>
 				<key>match</key>
-				<string>\b(Trace)\b:</string>
+				<string>\b([Tt]race|TRACE)\b:?</string>
 
 				<key>name</key>
 				<string>comment log.verbose</string>
