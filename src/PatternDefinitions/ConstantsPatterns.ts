@@ -20,7 +20,7 @@ export const ConstantsPatterns: CustomPattern[] = [
     //     undefined,
     //     undefined,
     //     GeneralColors.Constants,
-    //     vscode.OverviewRulerLane.Full,
+    //     vscode.OverviewRulerLane.Right,
     //     undefined
     // ),
     // Guids
@@ -36,8 +36,8 @@ export const ConstantsPatterns: CustomPattern[] = [
         undefined,
         undefined,
         undefined,
-        GeneralColors.Constants,
-        vscode.OverviewRulerLane.Full,
+        undefined,
+        undefined,
         undefined
     ),
     // MAC addresses: 89:A1:23:45:AB:C0, fde8:e767:269c:0:9425:3477:7c8f:7f1a
@@ -54,8 +54,8 @@ export const ConstantsPatterns: CustomPattern[] = [
         undefined,
         undefined,
         undefined,
-        GeneralColors.Constants,
-        vscode.OverviewRulerLane.Full,
+        undefined,
+        undefined,
         undefined
     ),
     // Constants
@@ -71,8 +71,8 @@ export const ConstantsPatterns: CustomPattern[] = [
         undefined,
         undefined,
         undefined,
-        GeneralColors.Constants,
-        vscode.OverviewRulerLane.Full,
+        undefined,
+        undefined,
         undefined
     ),
     // HEX constants
@@ -88,8 +88,8 @@ export const ConstantsPatterns: CustomPattern[] = [
         undefined,
         undefined,
         undefined,
-        GeneralColors.Constants,
-        vscode.OverviewRulerLane.Full,
+        undefined,
+        undefined,
         undefined
     ),
     // String constants (double quotes)
@@ -105,8 +105,8 @@ export const ConstantsPatterns: CustomPattern[] = [
         undefined,
         undefined,
         undefined,
-        GeneralColors.StringConstants,
-        vscode.OverviewRulerLane.Full,
+        undefined,
+        undefined,
         undefined
     ),
     // String constants (single quotes)
@@ -123,8 +123,8 @@ export const ConstantsPatterns: CustomPattern[] = [
         undefined,
         undefined,
         undefined,
-        GeneralColors.StringConstants,
-        vscode.OverviewRulerLane.Full,
+        undefined,
+        undefined,
         undefined
     ),
 ];

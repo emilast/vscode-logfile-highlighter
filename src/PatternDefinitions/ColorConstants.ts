@@ -11,5 +11,5 @@ export class GeneralColors {
     static readonly Constants = '#8040f0';
     static readonly StringConstants = '#2080f0';
     static readonly Exceptions = '#f02020';
-    static readonly Paths = '#20f020';
+    static readonly Paths = '#20c020';
 }

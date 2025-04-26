@@ -19,7 +19,7 @@ export const ExceptionPatterns: CustomPattern[] = [
         undefined,
         undefined,
         GeneralColors.Exceptions,
-        vscode.OverviewRulerLane.Full,
+        vscode.OverviewRulerLane.Right,
         undefined
     ),
     // Exception call stack rows 
@@ -35,8 +35,8 @@ export const ExceptionPatterns: CustomPattern[] = [
         undefined,
         undefined,
         undefined,
-        GeneralColors.Exceptions,
-        vscode.OverviewRulerLane.Full,
+        undefined,
+        undefined,
         undefined
     ),
 ];

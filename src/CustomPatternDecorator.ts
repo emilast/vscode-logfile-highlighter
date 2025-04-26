@@ -30,10 +30,23 @@ export class CustomPatternDecorator {
             // pattern.dispose();
         }
 
-        // Apply built in patterns
+        // The built-in patterns from https://github.com/microsoft/vscode/tree/main/extensions/log
+        // are disabled since we overwrite them with our own tmLanguage file that is empty.
         this._patterns = [];
 
+        // Add all built-in patterns. The order is important since the first pattern that matches
+        // is used. Overlapping patterns are explicitly avoided by verifying the ranges
+        // before applying them.
+
         for (const pattern of TimeAndDatePatterns) {
+            this._patterns.push(pattern);
+        }
+        
+        for (const pattern of PathPatterns) {
+            this._patterns.push(pattern);
+        }
+    
+        for (const pattern of ConstantsPatterns) {
             this._patterns.push(pattern);
         }
 
@@ -49,17 +62,10 @@ export class CustomPatternDecorator {
             this._patterns.push(pattern);
         }
 
-        for (const pattern of PathPatterns) {
-            this._patterns.push(pattern);
-        }
-        
-        for (const pattern of ConstantsPatterns) {
-            this._patterns.push(pattern);
-        }
-
         for (const pattern of ExceptionPatterns) {
             this._patterns.push(pattern);
         }
+
 
         // Append all custom patterns from the configuration.
         const configPatterns = vscode.workspace.getConfiguration('logFileHighlighter').get(
@@ -155,7 +161,6 @@ export class CustomPatternDecorator {
                     }
 
                     const newRange = new vscode.Range(start, end);
-                    console.log('Adding range: ', newRange);
 
                     // Check for overlap with already applied ranges
                     if (!this.isOverlappingRange(newRange, appliedRanges)) {

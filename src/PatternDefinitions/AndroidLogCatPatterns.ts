@@ -18,8 +18,8 @@ export const AndroidLogCatPatterns: CustomPattern[] = [
         undefined,
         undefined,
         undefined,
-        LogLevelColors.Verbose,
-        vscode.OverviewRulerLane.Full,
+        undefined,
+        undefined,
         undefined
     ),
     // Android logcat /D
@@ -29,14 +29,14 @@ export const AndroidLogCatPatterns: CustomPattern[] = [
         false,
         LogLevelColors.Debug,
         undefined,
-        'bold',
+        'normal',
         'normal',
         undefined,
         undefined,
         undefined,
         undefined,
-        LogLevelColors.Debug,
-        vscode.OverviewRulerLane.Full,
+        undefined,
+        undefined,
         undefined
     ),
     // Android logcat /I
@@ -46,14 +46,14 @@ export const AndroidLogCatPatterns: CustomPattern[] = [
         false,
         LogLevelColors.Info,
         undefined,
-        'bold',
+        'normal',
         'normal',
         undefined,
         undefined,
         undefined,
         undefined,
-        LogLevelColors.Info,
-        vscode.OverviewRulerLane.Full,
+        undefined,
+        undefined,
         undefined
     ),
     // Android logcat /W
@@ -70,7 +70,7 @@ export const AndroidLogCatPatterns: CustomPattern[] = [
         undefined,
         undefined,
         LogLevelColors.Warning,
-        vscode.OverviewRulerLane.Full,
+        vscode.OverviewRulerLane.Center,
         undefined
     ),
     // Android logcat /E
@@ -87,7 +87,7 @@ export const AndroidLogCatPatterns: CustomPattern[] = [
         undefined,
         undefined,
         LogLevelColors.Error,
-        vscode.OverviewRulerLane.Full,
+        vscode.OverviewRulerLane.Right,
         undefined
     ),
 ];

@@ -13,13 +13,13 @@ export const GenericLogLevelPatterns: CustomPattern[] = [
         LogLevelColors.Verbose,
         undefined,
         'normal',
-        'italic',
+        'normal',
         undefined,
         undefined,
         undefined,
         undefined,
-        LogLevelColors.Verbose,
-        vscode.OverviewRulerLane.Full,
+        undefined,
+        undefined,
         undefined
     ),
 
@@ -30,14 +30,14 @@ export const GenericLogLevelPatterns: CustomPattern[] = [
         false,
         LogLevelColors.Debug,
         undefined,
-        'bold',
+        'normal',
         'normal',
         undefined,
         undefined,
         undefined,
         undefined,
-        LogLevelColors.Debug,
-        vscode.OverviewRulerLane.Full,
+        undefined,
+        undefined,
         undefined
     ),
     // Info
@@ -47,14 +47,14 @@ export const GenericLogLevelPatterns: CustomPattern[] = [
         false,
         LogLevelColors.Info,
         undefined,
-        'bold',
+        'normal',
         'normal',
         undefined,
         undefined,
         undefined,
         undefined,
-        LogLevelColors.Info,
-        vscode.OverviewRulerLane.Full,
+        undefined,
+        undefined,
         undefined
     ),
     // Warning
@@ -71,7 +71,7 @@ export const GenericLogLevelPatterns: CustomPattern[] = [
         undefined,
         undefined,
         LogLevelColors.Warning,
-        vscode.OverviewRulerLane.Full,
+        vscode.OverviewRulerLane.Center,
         undefined
     ),
     // Error
@@ -88,7 +88,7 @@ export const GenericLogLevelPatterns: CustomPattern[] = [
         undefined,
         undefined,
         LogLevelColors.Error,
-        vscode.OverviewRulerLane.Full,
+        vscode.OverviewRulerLane.Right,
         undefined
     ),
 ];

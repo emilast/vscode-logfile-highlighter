@@ -18,8 +18,8 @@ export const SerilogPatterns: CustomPattern[] = [
         undefined,
         undefined,
         undefined,
-        LogLevelColors.Verbose,
-        vscode.OverviewRulerLane.Full,
+        undefined,
+        undefined,
         undefined
     ),
     // Debug
@@ -29,14 +29,14 @@ export const SerilogPatterns: CustomPattern[] = [
         false,
         LogLevelColors.Debug,
         undefined,
-        'bold',
+        'normal',
         'normal',
         undefined,
         undefined,
         undefined,
         undefined,
-        LogLevelColors.Debug,
-        vscode.OverviewRulerLane.Full,
+        undefined,
+        undefined,
         undefined
     ),
     // Info
@@ -46,14 +46,14 @@ export const SerilogPatterns: CustomPattern[] = [
         false,
         LogLevelColors.Info,
         undefined,
-        'bold',
+        'normal',
         'normal',
         undefined,
         undefined,
         undefined,
         undefined,
-        LogLevelColors.Info,
-        vscode.OverviewRulerLane.Full,
+        undefined,
+        undefined,
         undefined
     ),
     // Warning
@@ -70,7 +70,7 @@ export const SerilogPatterns: CustomPattern[] = [
         undefined,
         undefined,
         LogLevelColors.Warning,
-        vscode.OverviewRulerLane.Full,
+        vscode.OverviewRulerLane.Center,
         undefined
     ),
     // Error
@@ -87,7 +87,7 @@ export const SerilogPatterns: CustomPattern[] = [
         undefined,
         undefined,
         LogLevelColors.Error,
-        vscode.OverviewRulerLane.Full,
+        vscode.OverviewRulerLane.Right,
         undefined
     ),
 ];
