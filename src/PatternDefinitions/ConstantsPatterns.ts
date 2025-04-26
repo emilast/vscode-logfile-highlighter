@@ -54,7 +54,7 @@ export const ConstantsPatterns: CustomPattern[] = [
         undefined,
         undefined,
         undefined,
-        GeneralColors.Constants,
+        GeneralColors.Constants,˛
         vscode.OverviewRulerLane.Full,
         undefined
     ),
@@ -72,6 +72,58 @@ export const ConstantsPatterns: CustomPattern[] = [
         undefined,
         undefined,
         GeneralColors.Constants,
+        vscode.OverviewRulerLane.Full,
+        undefined
+    ),
+    // HEX constants
+    new CustomPattern(
+        '\\b(0x[a-fA-F0-9]+)\\b',
+        '',
+        false,
+        GeneralColors.Constants,
+        undefined,
+        'normal',
+        'normal',
+        undefined,
+        undefined,
+        undefined,
+        undefined,
+        GeneralColors.Constants,
+        vscode.OverviewRulerLane.Full,
+        undefined
+    ),
+    // String constants (double quotes)
+    new CustomPattern(
+        '"[^"]*"',
+        '',
+        false,
+        GeneralColors.StringConstants,
+        undefined,
+        'normal',
+        'normal',
+        undefined,
+        undefined,
+        undefined,
+        undefined,
+        GeneralColors.StringConstants,
+        vscode.OverviewRulerLane.Full,
+        undefined
+    ),
+    // String constants (single quotes)
+    new CustomPattern(
+        // '\'[^\']*\'', // Original: (?<![\w])'[^']*'
+        '(?<![\\w])\'[^\']*\'', // NB: Excludes single quotes inside strings such as "don't"
+        '',
+        false,
+        GeneralColors.StringConstants,
+        undefined,
+        'normal',
+        'normal',
+        undefined,
+        undefined,
+        undefined,
+        undefined,
+        GeneralColors.StringConstants,
         vscode.OverviewRulerLane.Full,
         undefined
     ),
