@@ -10,4 +10,5 @@ export class GeneralColors {
     static readonly TimeAndDates = '#808080';
     static readonly Constants = '#8040f0';
     static readonly StringConstants = '#2080f0';
+    static readonly Exceptions = '#f02020';
 }

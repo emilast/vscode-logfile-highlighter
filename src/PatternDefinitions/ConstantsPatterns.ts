@@ -54,7 +54,7 @@ export const ConstantsPatterns: CustomPattern[] = [
         undefined,
         undefined,
         undefined,
-        GeneralColors.Constants,˛
+        GeneralColors.Constants,
         vscode.OverviewRulerLane.Full,
         undefined
     ),
