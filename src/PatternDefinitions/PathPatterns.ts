@@ -4,13 +4,14 @@ import * as vscode from 'vscode';
 import { CustomPattern } from '../CustomPattern';
 import { GeneralColors } from './ColorConstants';
 
-export const ExceptionPatterns: CustomPattern[] = [
-    // Exception type names 
+export const PathPatterns: CustomPattern[] = [
+    // URLs
     new CustomPattern(
-        '\\b([a-zA-Z.]*Exception)\\b',
+        '\\b[a-z]+://\\S+\\b/?',
+        // 'http',
         '',
         false,
-        GeneralColors.Exceptions,
+        GeneralColors.Paths,
         undefined,
         'normal',
         'normal',
@@ -18,16 +19,17 @@ export const ExceptionPatterns: CustomPattern[] = [
         undefined,
         undefined,
         undefined,
-        GeneralColors.Exceptions,
+        GeneralColors.Paths,
         vscode.OverviewRulerLane.Full,
         undefined
     ),
-    // Exception call stack rows 
+    // Match character and . sequences (such as namespaces)	as well as file names and extensions (e.g. bar.txt)
     new CustomPattern(
-        '^[\t ]*at[\t ]',
+        '(?<![\\w/\\\\])([\\w-]+\\.)+([\\w-])+(?![\\w/\\\\])',
+        // 'http',
         '',
         false,
-        GeneralColors.Exceptions,
+        GeneralColors.Paths,
         undefined,
         'normal',
         'normal',
@@ -35,7 +37,7 @@ export const ExceptionPatterns: CustomPattern[] = [
         undefined,
         undefined,
         undefined,
-        GeneralColors.Exceptions,
+        GeneralColors.Paths,
         vscode.OverviewRulerLane.Full,
         undefined
     ),

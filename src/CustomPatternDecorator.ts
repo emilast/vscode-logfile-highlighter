@@ -8,6 +8,7 @@ import { SerilogPatterns } from './PatternDefinitions/SerilogPatterns';
 import { GenericLogLevelPatterns } from './PatternDefinitions/GenericLogLevelPatterns';
 import { AndroidLogCatPatterns } from './PatternDefinitions/AndroidLogCatPatterns';
 import { ExceptionPatterns } from './PatternDefinitions/ExceptionPatterns';
+import { PathPatterns } from './PatternDefinitions/PathPatterns';
 
 export class CustomPatternDecorator {
 
@@ -48,6 +49,10 @@ export class CustomPatternDecorator {
             this._patterns.push(pattern);
         }
 
+        for (const pattern of PathPatterns) {
+            this._patterns.push(pattern);
+        }
+        
         for (const pattern of ConstantsPatterns) {
             this._patterns.push(pattern);
         }
