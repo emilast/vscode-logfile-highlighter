@@ -19,8 +19,8 @@ export const PathPatterns: CustomPattern[] = [
         undefined,
         undefined,
         undefined,
-        GeneralColors.Paths,
-        vscode.OverviewRulerLane.Full,
+        undefined,
+        undefined,
         undefined
     ),
     // Match character and . sequences (such as namespaces)	as well as file names and extensions (e.g. bar.txt)
@@ -37,8 +37,8 @@ export const PathPatterns: CustomPattern[] = [
         undefined,
         undefined,
         undefined,
-        GeneralColors.Paths,
-        vscode.OverviewRulerLane.Full,
+        undefined,
+        undefined,
         undefined
     ),
 ];

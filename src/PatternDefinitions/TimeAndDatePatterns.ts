@@ -1,6 +1,5 @@
 'use strict';
 
-import * as vscode from 'vscode';
 import { CustomPattern } from '../CustomPattern';
 import { GeneralColors } from './ColorConstants';
 
@@ -18,8 +17,8 @@ export const TimeAndDatePatterns: CustomPattern[] = [
         undefined,
         undefined,
         undefined,
-        GeneralColors.TimeAndDates,
-        vscode.OverviewRulerLane.Full,
+        undefined,
+        undefined,
         undefined
     ),
     // Culture specific dates ("23/08/2016", "23.08.2016") 
@@ -35,13 +34,13 @@ export const TimeAndDatePatterns: CustomPattern[] = [
         undefined,
         undefined,
         undefined,
-        GeneralColors.TimeAndDates,
-        vscode.OverviewRulerLane.Full,
+        undefined,
+        undefined,
         undefined
     ),
     // Clock times with optional timezone and optional T prefix ("T09:13:16", "09:13:16", "09:13:16.323", "09:13:16+01:00")
     new CustomPattern(
-        'T?\\d{1,2}:\\d{2}(:\\d{2}([.,]\\d{1,})?)?(Z| ?[+-]\\d{1,2}:\\d{2})?\\b',
+        '(T|\\b)\\d{1,2}:\\d{2}(:\\d{2}([.,]\\d{1,})?)?(Z| ?[+-]\\d{1,2}:\\d{2})?\\b',
         '',
         false,
         GeneralColors.TimeAndDates,
@@ -52,8 +51,8 @@ export const TimeAndDatePatterns: CustomPattern[] = [
         undefined,
         undefined,
         undefined,
-        GeneralColors.TimeAndDates,
-        vscode.OverviewRulerLane.Full,
+        undefined,
+        undefined,
         undefined
     ),
     // Clock times without separator and with optional timezone ("T091316", "T091316.323", "T091316+0100")
@@ -69,8 +68,8 @@ export const TimeAndDatePatterns: CustomPattern[] = [
         undefined,
         undefined,
         undefined,
-        GeneralColors.TimeAndDates,
-        vscode.OverviewRulerLane.Full,
+        undefined,
+        undefined,
         undefined
     ),
 ];
