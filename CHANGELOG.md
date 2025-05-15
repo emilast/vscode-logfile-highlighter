@@ -1,5 +1,11 @@
 # Change Log
 
+### 3.4.1 - 15 May 2025
+
+* Updated package dependencies.
+
+* Added pattern for TRACE (contributed by @eronnen)
+
 ### 3.4.0 - 1 January 2025
 
 * Refactored timestamp parsing to be more maintainable and flexible.
