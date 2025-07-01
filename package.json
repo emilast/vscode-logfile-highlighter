@@ -186,7 +186,7 @@
 		"@types/node": "^24.0.7",
 		"@types/vscode": "^1.100.0",
 		"@vscode/test-electron": "^2.5.2",
-		"jasmine": "^5.7.1",
+		"jasmine": "^5.8.0",
 		"jasmine-console-reporter": "^3.1.0",
 		"jasmine-core": "^5.6.0",
 		"minimist": "^1.2.8",
