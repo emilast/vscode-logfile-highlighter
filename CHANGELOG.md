@@ -1,5 +1,10 @@
 # Change Log
 
+* Updated package dependencies.
+
+* Reduce scrolling for tail mode. The last line is no longer kept at the center of the window. Fixes #727.
+
+
 ### 3.4.1 - 15 May 2025
 
 * Updated package dependencies.

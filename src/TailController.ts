@@ -108,7 +108,7 @@ export class TailController {
             const range = new vscode.Range(lastLine, 0, lastLine, 0);
 
             // Scroll to the last line
-            vscode.window.activeTextEditor.revealRange(range, vscode.TextEditorRevealType.InCenterIfOutsideViewport);
+            vscode.window.activeTextEditor.revealRange(range, vscode.TextEditorRevealType.Default);
         }
     }
 }
