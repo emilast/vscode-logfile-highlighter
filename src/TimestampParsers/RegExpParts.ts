@@ -4,7 +4,9 @@ export class RegExpParts {
     public static readonly DateTimeSeparator: string = '((?:T|\\b) ?)';
     
     /** Time pattern in format HH:MM:SS[.mmm] */
-    public static readonly Time: string = '\\d{2}:\\d{2}(?::\\d{2}(?:[.,]\\d{3})?)?';
+    public static readonly TimeHourMinutes: string = '\\d{2}:\\d{2}';
+    public static readonly TimeHourMinutesSeconds: string = '\\d{2}:\\d{2}:\\d{2}';
+    public static readonly TimeHourMinutesSecondsMilliseconds: string = '\\d{2}:\\d{2}:\\d{2}[.,]\\d{3}';
 
     /** Time pattern in format HHMMSS[.mmm] */
     public static readonly TimeSlim: string = '(\\d{2})(\\d{2})(?:(\\d{2}(?:[.,]\\d{3})?))?';
@@ -20,4 +22,6 @@ export class RegExpParts {
     /** Optional timezone pattern (Z or ±HHMM) */
     public static readonly TimeZoneSlim: string = '(?:(Z)|([+-])(\\d{2})(\\d{2}))?\\b';
 
+    /** Comprehensive time pattern supporting HH:MM, HH:MM::SS, HH:MM::SS.mmm[us], and optional timezone */
+    public static readonly Time = `((${RegExpParts.TimeHourMinutesSecondsMilliseconds}${RegExpParts.Microseconds})|(${RegExpParts.TimeHourMinutesSeconds})|(${RegExpParts.TimeHourMinutes}))${RegExpParts.TimeZone}`;
 }
