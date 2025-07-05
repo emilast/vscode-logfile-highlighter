@@ -175,6 +175,18 @@ describe('TimestampParser', () => {
             expect(result.microseconds).toBe(123);
         });
 
+        it('ignores non-time digit sequences such as "29:212121".', () => {
+            // Arrange
+            // const text = '29:212121';
+            const text = 'at $5.S (file:///c:/Program%20Files/Microsoft%20VS%20Code/resources/app/out/vs/workbench/api/node/extensionHostProcess.js:29:116786)';
+
+            // Act
+            const result = testObject.getTimestampFromText(text);
+
+            // Assert
+            expect(result).toBeUndefined();
+        });
+
         it('gets the correct timestamp from "YYYY-MM-DD hh:mm:ss.ssssss".', () => {
             // Arrange
             const text = '2024-01-23 10:11:12.100123 first line';

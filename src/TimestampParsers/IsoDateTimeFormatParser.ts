@@ -4,7 +4,7 @@ import { TimestampFormatParser, TimestampMatch } from "./TimestampParser";
 
 export class IsoDateTimeFormatParser implements TimestampFormatParser {
         
-    private pattern = new RegExp(`\\d{4}-\\d{2}-\\d{2}${RegExpParts.DateTimeSeparator}(${RegExpParts.Time})${RegExpParts.Microseconds}${RegExpParts.TimeZone}`);
+    private pattern = new RegExp(`\\d{4}-\\d{2}-\\d{2}${RegExpParts.DateTimeSeparator}(${RegExpParts.Time})`);
 
     parse(text: string): TimestampMatch | null {
         const match = this.pattern.exec(text);

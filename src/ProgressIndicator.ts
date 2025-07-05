@@ -43,8 +43,14 @@ export class ProgressIndicator {
 
             if (timePeriod !== undefined) {
 
-                let timestampStartIndex = this._timestampParser.getTimestampFromText(texts.endLine).matchIndex;
-                let timestampWidth = this._timestampParser.getTimestampFromText(texts.endLine).original.length;
+                const endLineTimestamp = this._timestampParser.getTimestampFromText(texts.endLine);
+                if (!endLineTimestamp) {
+                    // If no timestamp is found in the end line, we cannot calculate progress
+                    return;
+                }
+                
+                let timestampStartIndex = endLineTimestamp.matchIndex;
+                let timestampWidth = endLineTimestamp.original.length;
 
                 const durationInMicroseconds = timePeriod.getDurationAsMicroseconds();
                 const startTimeAsEpoch = timePeriod.startTime.getTimeAsEpoch();
