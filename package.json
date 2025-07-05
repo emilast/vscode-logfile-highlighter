@@ -154,7 +154,7 @@
 				"logFileHighlighter.enableProgressIndicator": {
 					"type": "boolean",
 					"default": true,
-					"description": "Enable or disable the progress indicator for selected lines"
+					"description": "Enable the progress indicator for selected lines"
 				},
 				"logFileHighlighter.progressIndicatorUnderlineColor": {
 					"format": "color-hex",
