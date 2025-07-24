@@ -70,7 +70,7 @@ export class ProgressIndicator {
                         var decorationCharacterCount = Math.floor(timestampWidth * progress);
 
                         // set decorationCharacterCount to 0 if not a number or infinit
-                        if (isNaN(decorationCharacterCount) || !isFinite(decorationCharacterCount)) {
+                        if (isNaN(decorationCharacterCount) || !isFinite(decorationCharacterCount) || decorationCharacterCount < 0) {
                             decorationCharacterCount = 0;
                         }
 

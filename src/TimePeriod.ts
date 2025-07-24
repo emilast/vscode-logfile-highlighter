@@ -64,6 +64,10 @@ export class TimePeriod {
     }
 
     public getDurationAsMicroseconds(): number {
+        if (!this.duration) {
+            return 0;
+        }
+
         return this.duration.asMilliseconds() * 1000 + this.durationPartMicroseconds;
     }
 }

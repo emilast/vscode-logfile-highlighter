@@ -87,10 +87,15 @@ export class ProgressIndicatorController {
 
     /// Decorates the lines in the specified range of the given text editor.
     private decorateLines(event: vscode.TextEditorSelectionChangeEvent) {
-        if (event.textEditor === vscode.window.activeTextEditor) {
-            for (const selection of event.selections) {
-                this._progressIndicator.decorateLines(event.textEditor, selection.start.line, selection.end.line);
+        try {
+            if (event.textEditor === vscode.window.activeTextEditor) {
+                for (const selection of event.selections) {
+                    this._progressIndicator.decorateLines(event.textEditor, selection.start.line, selection.end.line);
+                }
             }
+        } catch (error) {
+            console.error('Error while decorating lines:', error);
+            vscode.window.showErrorMessage('An error occurred while decorating lines: ' + error.message);
         }
     }
 }

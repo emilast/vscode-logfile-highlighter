@@ -8,6 +8,9 @@ export class TimeWithMicroseconds {
     }
 
     public getTimeAsEpoch(): number {
+        if (!this.time) {
+            return 0;
+        }
         return this.time.valueOf() * 1000 + this.microseconds;
     }
 }
