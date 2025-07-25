@@ -1,5 +1,11 @@
 # Change Log
 
+### 3.4.4 - 25 July 2025
+
+* Updated package dependencies.
+
+* Stability fixes for time period analysis. Should reduce the amount of errors logged in the Extension Host log. Fixes #703. Hopefully this is the last fix for this issue, as it has been a recurring problem in the last few releases.
+
 ### 3.4.3 - 5 July 2025
 
 * Updated package dependencies.
