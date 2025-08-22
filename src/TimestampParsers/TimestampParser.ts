@@ -11,12 +11,16 @@ import { USDateTimeFormatParser } from "./USDateTimeFormatParser";
 import { LittleEndianDateFormatParser } from "./LittleEndianDateFormatParser";
 import { LittleEndianDateTimeFormatParser } from "./LittleEndianDateTimeFormatParser";
 import { IsoSlimDateTimeFormatParser } from "./IsoSlimDateTimeFormatParser";
+import { CustomTimestampFormatParser } from "./CustomTimestampFormatParser";
 
 export class TimestampParser {
     private parsers: TimestampFormatParser[];
+    private customFormatParser: CustomTimestampFormatParser;
 
     constructor() {
+        this.customFormatParser = new CustomTimestampFormatParser();
         this.parsers = [
+            this.customFormatParser,
             new IsoDateTimeFormatParser(),
             new IsoSlimDateTimeFormatParser(),
             new USDateTimeFormatParser(),
