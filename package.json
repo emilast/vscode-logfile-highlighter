@@ -166,7 +166,28 @@
 					"type": "boolean",
 					"default": true,
 					"description": "Enable or disable the tail mode in log files. Scroll to the end of a file to activate it. The status bar will show 'Log File Tail Mode' when it is active."
-				}
+				},
+                "logFileHighlighter.customTimestampFormats": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "pattern": {
+                                "type": "string",
+                                "title": "Timestamp pattern",
+                                "description": "Regular expression pattern to match timestamps. Must include named capture groups for date/time components."
+                            },
+                            "format": {
+                                "type": "string",
+                                "title": "Timestamp format",
+                                "description": "Format string in moment.js syntax (e.g. 'YYYY.MM.DD-HH.mm.ss:SSS')"
+                            }
+                        },
+                        "required": ["pattern", "format"]
+                    },
+                    "default": [],
+                    "description": "Custom timestamp formats to parse in log files"
+                }
 			}
 		}
 	},
