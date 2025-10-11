@@ -1,6 +1,10 @@
 'use strict';
 import { TimestampFormatParser, TimestampMatch } from "./TimestampParser";
 
+/**
+ * Examples:
+ *  2020-01-28
+ */
 export class IsoDateFormatParser implements TimestampFormatParser {
     private pattern = new RegExp('\\d{4}-\\d{2}-\\d{2}(?:T|\\b)');
 

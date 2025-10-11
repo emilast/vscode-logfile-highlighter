@@ -17,7 +17,7 @@ export class RegExpParts {
     public static readonly Microseconds: string = '(?<microseconds>\\d{3})?\\d?';
     
     /** Optional timezone pattern (Z or ±HH:MM) */
-    public static readonly TimeZone: string = '(?:Z| ?[+-]\\d{2}:\\d{2})?\\b';
+    public static readonly TimeZone: string = '(?: ?(Z|[+-]\\d{2}:\\d{2}))?\\b';
 
     /** Optional timezone pattern (Z or ±HHMM) */
     public static readonly TimeZoneSlim: string = '(?:(Z)|([+-])(\\d{2})(\\d{2}))?\\b';

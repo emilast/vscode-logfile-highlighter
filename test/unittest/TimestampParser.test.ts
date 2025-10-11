@@ -130,6 +130,38 @@ describe('TimestampParser', () => {
             expect(result.microseconds).toBe(0);
         });
 
+        it('gets the correct timestamp from "YYYY-MM-DD hh:mm:ss+02:00".', () => {
+            // Arrange
+            const text = '2024-11-13 09:10:00+02:00 first line';
+
+            // Act
+            const result = testObject.getTimestampFromText(text);
+
+            // Assert
+            expect(result.moment.toISOString()).toEqual(moment('2024-11-13 09:10:00+02:00').toISOString());
+            expect(result.duration).toBeUndefined();
+            expect(result.matchIndex).toBe(0);
+            expect(result.original).toBe('2024-11-13 09:10:00+02:00');
+            expect(result.microseconds).toBe(0);
+        });
+
+
+        
+        it('gets the correct timestamp from "YYYY-MM-DD hh:mm:ss +02:00".', () => {
+            // Arrange
+            const text = '2024-11-13 09:10:00 +02:00 first line';
+
+            // Act
+            const result = testObject.getTimestampFromText(text);
+
+            // Assert
+            expect(result.moment.toISOString()).toEqual(moment('2024-11-13 09:10:00+02:00').toISOString());
+            expect(result.duration).toBeUndefined();
+            expect(result.matchIndex).toBe(0);
+            expect(result.original).toBe('2024-11-13 09:10:00 +02:00');
+            expect(result.microseconds).toBe(0);
+        });
+
         it('gets the correct timestamp from "YYYY-MM-DDThhmmss".', () => {
             // Arrange
             const text = '2024-11-13T091012 first line';
