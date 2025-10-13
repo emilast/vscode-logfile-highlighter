@@ -1,5 +1,12 @@
 # Change Log
 
+### 3.4.5 - 13 October 2025
+
+* Adjusted the regular expression for ISO timestamps to handle a space between the time and time zone parts. Fixes #750.
+
+* Updated package dependencies.
+
+
 ### 3.4.4 - 25 July 2025
 
 * Updated package dependencies.
