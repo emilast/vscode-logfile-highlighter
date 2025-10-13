@@ -16,7 +16,7 @@
 		"url": "https://github.com/emilast/vscode-logfile-highlighter.git"
 	},
 	"engines": {
-		"vscode": "^1.105.0"
+		"vscode": "^1.108.0"
 	},
 	"publisher": "emilast",
 	"sponsor": {
@@ -30,7 +30,7 @@
 		"ui",
 		"workspace"
 	],
-	"main": "./out/src/extension",
+	"main": "./dist/extension.js",
 	"contributes": {
 		"languages": [
 			{
@@ -174,12 +174,15 @@
 		"onLanguage:log"
 	],
 	"scripts": {
-		"vscode:prepublish": "npm run compile",
-		"compile": "tsc -p ./",
-		"watch": "tsc -watch -p ./",
+		"vscode:prepublish": "npm run package",
+		"compile": "webpack",
+		"watch": "webpack --watch",
+		"package": "webpack --mode production --devtool hidden-source-map",
+		"compile-tests": "tsc -p . --outDir out",
+		"watch-tests": "tsc -p . -w --outDir out",
 		"preinstall": "npx npm-force-resolutions",
 		"tslint": "tslint --project ./",
-		"unittest": "node out/test/testRunner.js -c jasmine.unittest.json"
+		"unittest": "npm run compile-tests && node out/test/testRunner.js -c jasmine.unittest.json"
 	},
 	"devDependencies": {
 		"@types/jasmine": "^6.0.0",
@@ -190,8 +193,11 @@
 		"jasmine-console-reporter": "^3.1.0",
 		"jasmine-core": "^6.0.1",
 		"minimist": "^1.2.8",
+		"ts-loader": "^9.5.4",
 		"tslint": "^6.1.3",
-		"typescript": "^5.9.3"
+		"typescript": "^5.9.3",
+		"webpack": "^5.102.1",
+		"webpack-cli": "^6.0.1"
 	},
 	"dependencies": {
 		"moment": "^2.30.1"
