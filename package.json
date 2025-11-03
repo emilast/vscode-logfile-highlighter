@@ -183,7 +183,7 @@
 	},
 	"devDependencies": {
 		"@types/jasmine": "^5.1.9",
-		"@types/node": "^24.7.2",
+		"@types/node": "^24.10.0",
 		"@types/vscode": "^1.105.0",
 		"@vscode/test-electron": "^2.5.2",
 		"jasmine": "^5.12.0",
