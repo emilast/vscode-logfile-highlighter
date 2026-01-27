@@ -182,11 +182,11 @@
 		"unittest": "node out/test/testRunner.js -c jasmine.unittest.json"
 	},
 	"devDependencies": {
-		"@types/jasmine": "^5.1.9",
+		"@types/jasmine": "^6.0.0",
 		"@types/node": "^25.0.10",
 		"@types/vscode": "^1.105.0",
 		"@vscode/test-electron": "^2.5.2",
-		"jasmine": "^5.12.0",
+		"jasmine": "^6.0.0",
 		"jasmine-console-reporter": "^3.1.0",
 		"jasmine-core": "^6.0.1",
 		"minimist": "^1.2.8",
