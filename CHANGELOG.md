@@ -1,5 +1,12 @@
 # Change Log
 
+### 3.5.0 - 27 January 2026
+
+* Switched to webpack for creating the application bundle. Package size goes from 1.3M to 275K.
+
+* Updated package dependencies.
+
+
 ### 3.4.5 - 13 October 2025
 
 * Adjusted the regular expression for ISO timestamps to handle a space between the time and time zone parts. Fixes #750.
