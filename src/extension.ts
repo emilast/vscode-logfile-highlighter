@@ -10,13 +10,16 @@ import { TimePeriodCalculator } from './TimePeriodCalculator';
 import { TimePeriodController } from './TimePeriodController';
 import { TailController } from './TailController';
 import { TimestampParser } from './TimestampParsers/TimestampParser';
+import { CustomTimestampFormatController } from './CustomTimestampFormatController';
 
 // this method is called when the extension is activated
 export function activate(context: vscode.ExtensionContext) {
 
     const selectionHelper = new SelectionHelper();
 
-    var timestampParser = new TimestampParser()
+    const timestampParser = new TimestampParser();
+    const customFormatParser = timestampParser['customFormatParser'];
+    const timestampFormatController = new CustomTimestampFormatController(customFormatParser);
 
     // create a new time calculator and controller
     const timeCalculator = new TimePeriodCalculator(timestampParser);
@@ -42,7 +45,7 @@ export function activate(context: vscode.ExtensionContext) {
             }));
 
     // Add to a list of disposables which are disposed when this extension is deactivated.
-    context.subscriptions.push(timeController, customPatternController, progressIndicatorController, tailController);
+    context.subscriptions.push(timeController, customPatternController, progressIndicatorController, tailController, timestampFormatController);
 }
 
 // this method is called when your extension is deactivated
