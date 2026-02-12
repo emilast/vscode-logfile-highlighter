@@ -35,6 +35,11 @@ export class ProgressIndicator {
      * @param endLine - The ending line of the range to decorate.
      */
     public decorateLines(editor: vscode.TextEditor, startLine: number, endLine: number) {
+        // Ensure decoration is initialized before use
+        if (!this._decoration) {
+            return;
+        }
+
         const doc = editor.document;
 
         let texts = this._selectionHelper.getFirstAndLastLines(editor, doc);

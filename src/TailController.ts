@@ -48,7 +48,7 @@ export class TailController {
             this.checkEndOfFileVisibilityInActiveEditor();
         }
         else {
-            this.dispose
+            this.dispose();
         }
 
     }
@@ -58,8 +58,12 @@ export class TailController {
     }
 
     public dispose() {
-        this._statusBarItem.dispose();
-        this._disposable.dispose();
+        if (this._statusBarItem) {
+            this._statusBarItem.dispose();
+        }
+        if (this._disposable) {
+            this._disposable.dispose();
+        }
     }
 
     private getConfiguration(): { enableTailMode: boolean } {
@@ -74,17 +78,19 @@ export class TailController {
     private checkEndOfFileVisibilityInActiveEditor() {
         const textEditor = vscode.window.activeTextEditor;
         if (textEditor) {
-            const visibleRanges = textEditor.visibleRanges
+            const visibleRanges = textEditor.visibleRanges;
 
-            if (visibleRanges && textEditor?.document.languageId === Constants.LogLanguageId) {
+            if (visibleRanges && visibleRanges.length > 0 && textEditor?.document.languageId === Constants.LogLanguageId) {
                 const lastLine = textEditor.document.lineCount - 1;
                 const lastVisibleRange = visibleRanges[0].end.line;
 
                 if (lastVisibleRange >= lastLine) {
                     // The end of the file is visible
                     this._tailModeActive = true;
-                    this._statusBarItem.text = 'Log File Tail Mode';
-                    this._statusBarItem.show();
+                    if (this._statusBarItem) {
+                        this._statusBarItem.text = 'Log File Tail Mode';
+                        this._statusBarItem.show();
+                    }
 
                     return;
                 }
@@ -93,7 +99,9 @@ export class TailController {
 
         // Else: Not a log file, or the end of the file is not visible => no tail mode
         this._tailModeActive = false;
-        this._statusBarItem.hide();
+        if (this._statusBarItem) {
+            this._statusBarItem.hide();
+        }
     }
 
     editorChanged(event: vscode.TextEditor) {
