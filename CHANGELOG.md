@@ -1,5 +1,9 @@
 # Change Log
 
+### 3.5.1 - Unreleased
+
+* Stability fixes for progress indicator and tail mode. Fixes #744.
+
 ### 3.5.0 - 27 January 2026
 
 * Switched to webpack for creating the application bundle. Package size goes from 1.3M to 275K.
