@@ -45,8 +45,12 @@ export class ProgressIndicatorController {
     }
 
     public dispose() {
-        this._statusBarItem.dispose();
-        this._disposableSubscriptions.dispose();
+        if (this._statusBarItem) {
+            this._statusBarItem.dispose();
+        }
+        if (this._disposableSubscriptions) {
+            this._disposableSubscriptions.dispose();
+        }
     }
 
     private onDidChangeConfiguration(): void {
@@ -88,6 +92,10 @@ export class ProgressIndicatorController {
     /// Decorates the lines in the specified range of the given text editor.
     private decorateLines(event: vscode.TextEditorSelectionChangeEvent) {
         try {
+            // Validate event and editor before processing
+            if (!event.textEditor || !event.textEditor.document) {
+                return;
+            }
             if (event.textEditor === vscode.window.activeTextEditor) {
                 for (const selection of event.selections) {
                     this._progressIndicator.decorateLines(event.textEditor, selection.start.line, selection.end.line);
