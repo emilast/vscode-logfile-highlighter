@@ -1,8 +1,10 @@
 # Change Log
 
-### 3.5.1 - Unreleased
+### 3.5.1 - 15 February
 
 * Stability fixes for progress indicator and tail mode. Fixes #744.
+
+* Updated package dependencies.
 
 ### 3.5.0 - 27 January 2026
 

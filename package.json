@@ -7,7 +7,7 @@
 		"Other"
 	],
 	"license": "MIT",
-	"version": "3.5.0",
+	"version": "3.5.1",
 	"bugs": {
 		"url": "https://github.com/emilast/vscode-logfile-highlighter/issues"
 	},
@@ -16,7 +16,7 @@
 		"url": "https://github.com/emilast/vscode-logfile-highlighter.git"
 	},
 	"engines": {
-		"vscode": "^1.108.0"
+		"vscode": "^1.109.0"
 	},
 	"publisher": "emilast",
 	"sponsor": {
