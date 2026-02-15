@@ -13,7 +13,7 @@
             "stopOnEntry": false,
             "sourceMaps": true,
             "outFiles": [
-                "${workspaceRoot}/out/**/*.js"
+                "${workspaceRoot}/dist/**/*.js"
             ],
             "preLaunchTask": "npm: watch"
         },
@@ -29,11 +29,11 @@
             },
             "sourceMaps": true,
             "outFiles": [
-                "${workspaceRoot}/out/**/*.js"
+                "${workspaceRoot}/dist/**/*.js"
             ],
             "type": "node",
             "request": "launch",
-            "program": "${workspaceRoot}/out/test/testRunner.js",
+            "program": "${workspaceRoot}/dist/test/testRunner.js",
             "stopOnEntry": false,
             "args": [
                 "-c",
@@ -49,12 +49,12 @@
             "args": [
                 "${workspaceRoot}/test/integrationtest/testLogs/",
                 "--extensionDevelopmentPath=${workspaceRoot}",
-                "--extensionTestsPath=${workspaceRoot}/out/test/integrationtest/"
+                "--extensionTestsPath=${workspaceRoot}/dist/test/integrationtest/"
             ],
             "stopOnEntry": false,
             "sourceMaps": true,
             "outFiles": [
-                "${workspaceRoot}/out/**/*.js"
+                "${workspaceRoot}/dist/**/*.js"
             ],
             "preLaunchTask": "npm: watch"
         }

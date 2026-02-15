@@ -6,7 +6,14 @@
         {
             "type": "npm",
             "script": "watch",
-            "problemMatcher": "$tsc-watch",
+            "problemMatcher": {
+                "base": "$tsc-watch",
+                "background": {
+                    "activeOnStart": true,
+                    "beginsPattern": "^\\s*\\[webpack-cli\\] Compiler starting",
+                    "endsPattern": "^webpack \\d+\\.\\d+\\.\\d+ compiled"
+                }
+            },
             "isBackground": true,
             "presentation": {
                 "reveal": "never"
