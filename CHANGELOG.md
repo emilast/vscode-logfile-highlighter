@@ -1,5 +1,9 @@
 # Change Log
 
+### 3.5.2 - 5 August
+
+* Updated package dependencies.
+
 ### 3.5.1 - 15 February
 
 * Stability fixes for progress indicator and tail mode. Fixes #744.
