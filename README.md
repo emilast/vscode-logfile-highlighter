@@ -29,6 +29,7 @@ The extension associates with `.log` files and applies coloring to the different
 | ------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------ |
 | Dates and times in ISO format, such as           | `2015-12-09`, `2015-12-09 09:29`, `2015-12-09 09:29:02.258`                                                              |
 | Dates and times in some culture-specific formats | `12/09/2016`, `12.09.2016`, `12-09-2016`, `12-09-2015 09:29`, `12-09-2015 09:29:02,258`                                 |
+| Custom timestamp formats                         | Configurable through settings (see [Custom Timestamp Formats](#custom-timestamp-formats) section below)                  |
 | Log level                                        | `TRACE`, `DEBUG`, `INFO`, `INFORMATION`, `WARN`, `WARNING`, `ERROR`, `FAIL`, `FAILURE`                                            |
 | Numeric constants                                | `1`, `234`                                                                                                               |
 | Standard .Net constants                          | `null`, `true`, `false`                                                                                                  |
@@ -68,6 +69,29 @@ The extension also supports a tail mode where the end of the log file is kept in
 To deactivate tail mode for the current file, scroll up again.
 
 This feature can be disabled by setting the `logFileHighlighter.enableTailMode` setting to `false`.
+
+## Custom Timestamp Formats
+
+You can add support for custom timestamp formats that aren't covered by the default patterns. This is especially useful for specialized log formats like game engine logs or custom logging frameworks.
+
+To add custom timestamp formats, use the `logFileHighlighter.customTimestampFormats` setting in your VS Code settings.
+
+Each custom format requires two properties:
+- **pattern**: A regular expression pattern that matches your timestamp format
+- **format**: The moment.js format string that describes how to parse the timestamp
+
+Example configuration for Unreal Engine log timestamps (`[2025.04.09-17.03.29:413]`):
+
+```JSON
+"logFileHighlighter.customTimestampFormats": [
+    {
+        "pattern": "\\[(\\d{4})\\.(\\d{2})\\.(\\d{2})-(\\d{2})\\.(\\d{2})\\.(\\d{2}):(\\d{3})\\]",
+        "format": "YYYY.MM.DD-HH.mm.ss:SSS"
+    }
+]
+```
+
+The custom timestamp formats are checked before the default formats, so they take precedence if there's a match.
 
 ## Customization
 
