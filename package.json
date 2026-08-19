@@ -191,7 +191,7 @@
 		"@vscode/test-electron": "^3.1.0",
 		"jasmine": "^6.3.0",
 		"jasmine-console-reporter": "^3.1.0",
-		"jasmine-core": "^6.2.0",
+		"jasmine-core": "^7.0.1",
 		"minimist": "^1.2.8",
 		"ts-loader": "^9.6.2",
 		"tslint": "^6.1.3",
