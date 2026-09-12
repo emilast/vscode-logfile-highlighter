@@ -43,14 +43,6 @@ export class TailController {
                 this.editorChanged(event);
             }, this, subscriptions);
 
-            // Listen for external file changes (e.g., file modified on disk by external processes)
-            // Watch all files with common log extensions
-            this._fileSystemWatcher = vscode.workspace.createFileSystemWatcher('**/*.log');
-            
-            this._fileSystemWatcher.onDidChange(uri => {
-                this.onFileChanged(uri);
-            }, this, subscriptions);
-
             // create a combined disposable from both event subscriptions
             this._disposable = vscode.Disposable.from(...subscriptions);
 
@@ -75,6 +67,7 @@ export class TailController {
         }
         if (this._fileSystemWatcher) {
             this._fileSystemWatcher.dispose();
+            this._fileSystemWatcher = undefined;
         }
     }
 
@@ -105,6 +98,9 @@ export class TailController {
                         this._statusBarItem.show();
                     }
 
+                    // Set up file watcher for the current file when entering tail mode
+                    this.setupFileWatcher(textEditor.document.uri);
+
                     return;
                 }
             }
@@ -115,9 +111,15 @@ export class TailController {
         if (this._statusBarItem) {
             this._statusBarItem.hide();
         }
+
+        // Clean up file watcher when exiting tail mode
+        if (this._fileSystemWatcher) {
+            this._fileSystemWatcher.dispose();
+            this._fileSystemWatcher = undefined;
+        }
     }
 
-    editorChanged(event: vscode.TextEditor) {
+    editorChanged(event: vscode.TextEditor | undefined) {
         this.checkEndOfFileVisibilityInActiveEditor();
     }
 
@@ -133,20 +135,20 @@ export class TailController {
         }
     }
 
-    private onFileChanged(uri: vscode.Uri) {
-        // Handle external file changes (file modified on disk)
-        const activeEditor = vscode.window.activeTextEditor;
-        
-        if (!activeEditor || !this._tailModeActive) {
-            return;
+    private setupFileWatcher(uri: vscode.Uri) {
+        // Clean up any existing watcher
+        if (this._fileSystemWatcher) {
+            this._fileSystemWatcher.dispose();
         }
 
-        const activeDocumentUri = activeEditor.document.uri;
+        // Create a watcher for only the current file
+        this._fileSystemWatcher = vscode.workspace.createFileSystemWatcher(uri.fsPath, false, false, true);
 
-        // Check if the changed file matches the currently active document
-        if (uri.fsPath === activeDocumentUri.fsPath) {
-            // File was modified externally, trigger tail scrolling
-            this.tailLogFile(activeEditor.document);
-        }
+        this._fileSystemWatcher.onDidChange(() => {
+            const activeEditor = vscode.window.activeTextEditor;
+            if (activeEditor && activeEditor.document.uri.fsPath === uri.fsPath && this._tailModeActive) {
+                this.tailLogFile(activeEditor.document);
+            }
+        });
     }
 }
