@@ -42,7 +42,7 @@ export class TailController {
                 this.editorChanged(event);
             }, this, subscriptions);
 
-            // Listen for external file changes (e.g., file modified on disk)
+            // Listen for external file changes (e.g., file modified on disk by external processes)
             vscode.workspace.onDidChangeWatchedFiles(event => {
                 this.onDidChangeWatchedFiles(event);
             }, this, subscriptions);
@@ -126,7 +126,7 @@ export class TailController {
         }
     }
 
-    private onDidChangeWatchedFiles(event: vscode.FileChangeEvent) {
+    private onDidChangeWatchedFiles(event: vscode.FileChangeEvent[]) {
         // Handle external file changes (file modified on disk)
         const activeEditor = vscode.window.activeTextEditor;
         
@@ -137,7 +137,7 @@ export class TailController {
         const activeDocumentUri = activeEditor.document.uri;
 
         // Check if any of the changed files match the currently active document
-        for (const change of event.changes) {
+        for (const change of event) {
             if (change.uri.fsPath === activeDocumentUri.fsPath) {
                 // File was modified externally, trigger tail scrolling
                 this.tailLogFile(activeEditor.document);
