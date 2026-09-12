@@ -42,6 +42,11 @@ export class TailController {
                 this.editorChanged(event);
             }, this, subscriptions);
 
+            // Listen for external file changes (e.g., file modified on disk)
+            vscode.workspace.onDidChangeWatchedFiles(event => {
+                this.onDidChangeWatchedFiles(event);
+            }, this, subscriptions);
+
             // create a combined disposable from both event subscriptions
             this._disposable = vscode.Disposable.from(...subscriptions);
 
@@ -75,6 +80,7 @@ export class TailController {
             enableTailMode
         };
     }
+
     private checkEndOfFileVisibilityInActiveEditor() {
         const textEditor = vscode.window.activeTextEditor;
         if (textEditor) {
@@ -117,6 +123,26 @@ export class TailController {
 
             // Scroll to the last line
             vscode.window.activeTextEditor.revealRange(range, vscode.TextEditorRevealType.Default);
+        }
+    }
+
+    private onDidChangeWatchedFiles(event: vscode.FileChangeEvent) {
+        // Handle external file changes (file modified on disk)
+        const activeEditor = vscode.window.activeTextEditor;
+        
+        if (!activeEditor || !this._tailModeActive) {
+            return;
+        }
+
+        const activeDocumentUri = activeEditor.document.uri;
+
+        // Check if any of the changed files match the currently active document
+        for (const change of event.changes) {
+            if (change.uri.fsPath === activeDocumentUri.fsPath) {
+                // File was modified externally, trigger tail scrolling
+                this.tailLogFile(activeEditor.document);
+                break;
+            }
         }
     }
 }
