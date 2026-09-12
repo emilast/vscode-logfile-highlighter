@@ -5,8 +5,8 @@ import { Constants } from './Constants';
 
 export class TailController {
 
-    private _disposable: vscode.Disposable;
-    private _statusBarItem: vscode.StatusBarItem;
+    private _disposable: vscode.Disposable | undefined;
+    private _statusBarItem: vscode.StatusBarItem | undefined;
     private _fileSystemWatcher: vscode.FileSystemWatcher | undefined;
 
     private _tailModeActive: boolean = false;
