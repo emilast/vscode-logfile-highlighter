@@ -5,8 +5,9 @@ import { Constants } from './Constants';
 
 export class TailController {
 
-    private _disposable: vscode.Disposable;
-    private _statusBarItem: vscode.StatusBarItem;
+    private _disposable: vscode.Disposable | undefined;
+    private _statusBarItem: vscode.StatusBarItem | undefined;
+    private _fileSystemWatcher: vscode.FileSystemWatcher | undefined;
 
     private _tailModeActive: boolean = false;
 
@@ -39,7 +40,7 @@ export class TailController {
             }, this, subscriptions);
 
             vscode.window.onDidChangeActiveTextEditor(event => {
-                this.editorChanged(event);
+                this.editorChanged();
             }, this, subscriptions);
 
             // create a combined disposable from both event subscriptions
@@ -64,6 +65,10 @@ export class TailController {
         if (this._disposable) {
             this._disposable.dispose();
         }
+        if (this._fileSystemWatcher) {
+            this._fileSystemWatcher.dispose();
+            this._fileSystemWatcher = undefined;
+        }
     }
 
     private getConfiguration(): { enableTailMode: boolean } {
@@ -75,6 +80,7 @@ export class TailController {
             enableTailMode
         };
     }
+
     private checkEndOfFileVisibilityInActiveEditor() {
         const textEditor = vscode.window.activeTextEditor;
         if (textEditor) {
@@ -92,6 +98,9 @@ export class TailController {
                         this._statusBarItem.show();
                     }
 
+                    // Set up file watcher for the current file when entering tail mode
+                    this.setupFileWatcher(textEditor.document.uri);
+
                     return;
                 }
             }
@@ -102,9 +111,15 @@ export class TailController {
         if (this._statusBarItem) {
             this._statusBarItem.hide();
         }
+
+        // Clean up file watcher when exiting tail mode
+        if (this._fileSystemWatcher) {
+            this._fileSystemWatcher.dispose();
+            this._fileSystemWatcher = undefined;
+        }
     }
 
-    editorChanged(event: vscode.TextEditor) {
+    editorChanged() {
         this.checkEndOfFileVisibilityInActiveEditor();
     }
 
@@ -118,5 +133,22 @@ export class TailController {
             // Scroll to the last line
             vscode.window.activeTextEditor.revealRange(range, vscode.TextEditorRevealType.Default);
         }
+    }
+
+    private setupFileWatcher(uri: vscode.Uri) {
+        // Clean up any existing watcher
+        if (this._fileSystemWatcher) {
+            this._fileSystemWatcher.dispose();
+        }
+
+        // Create a watcher for only the current file
+        this._fileSystemWatcher = vscode.workspace.createFileSystemWatcher(uri.fsPath, false, false, true);
+
+        this._fileSystemWatcher.onDidChange(() => {
+            const activeEditor = vscode.window.activeTextEditor;
+            if (activeEditor && activeEditor.document.uri.fsPath === uri.fsPath && this._tailModeActive) {
+                this.tailLogFile(activeEditor.document);
+            }
+        });
     }
 }
