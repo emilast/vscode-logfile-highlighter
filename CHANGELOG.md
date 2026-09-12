@@ -1,5 +1,11 @@
 # Change Log
 
+### 3.6.0 - 12 September
+
+* Updated package dependencies.
+
+* Make tail mode robust by using file system change events. Fixes #849.
+
 ### 3.5.2 - 5 August
 
 * Updated package dependencies.
