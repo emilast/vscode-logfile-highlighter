@@ -7,6 +7,7 @@ export class TailController {
 
     private _disposable: vscode.Disposable;
     private _statusBarItem: vscode.StatusBarItem;
+    private _fileSystemWatcher: vscode.FileSystemWatcher | undefined;
 
     private _tailModeActive: boolean = false;
 
@@ -43,8 +44,11 @@ export class TailController {
             }, this, subscriptions);
 
             // Listen for external file changes (e.g., file modified on disk by external processes)
-            vscode.workspace.onDidChangeWatchedFiles(event => {
-                this.onDidChangeWatchedFiles(event);
+            // Watch all files with common log extensions
+            this._fileSystemWatcher = vscode.workspace.createFileSystemWatcher('**/*.log');
+            
+            this._fileSystemWatcher.onDidChange(uri => {
+                this.onFileChanged(uri);
             }, this, subscriptions);
 
             // create a combined disposable from both event subscriptions
@@ -68,6 +72,9 @@ export class TailController {
         }
         if (this._disposable) {
             this._disposable.dispose();
+        }
+        if (this._fileSystemWatcher) {
+            this._fileSystemWatcher.dispose();
         }
     }
 
@@ -126,7 +133,7 @@ export class TailController {
         }
     }
 
-    private onDidChangeWatchedFiles(event: vscode.FileChangeEvent[]) {
+    private onFileChanged(uri: vscode.Uri) {
         // Handle external file changes (file modified on disk)
         const activeEditor = vscode.window.activeTextEditor;
         
@@ -136,13 +143,10 @@ export class TailController {
 
         const activeDocumentUri = activeEditor.document.uri;
 
-        // Check if any of the changed files match the currently active document
-        for (const change of event) {
-            if (change.uri.fsPath === activeDocumentUri.fsPath) {
-                // File was modified externally, trigger tail scrolling
-                this.tailLogFile(activeEditor.document);
-                break;
-            }
+        // Check if the changed file matches the currently active document
+        if (uri.fsPath === activeDocumentUri.fsPath) {
+            // File was modified externally, trigger tail scrolling
+            this.tailLogFile(activeEditor.document);
         }
     }
 }
