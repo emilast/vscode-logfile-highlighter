@@ -40,7 +40,7 @@ export class TailController {
             }, this, subscriptions);
 
             vscode.window.onDidChangeActiveTextEditor(event => {
-                this.editorChanged(event);
+                this.editorChanged();
             }, this, subscriptions);
 
             // create a combined disposable from both event subscriptions
@@ -119,7 +119,7 @@ export class TailController {
         }
     }
 
-    editorChanged(event: vscode.TextEditor | undefined) {
+    editorChanged() {
         this.checkEndOfFileVisibilityInActiveEditor();
     }
 
