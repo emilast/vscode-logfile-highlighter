@@ -1,5 +1,9 @@
 # Change Log
 
+### Unreleased
+
+* New feature: Text is colored according to ANSI color codes in the log file, and the escape codes are hidden. Can be configured with the `logFileHighlighter.enableAnsiColors` and `logFileHighlighter.ansiEscapeCodeDisplay` settings. Fixes #654.
+
 ### 3.6.0 - 12 September
 
 * Updated package dependencies.

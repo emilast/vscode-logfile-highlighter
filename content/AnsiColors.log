@@ -1,0 +1,51 @@
+ANSI color codes sample
+=======================
+
+Build pipeline output (PowerShell)
+----------------------------------
+2024-09-10T05:49:10.1234567Z [36;1mStarting: Build module[0m
+2024-09-10T05:49:11.0369141Z [33;1mVERBOSE: Exporting function 'Select-Match'.[0m
+2024-09-10T05:49:11.0412345Z [33;1mVERBOSE: Exporting function 'Get-Config'.[0m
+2024-09-10T05:49:12.5000000Z [33;1mWARNING: The module 'PSReadLine' is deprecated.[0m
+2024-09-10T05:49:13.7000000Z [31;1mError: Cannot find path 'C:\build\out' because it does not exist.[0m
+2024-09-10T05:49:14.0000000Z [32;1mFinishing: Build module[0m
+
+Application log
+---------------
+2024-09-10 05:50:01.123 INFO  [main] Application started on port [1m8080[22m
+2024-09-10 05:50:01.456 DEBUG [db] Connection pool initialized ([2m10 connections[22m)
+2024-09-10 05:50:02.789 WARN  [cache] Cache miss rate above [4mthreshold[24m
+2024-09-10 05:50:03.012 ERROR [api] Request failed: [3mtimeout after 30s[23m
+2024-09-10 05:50:03.345 FATAL [main] Shutting down
+
+Basic colors
+------------
+[30mblack[0m [31mred[0m [32mgreen[0m [33myellow[0m [34mblue[0m [35mmagenta[0m [36mcyan[0m [37mwhite[0m
+[90mbrightBlack[0m [91mbrightRed[0m [92mbrightGreen[0m [93mbrightYellow[0m [94mbrightBlue[0m [95mbrightMagenta[0m [96mbrightCyan[0m [97mbrightWhite[0m
+[40m black [0m [41m red [0m [42m green [0m [43m yellow [0m [44m blue [0m [45m magenta [0m [46m cyan [0m [47m white [0m
+[30;100m brightBlack [0m [30;101m brightRed [0m [30;102m brightGreen [0m [30;103m brightYellow [0m [30;104m brightBlue [0m [30;105m brightMagenta [0m [30;106m brightCyan [0m [30;107m brightWhite [0m
+
+Text styles
+-----------
+[1mbold[0m [2mdim[0m [3mitalic[0m [4munderline[0m [9mstrikethrough[0m [7minverse[0m [1;3;4;31mcombined[0m
+
+256 colors
+----------
+[48;5;16m  [0m[48;5;17m  [0m[48;5;18m  [0m[48;5;19m  [0m[48;5;20m  [0m[48;5;21m  [0m[48;5;22m  [0m[48;5;23m  [0m[48;5;24m  [0m[48;5;25m  [0m[48;5;26m  [0m[48;5;27m  [0m[48;5;28m  [0m[48;5;29m  [0m[48;5;30m  [0m[48;5;31m  [0m[48;5;32m  [0m[48;5;33m  [0m[48;5;34m  [0m[48;5;35m  [0m[48;5;36m  [0m[48;5;37m  [0m[48;5;38m  [0m[48;5;39m  [0m[48;5;40m  [0m[48;5;41m  [0m[48;5;42m  [0m[48;5;43m  [0m[48;5;44m  [0m[48;5;45m  [0m[48;5;46m  [0m[48;5;47m  [0m[48;5;48m  [0m[48;5;49m  [0m[48;5;50m  [0m[48;5;51m  [0m
+[48;5;232m  [0m[48;5;233m  [0m[48;5;234m  [0m[48;5;235m  [0m[48;5;236m  [0m[48;5;237m  [0m[48;5;238m  [0m[48;5;239m  [0m[48;5;240m  [0m[48;5;241m  [0m[48;5;242m  [0m[48;5;243m  [0m[48;5;244m  [0m[48;5;245m  [0m[48;5;246m  [0m[48;5;247m  [0m[48;5;248m  [0m[48;5;249m  [0m[48;5;250m  [0m[48;5;251m  [0m[48;5;252m  [0m[48;5;253m  [0m[48;5;254m  [0m[48;5;255m  [0m
+[38;5;208morange[0m [38;5;129mpurple[0m [38;5;45msky blue[0m
+
+24-bit colors
+-------------
+[48;2;0;255;128m [0m[48;2;8;246;128m [0m[48;2;16;238;128m [0m[48;2;24;230;128m [0m[48;2;32;222;128m [0m[48;2;41;213;128m [0m[48;2;49;205;128m [0m[48;2;57;197;128m [0m[48;2;65;189;128m [0m[48;2;74;180;128m [0m[48;2;82;172;128m [0m[48;2;90;164;128m [0m[48;2;98;156;128m [0m[48;2;106;148;128m [0m[48;2;115;139;128m [0m[48;2;123;131;128m [0m[48;2;131;123;128m [0m[48;2;139;115;128m [0m[48;2;148;106;128m [0m[48;2;156;98;128m [0m[48;2;164;90;128m [0m[48;2;172;82;128m [0m[48;2;180;74;128m [0m[48;2;189;65;128m [0m[48;2;197;57;128m [0m[48;2;205;49;128m [0m[48;2;213;41;128m [0m[48;2;222;32;128m [0m[48;2;230;24;128m [0m[48;2;238;16;128m [0m[48;2;246;8;128m [0m[48;2;255;0;128m [0m
+[38;2;255;0;128mpink[0m [38;2;0;200;100mteal[0m [38:2::255:165:0morange (colon form)[0m
+
+Styles spanning multiple lines
+------------------------------
+[35mThis text is magenta
+and continues on the next line
+until it is reset.[0m Back to normal.
+
+Non-color escape sequences (hidden, style unchanged)
+----------------------------------------------------
+[32mProgress: 10%[2K[1G Progress: 100%[0m

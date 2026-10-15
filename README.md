@@ -69,6 +69,21 @@ To deactivate tail mode for the current file, scroll up again.
 
 This feature can be disabled by setting the `logFileHighlighter.enableTailMode` setting to `false`.
 
+### ANSI Color Codes
+
+Log files written by terminal programs, such as build pipelines and PowerShell scripts, often contain ANSI escape codes for colors, e.g. `ESC[33;1mVERBOSE: ...ESC[0m`. The text is colored as specified by these codes and the escape codes themselves are hidden.
+
+Supported are the 16 basic colors (which use the terminal colors of the current color theme), 256 color and 24-bit color codes, as well as bold, dim, italic, underline, strikethrough and inverse.
+
+The following settings control this feature:
+
+```json
+"logFileHighlighter.enableAnsiColors": true,
+"logFileHighlighter.ansiEscapeCodeDisplay": "hide",
+```
+
+`logFileHighlighter.ansiEscapeCodeDisplay` can be `hide`, `dim` or `show`.
+
 ## Customization
 
 ### Customizing the colors
