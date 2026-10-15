@@ -162,6 +162,26 @@
 					"default": "#00ff1f8f",
 					"description": "The color to use for drawing the timestamp progress indicator underline"
 				},
+				"logFileHighlighter.enableAnsiColors": {
+					"type": "boolean",
+					"default": true,
+					"description": "Enable coloring of text based on ANSI escape codes (e.g. ESC[31m) in log files."
+				},
+				"logFileHighlighter.ansiEscapeCodeDisplay": {
+					"type": "string",
+					"enum": [
+						"hide",
+						"dim",
+						"show"
+					],
+					"enumDescriptions": [
+						"Hide the ANSI escape codes.",
+						"Show the ANSI escape codes dimmed.",
+						"Show the ANSI escape codes as regular text."
+					],
+					"default": "hide",
+					"description": "How ANSI escape codes are displayed when 'logFileHighlighter.enableAnsiColors' is enabled."
+				},
 				"logFileHighlighter.enableTailMode": {
 					"type": "boolean",
 					"default": true,
