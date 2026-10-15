@@ -175,3 +175,14 @@ To color the above, add this to the user settings:
 			"foreground": "#af1f1f"
 		}
 	]
+
+
+ANSI color codes
+----------------
+2024-09-10T05:49:11.0369141Z [33;1mVERBOSE: Exporting function 'Select-Match'.[0m
+2024-09-10T05:49:12.0000000Z [31mError:[0m something [1;4mfailed[0m here
+2024-09-10T05:49:13.0000000Z [32mgreen[0m [92mbright green[0m [30;43mblack on yellow[0m [7minverse[0m [3mitalic[0m [2mdim[0m [9mstrikethrough[0m
+2024-09-10T05:49:14.0000000Z [38;5;208m256 color orange[0m [38;2;255;0;128mtruecolor pink[0m
+2024-09-10T05:49:15.0000000Z [36mstyle that continues
+over several lines
+until reset[0m back to normal
