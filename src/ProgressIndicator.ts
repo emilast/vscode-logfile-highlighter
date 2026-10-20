@@ -68,7 +68,7 @@ export class ProgressIndicator {
 
                     var timestamp = this._timestampParser.getTimestampFromText(lineText);
                     if (timestamp) {
-                        let timestampWithMicroseconds = new TimeWithMicroseconds(timestamp.moment, timestamp.microseconds);
+                        let timestampWithMicroseconds = new TimeWithMicroseconds(timestamp.moment, timestamp.microseconds, timestamp.duration);
                         var progress = (timestampWithMicroseconds.getTimeAsEpoch() - startTimeAsEpoch) / durationInMicroseconds;
 
                         // Max progress = length of timestamp
