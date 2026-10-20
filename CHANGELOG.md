@@ -1,5 +1,9 @@
 # Change Log
 
+### Unreleased
+
+* Escaped `<` characters in the regular expressions in `log.tmLanguage` so the grammar file is well-formed XML. Fixes #432.
+
 ### 3.7.0 - 20 October 2026
 
 * New feature: Text is colored according to ANSI color codes in the log file, and the escape codes are hidden. Can be configured with the `logFileHighlighter.enableAnsiColors` and `logFileHighlighter.ansiEscapeCodeDisplay` settings. Fixes #654.
