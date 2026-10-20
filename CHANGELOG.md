@@ -1,20 +1,22 @@
 # Change Log
 
-### Unreleased
+### 3.7.0 - 20 October 2026
 
 * New feature: Text is colored according to ANSI color codes in the log file, and the escape codes are hidden. Can be configured with the `logFileHighlighter.enableAnsiColors` and `logFileHighlighter.ansiEscapeCodeDisplay` settings. Fixes #654.
 
-### 3.6.0 - 12 September
+* Package updates
+
+### 3.6.0 - 12 September 2026
 
 * Updated package dependencies.
 
 * Make tail mode robust by using file system change events. Fixes #849.
 
-### 3.5.2 - 5 August
+### 3.5.2 - 5 August 2026
 
 * Updated package dependencies.
 
-### 3.5.1 - 15 February
+### 3.5.1 - 15 February 2026
 
 * Stability fixes for progress indicator and tail mode. Fixes #744.
 

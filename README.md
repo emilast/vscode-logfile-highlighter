@@ -73,6 +73,8 @@ This feature can be disabled by setting the `logFileHighlighter.enableTailMode` 
 
 Log files written by terminal programs, such as build pipelines and PowerShell scripts, often contain ANSI escape codes for colors, e.g. `ESC[33;1mVERBOSE: ...ESC[0m`. The text is colored as specified by these codes and the escape codes themselves are hidden.
 
+![ANSI colors](content/ansi_colors.png)  
+
 Supported are the 16 basic colors (which use the terminal colors of the current color theme), 256 color and 24-bit color codes, as well as bold, dim, italic, underline, strikethrough and inverse.
 
 The following settings control this feature:
