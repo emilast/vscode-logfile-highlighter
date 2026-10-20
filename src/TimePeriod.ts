@@ -31,13 +31,13 @@ export class TimePeriod {
         if (startIsFullDate) {
             this.startTime = new TimeWithMicroseconds(startTimeMatch.moment, startTimeMatch.microseconds);
         } else {
-            this.startTime = new TimeWithMicroseconds(undefined, startTimeMatch.microseconds);
+            this.startTime = new TimeWithMicroseconds(undefined, startTimeMatch.microseconds, startTimeMatch.duration);
         }
 
         if (endIsFullDate) {
             this.endTime = new TimeWithMicroseconds(endTimeMatch.moment, endTimeMatch.microseconds);
         } else {
-            this.endTime = new TimeWithMicroseconds(undefined, endTimeMatch.microseconds);
+            this.endTime = new TimeWithMicroseconds(undefined, endTimeMatch.microseconds, endTimeMatch.duration);
         }
 
         // Calculate the duration
