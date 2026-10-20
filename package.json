@@ -205,7 +205,7 @@
 		"unittest": "npm run compile-tests && node out/test/testRunner.js -c jasmine.unittest.json"
 	},
 	"devDependencies": {
-		"@types/jasmine": "^6.0.0",
+		"@types/jasmine": "^7.0.0",
 		"@types/node": "^26.6.5",
 		"@types/vscode": "^1.136.0",
 		"@vscode/test-electron": "^3.1.0",
