@@ -34,6 +34,19 @@ describe('TimePeriod', () => {
             expect(result.endTime.time).toBeUndefined(); // Not set when date is missing
         });
 
+        it('gives time-only timestamps a usable position for the progress indicator (#854).', () => {
+            // Arrange
+            const startTime: ParsedTimestamp = {duration: moment.duration('10:21:33.456'), microseconds: 0, matchIndex: 6, original: '10:21:33.456'};
+            const endTime: ParsedTimestamp = {duration: moment.duration('10:21:38.789'), microseconds: 0, matchIndex: 6, original: '10:21:38.789'};
+
+            // Act
+            const result = new TimePeriod(startTime, endTime);
+
+            // Assert
+            expect(result.startTime.getTimeAsEpoch()).toBeGreaterThan(0);
+            expect(result.endTime.getTimeAsEpoch() - result.startTime.getTimeAsEpoch()).toBe(result.getDurationAsMicroseconds());
+        });
+
         it('gets the correct duration with microseconds.', () => {
             // Arrange
             const startTime: ParsedTimestamp = {moment: moment('2024-02-03 12:13:14.100'), microseconds: 1, matchIndex: 0, original: '2024-02-03 12:13:14.100'};
