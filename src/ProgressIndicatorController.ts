@@ -8,13 +8,14 @@ export class ProgressIndicatorController {
     private _progressIndicator: ProgressIndicator;
     private _disposableSubscriptions: vscode.Disposable;
     private _statusBarItem: vscode.StatusBarItem;
+    private _configurationListener: vscode.Disposable;
 
     constructor(progressIndicator: ProgressIndicator) {
         this._progressIndicator = progressIndicator;
 
         this.init();
 
-        vscode.workspace.onDidChangeConfiguration(() => { this.onDidChangeConfiguration(); }, this);
+        this._configurationListener = vscode.workspace.onDidChangeConfiguration(() => { this.onDidChangeConfiguration(); }, this);
     }
 
     public removeDecorations() {
@@ -45,12 +46,15 @@ export class ProgressIndicatorController {
     }
 
     public dispose() {
+        if (this._configurationListener) {
+            this._configurationListener.dispose();
+            this._configurationListener = null;
+        }
         if (this._statusBarItem) {
             this._statusBarItem.dispose();
+            this._statusBarItem = null;
         }
-        if (this._disposableSubscriptions) {
-            this._disposableSubscriptions.dispose();
-        }
+        this.unregisterSelectionEventHandlers();
     }
 
     private onDidChangeConfiguration(): void {
