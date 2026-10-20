@@ -81,11 +81,20 @@ export class CustomPatternDecorator {
         const startPos = new vscode.Position(change.range.start.line, 0);
         const docCache = this._cache.get(doc.uri);
 
+        if (!docCache) {
+            // The document hasn't been fully decorated yet (e.g. it changed before it was shown),
+            // so there is no cache to update incrementally. Decorate it from scratch instead.
+            if (editors.length > 0) {
+                this.decorateEditors([editors[0]]);
+            }
+            return;
+        }
+
         const contentToEnd: string =
             doc.getText(new vscode.Range(startPos, doc.lineAt(doc.lineCount - 1).range.end));
 
         for (const pattern of this._configPattern) {
-            const patternCache = docCache.get(pattern);
+            const patternCache = docCache.get(pattern) ?? [];
 
             // Remove all ranges from the cache that occur after the changed range (change.range).
             const patternRanges = patternCache.filter((range) => {
@@ -93,9 +102,7 @@ export class CustomPatternDecorator {
             });
 
             for (const regex of pattern.regexes) {
-                let matches = regex.exec(contentToEnd);
-
-                while (matches) {
+                for (const matches of this.findMatches(regex, contentToEnd)) {
                     var { start, end } = this.getMatchPositionsInContentString(contentToEnd, matches);
 
                     // Adjust start and end positions to be relative to the whole document.
@@ -112,7 +119,6 @@ export class CustomPatternDecorator {
                     }
 
                     patternRanges.push(new vscode.Range(start, end));
-                    matches = regex.exec(contentToEnd);
                 }
             }
 
@@ -138,12 +144,9 @@ export class CustomPatternDecorator {
                     const logLevelRanges = [];
 
                     for (const regex of pattern.regexes) {
-                        let matches = regex.exec(content);
-
-                        while (matches) {
+                        for (const matches of this.findMatches(regex, content)) {
                             var { start, end } = this.getMatchPositionsInDocument(editor.document, matches);
                             logLevelRanges.push(new vscode.Range(start, end));
-                            matches = regex.exec(content);
                         }
                     }
 
@@ -155,6 +158,33 @@ export class CustomPatternDecorator {
                 this._cache.set(editor.document.uri, docRanges);
             }
         }
+    }
+
+    // Returns all non-empty matches of a global regex in the content.
+    // Zero-length matches (e.g. from patterns like `\b(OK|)\b` or `x*`) are skipped, and the
+    // search position is advanced past them. Without this, exec() would return the same empty
+    // match forever and hang the extension host (#856).
+    public findMatches(regex: RegExp, content: string): RegExpExecArray[] {
+        const result: RegExpExecArray[] = [];
+        regex.lastIndex = 0;
+
+        let matches = regex.exec(content);
+        while (matches) {
+            if (matches[0].length === 0) {
+                // Step over the empty match. With the unicode flag, step over a whole surrogate pair.
+                const codePoint = regex.unicode ? content.codePointAt(regex.lastIndex) : undefined;
+                regex.lastIndex += codePoint !== undefined && codePoint > 0xFFFF ? 2 : 1;
+                if (regex.lastIndex > content.length) {
+                    break;
+                }
+            } else {
+                result.push(matches);
+            }
+            matches = regex.exec(content);
+        }
+
+        regex.lastIndex = 0;
+        return result;
     }
 
     // Get the start and end positions of a match in a document. Use this if the document is in a
