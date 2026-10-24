@@ -7,6 +7,12 @@
             "es6"
         ],
         "sourceMap": true,
+        "strict": false,
+        "types": [
+            "node",
+            "vscode",
+            "jasmine"
+        ],
         "rootDir": "./"
     },
     "exclude": [

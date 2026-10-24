@@ -1,6 +1,6 @@
 'use strict';
 
-import * as moment from 'moment';
+import moment = require('moment');
 import { TimePeriodCalculator } from '../../src/TimePeriodCalculator';
 import { TimePeriod } from '../../src/TimePeriod';
 import { TimestampParser } from '../../src/TimestampParsers/TimestampParser';
