@@ -6,9 +6,9 @@ import { ProgressIndicator } from './ProgressIndicator';
 export class ProgressIndicatorController {
 
     private _progressIndicator: ProgressIndicator;
-    private _disposableSubscriptions: vscode.Disposable;
-    private _statusBarItem: vscode.StatusBarItem;
-    private _configurationListener: vscode.Disposable;
+    private _disposableSubscriptions: vscode.Disposable | undefined;
+    private _statusBarItem: vscode.StatusBarItem | undefined;
+    private _configurationListener: vscode.Disposable | undefined;
 
     constructor(progressIndicator: ProgressIndicator) {
         this._progressIndicator = progressIndicator;
@@ -48,11 +48,11 @@ export class ProgressIndicatorController {
     public dispose() {
         if (this._configurationListener) {
             this._configurationListener.dispose();
-            this._configurationListener = null;
+            this._configurationListener = undefined;
         }
         if (this._statusBarItem) {
             this._statusBarItem.dispose();
-            this._statusBarItem = null;
+            this._statusBarItem = undefined;
         }
         this.unregisterSelectionEventHandlers();
     }
@@ -89,7 +89,7 @@ export class ProgressIndicatorController {
     private unregisterSelectionEventHandlers() {
         if (this._disposableSubscriptions) {
             this._disposableSubscriptions.dispose();
-            this._disposableSubscriptions = null;
+            this._disposableSubscriptions = undefined;
         }
     }
 

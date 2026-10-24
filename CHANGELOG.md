@@ -6,6 +6,12 @@
 
 * Custom patterns that can match an empty string (e.g. `\b(OK|)\b`) no longer hang and crash the extension host. Zero-length matches are now skipped. Fixes #856.
 
+* The progress indicator now works for timestamps without a date, such as `06-01 10:21:33.456` in Android logcat files. Fixes #854.
+
+* The progress indicator now disposes its configuration change listener when the extension is deactivated, so it no longer leaks. Related to #744.
+
+* The project now builds with TypeScript 6 as well as TypeScript 5.
+
 ### 3.7.0 - 20 October 2026
 
 * New feature: Text is colored according to ANSI color codes in the log file, and the escape codes are hidden. Can be configured with the `logFileHighlighter.enableAnsiColors` and `logFileHighlighter.ansiEscapeCodeDisplay` settings. Fixes #654.
