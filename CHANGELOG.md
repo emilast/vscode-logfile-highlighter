@@ -1,6 +1,6 @@
 # Change Log
 
-### Unreleased
+### 3.8.0 - 24 October 2026
 
 * Escaped `<` characters in the regular expressions in `log.tmLanguage` so the grammar file is well-formed XML. Fixes #432.
 
