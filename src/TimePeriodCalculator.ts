@@ -58,7 +58,7 @@ export class TimePeriodCalculator {
         return text;
     }
 
-    public getTimePeriod(firstLine: string, lastLine: string): TimePeriod {
+    public getTimePeriod(firstLine: string, lastLine: string): TimePeriod | undefined {
         let firstLineMatch = this._timestampParser.getTimestampFromText(firstLine);
         let lastLineMatch = this._timestampParser.getTimestampFromText(lastLine);
 

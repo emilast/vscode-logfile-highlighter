@@ -8,7 +8,7 @@ import { TimestampParser } from './TimestampParsers/TimestampParser';
 
 export class ProgressIndicator {
 
-    private _decoration: vscode.TextEditorDecorationType;;
+    private _decoration: vscode.TextEditorDecorationType | undefined;
     private _timeCalculator: TimePeriodCalculator;
     private _selectionHelper: SelectionHelper;
     private _timestampParser: TimestampParser;
@@ -93,8 +93,9 @@ export class ProgressIndicator {
 
     removeAllDecorations() {
         if (this._decoration) {
+            const decoration = this._decoration;
             vscode.window.visibleTextEditors.forEach(editor => {
-                editor.setDecorations(this._decoration, []);
+                editor.setDecorations(decoration, []);
             });
         }
 

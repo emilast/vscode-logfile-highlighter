@@ -56,7 +56,10 @@ export class CustomPatternDecorator {
                     item.pattern, item.patternFlags ?? '', item.highlightEntireLine, item.foreground, item.background,
                     item.fontWeight, item.fontStyle, item.border, item.borderRadius,
                     item.borderSpacing, item.letterSpacing,
-                    item.overviewColor, vscode.OverviewRulerLane[item.overviewRulerLane],
+                    item.overviewColor,
+                    item.overviewRulerLane !== undefined
+                        ? vscode.OverviewRulerLane[item.overviewRulerLane as keyof typeof vscode.OverviewRulerLane]
+                        : undefined,
                     item.textDecoration);
                 this._configPattern.push(pattern);
             }

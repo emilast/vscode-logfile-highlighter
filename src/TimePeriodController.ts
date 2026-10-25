@@ -16,10 +16,7 @@ export class TimePeriodController {
         this._timeCalculator = timeCalculator;
         this._selectionHelper = selectionHelper;
 
-        // Create as needed
-        if (!this._statusBarItem) {
-            this._statusBarItem = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Left);
-        }
+        this._statusBarItem = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Left);
 
         // subscribe to selection change and editor activation events
         const subscriptions: vscode.Disposable[] = [];

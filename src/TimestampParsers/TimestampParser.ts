@@ -68,24 +68,24 @@ export interface TimestampFormatParser {
 /**
  * Represents a match of a timestamp within a log file.
  */
-export class TimestampMatch {
+export interface TimestampMatch {
     /**
      * The regular expression match result.
      */
-    public match: RegExpExecArray;
+    match: RegExpExecArray;
 
     /**
      * The timestamp representation that can be parsed by moment.js.
      */
-    public normalizedTimestamp: string;
+    normalizedTimestamp: string;
 
     /**
      * Indicates whether the timestamp contains a date.
      */
-    public containsDate: boolean;
+    containsDate: boolean;
 }
 
-export class ParsedTimestamp {
+export interface ParsedTimestamp {
     original: string;
     matchIndex: number;
     moment?: moment.Moment;

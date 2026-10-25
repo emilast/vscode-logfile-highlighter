@@ -105,8 +105,8 @@ describe('CustomPatternDecorator', () => {
                 document: vscode.window.visibleTextEditors[0].document
             };
             testObject.updateConfiguration(); // Init log level of config
-            testObject.decorateEditors([vscode.window.activeTextEditor]); // Init Cache
-            const vscodeSpy = spyOn(vscode.window.activeTextEditor, 'setDecorations').and.callThrough();
+            testObject.decorateEditors([vscode.window.activeTextEditor!]); // Init Cache
+            const vscodeSpy = spyOn(vscode.window.activeTextEditor!, 'setDecorations').and.callThrough();
 
             // Act
             // testObject.decorateDocument(mockEvent);
@@ -134,10 +134,10 @@ describe('CustomPatternDecorator', () => {
         it('should decorate all visible editors with the specified log levels of the config.', () => {
             // Arrange
             testObject.updateConfiguration(); // Init log level of config
-            const vscodeSpy = spyOn(vscode.window.activeTextEditor, 'setDecorations').and.callThrough();
+            const vscodeSpy = spyOn(vscode.window.activeTextEditor!, 'setDecorations').and.callThrough();
 
             // Act
-            testObject.decorateEditors([vscode.window.activeTextEditor]);
+            testObject.decorateEditors([vscode.window.activeTextEditor!]);
 
             // Assert
             expect(vscodeSpy.calls.count()).toBe(2); // Two calls for two log level.

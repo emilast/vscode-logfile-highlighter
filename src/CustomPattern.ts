@@ -4,16 +4,16 @@ import * as vscode from 'vscode';
 
 export class CustomPattern {
     public readonly pattern: string;
-    public readonly foreground: string;
-    public readonly background: string;
+    public readonly foreground: string | undefined;
+    public readonly background: string | undefined;
     public readonly regexes: RegExp[];
     public readonly decoration: vscode.TextEditorDecorationType;
 
     public constructor(
-        pattern: string, patternFlags: string, highlightEntireLine: boolean, foreground: string, background: string, fontWeight: string,
-        fontStyle: string, border: string, borderRadius: string, borderSpacing: string,
-        letterSpacing: string, overviewRulerColor: string, overviewRulerLane: vscode.OverviewRulerLane,
-        textDecoration: string)
+        pattern: string, patternFlags: string, highlightEntireLine: boolean, foreground: string | undefined, background: string | undefined,
+        fontWeight: string | undefined, fontStyle: string | undefined, border: string | undefined, borderRadius: string | undefined,
+        borderSpacing: string | undefined, letterSpacing: string | undefined, overviewRulerColor: string | undefined,
+        overviewRulerLane: vscode.OverviewRulerLane | undefined, textDecoration: string | undefined)
     {
         this.pattern = pattern;
         this.foreground = foreground;

@@ -107,7 +107,7 @@ export class ProgressIndicatorController {
             }
         } catch (error) {
             console.error('Error while decorating lines:', error);
-            vscode.window.showErrorMessage('An error occurred while decorating lines: ' + error.message);
+            vscode.window.showErrorMessage('An error occurred while decorating lines: ' + (error instanceof Error ? error.message : error));
         }
     }
 }

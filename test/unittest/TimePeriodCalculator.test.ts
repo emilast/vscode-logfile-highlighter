@@ -20,10 +20,10 @@ describe('TimePeriodCalculator', () => {
             const expected = moment.duration({ days: 1, months: 1, years: 2 });
 
             // Act
-            const result = testObject.getTimePeriod(firstLine, lastLine);
+            const result = testObject.getTimePeriod(firstLine, lastLine)!;
 
             // Assert
-            expect(result.duration.asMilliseconds()).toBe(expected.asMilliseconds());
+            expect(result.duration!.asMilliseconds()).toBe(expected.asMilliseconds());
         });
 
         it('gets the correct timePeriod from two dates with time zones.', () => {
@@ -34,11 +34,11 @@ describe('TimePeriodCalculator', () => {
             const lastLine = '2015-09-21 09:29:02.259+01:00 last line';
 
             // Act
-            const result = testObject.getTimePeriod(firstLine, lastLine);
+            const result = testObject.getTimePeriod(firstLine, lastLine)!;
 
             // Assert
             const expected = moment.duration({ hours: 1, milliseconds: 1 });
-            expect(result.duration.asMilliseconds()).toBe(expected.asMilliseconds());
+            expect(result.duration!.asMilliseconds()).toBe(expected.asMilliseconds());
         });
 
         it('gets the correct timePeriod from two differently formatted dates.', () => {
@@ -48,10 +48,10 @@ describe('TimePeriodCalculator', () => {
             const expected = moment.duration({ days: 1, months: 1, years: 2 });
 
             // Act
-            const result = testObject.getTimePeriod(firstLine, lastLine);
+            const result = testObject.getTimePeriod(firstLine, lastLine)!;
 
             // Assert
-            expect(result.duration.asMilliseconds()).toBe(expected.asMilliseconds());
+            expect(result.duration!.asMilliseconds()).toBe(expected.asMilliseconds());
         });
 
         it('gets the correct timePeriod from two times (with milliseconds) with dates.', () => {
@@ -61,10 +61,10 @@ describe('TimePeriodCalculator', () => {
             const expected = moment.duration({ years: 2, months: 1, days: 1, hours: 6, minutes: 13, seconds: 0, milliseconds: 66 });
 
             // Act
-            const result = testObject.getTimePeriod(firstLine, lastLine);
+            const result = testObject.getTimePeriod(firstLine, lastLine)!;
 
             // Assert
-            expect(result.duration.asMilliseconds()).toBe(expected.asMilliseconds());
+            expect(result.duration!.asMilliseconds()).toBe(expected.asMilliseconds());
         });
 
         it('gets the correct timePeriod from two times (with milliseconds) without dates.', () => {
@@ -74,10 +74,10 @@ describe('TimePeriodCalculator', () => {
             const expected = moment.duration({ hours: 6, minutes: 13, seconds: 0, milliseconds: 66 });
 
             // Act
-            const result = testObject.getTimePeriod(firstLine, lastLine);
+            const result = testObject.getTimePeriod(firstLine, lastLine)!;
 
             // Assert
-            expect(result.duration.asMilliseconds()).toBe(expected.asMilliseconds());
+            expect(result.duration!.asMilliseconds()).toBe(expected.asMilliseconds());
             expect(result.durationPartMicroseconds).toBe(0);
         });
 
@@ -87,10 +87,10 @@ describe('TimePeriodCalculator', () => {
             const lastLine = '2023-01-02 10:11:12.100123 last line';;
 
             // Act
-            const result = testObject.getTimePeriod(firstLine, lastLine);
+            const result = testObject.getTimePeriod(firstLine, lastLine)!;
 
             // Assert
-            expect(result.duration.asMilliseconds()).toBe(0);
+            expect(result.duration!.asMilliseconds()).toBe(0);
             expect(result.durationPartMicroseconds).toBe(123);
         });
 
@@ -100,10 +100,10 @@ describe('TimePeriodCalculator', () => {
             const lastLine = '10:11:12.100123 last line';;
 
             // Act
-            const result = testObject.getTimePeriod(firstLine, lastLine);
+            const result = testObject.getTimePeriod(firstLine, lastLine)!;
 
             // Assert
-            expect(result.duration.asMilliseconds()).toBe(0);
+            expect(result.duration!.asMilliseconds()).toBe(0);
             expect(result.durationPartMicroseconds).toBe(123);
         });
 
@@ -114,10 +114,10 @@ describe('TimePeriodCalculator', () => {
             const expected = moment.duration({ years: 2, months: 1, days: 1 });
 
             // Act
-            const result = testObject.getTimePeriod(firstLine, lastLine);
+            const result = testObject.getTimePeriod(firstLine, lastLine)!;
 
             // Assert
-            expect(result.duration.asMilliseconds()).toBe(expected.asMilliseconds());
+            expect(result.duration!.asMilliseconds()).toBe(expected.asMilliseconds());
         });
     });
 
