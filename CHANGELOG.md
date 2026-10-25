@@ -1,5 +1,9 @@
 # Change Log
 
+### Unreleased
+
+* Selecting from a line with a full date to a line with only a time (or the other way around) no longer throws an error when the end timestamp has fewer microseconds than the start.
+
 ### 3.8.0 - 24 October 2026
 
 * Escaped `<` characters in the regular expressions in `log.tmLanguage` so the grammar file is well-formed XML. Fixes #432.

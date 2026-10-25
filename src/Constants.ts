@@ -3,4 +3,3 @@ export class Constants {
 
     public static readonly ContextNameIsShowingProgressIndicators = 'logFileHighlighter.isShowingProgressIndicators';
 }
-

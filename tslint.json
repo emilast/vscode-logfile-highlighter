@@ -6,7 +6,9 @@
     "jsRules": {},
     "rules": {
         "quotemark": [true, "single"],
-        "variable-name": [true, "check-format", "allow-leading-underscore"],
+        "variable-name": [true, "check-format", "allow-leading-underscore", "allow-pascal-case"],
+        "interface-name": false,
+        "member-ordering": false,
         "indent": [true, "spaces", 4],
         "no-console": [false],
         "trailing-comma": [false],

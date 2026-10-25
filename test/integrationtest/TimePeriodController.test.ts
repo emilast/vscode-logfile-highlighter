@@ -1,5 +1,3 @@
-'use strict';
-
 import * as vscode from 'vscode';
 import { Position, Selection } from 'vscode';
 import { TimePeriodController } from '../../src/TimePeriodController';
@@ -40,7 +38,7 @@ describe('TimePeriodController', () => {
 
         // Arrange
         const editor = vscode.window.activeTextEditor;
-        let controllerSpy = spyOn(TimePeriodController.prototype, 'updateTimePeriod').and.callThrough();
+        let controllerSpy: jasmine.Spy<() => void> | undefined = spyOn(TimePeriodController.prototype, 'updateTimePeriod').and.callThrough();
 
         // Assert
         vscode.window.onDidChangeTextEditorSelection((selectionChangedEvent) => {
@@ -66,7 +64,7 @@ describe('TimePeriodController', () => {
 
         // Arrange
         const editor = vscode.window.activeTextEditor;
-        let controllerSpy = spyOn(TimePeriodController.prototype, 'updateTimePeriod').and.callThrough();
+        let controllerSpy: jasmine.Spy<() => void> | undefined = spyOn(TimePeriodController.prototype, 'updateTimePeriod').and.callThrough();
 
         // Assert
         vscode.window.onDidChangeTextEditorSelection((selectionChangedEvent) => {
@@ -91,7 +89,7 @@ describe('TimePeriodController', () => {
     it('should update the status bar item when the active editor switches to another file.', (done) => {
 
         // Arrange
-        let controllerSpy = spyOn(TimePeriodController.prototype, 'updateTimePeriod').and.callThrough();
+        let controllerSpy: jasmine.Spy<() => void> | undefined = spyOn(TimePeriodController.prototype, 'updateTimePeriod').and.callThrough();
 
         // Assert
         vscode.window.onDidChangeActiveTextEditor((selectionChangedEvent) => {

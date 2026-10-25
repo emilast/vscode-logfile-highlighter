@@ -1,5 +1,3 @@
-'use strict';
-
 import * as vscode from 'vscode';
 import { CustomPattern } from './CustomPattern';
 
@@ -18,7 +16,7 @@ export class CustomPatternDecorator {
 
     public updateConfiguration(): void {
         const configPatterns = vscode.workspace.getConfiguration('logFileHighlighter').get(
-            'customPatterns') as {
+            'customPatterns') as Array<{
                 pattern: string,
                 patternFlags: string,
                 highlightEntireLine: boolean,
@@ -33,7 +31,7 @@ export class CustomPatternDecorator {
                 overviewColor?: string,
                 overviewRulerLane?: string,
                 textDecoration?: string,
-            }[];
+            }>;
 
         for (const pattern of this._configPattern) {
             pattern.dispose();
@@ -52,11 +50,14 @@ export class CustomPatternDecorator {
                     || item.borderRadius !== undefined
                 )
                 && item.pattern !== undefined) {
-                var pattern = new CustomPattern(
+                const pattern = new CustomPattern(
                     item.pattern, item.patternFlags ?? '', item.highlightEntireLine, item.foreground, item.background,
                     item.fontWeight, item.fontStyle, item.border, item.borderRadius,
                     item.borderSpacing, item.letterSpacing,
-                    item.overviewColor, vscode.OverviewRulerLane[item.overviewRulerLane],
+                    item.overviewColor,
+                    item.overviewRulerLane !== undefined
+                        ? vscode.OverviewRulerLane[item.overviewRulerLane as keyof typeof vscode.OverviewRulerLane]
+                        : undefined,
                     item.textDecoration);
                 this._configPattern.push(pattern);
             }
@@ -103,15 +104,14 @@ export class CustomPatternDecorator {
 
             for (const regex of pattern.regexes) {
                 for (const matches of this.findMatches(regex, contentToEnd)) {
-                    var { start, end } = this.getMatchPositionsInContentString(contentToEnd, matches);
+                    let { start, end } = this.getMatchPositionsInContentString(contentToEnd, matches);
 
                     // Adjust start and end positions to be relative to the whole document.
                     if (start.line === 0) {
                         // First line, so the character position is relative to the start of the change.
                         start = new vscode.Position(start.line + startPos.line, start.character + startPos.character);
                         end = new vscode.Position(end.line + startPos.line, end.character + startPos.character);
-                    }
-                    else {
+                    } else {
                         // Not the first line, so the character position is relative to the start of the line,
                         // which is what getMatchPositionsInContentString() returns.
                         start = new vscode.Position(start.line + startPos.line, start.character);
@@ -145,7 +145,7 @@ export class CustomPatternDecorator {
 
                     for (const regex of pattern.regexes) {
                         for (const matches of this.findMatches(regex, content)) {
-                            var { start, end } = this.getMatchPositionsInDocument(editor.document, matches);
+                            const { start, end } = this.getMatchPositionsInDocument(editor.document, matches);
                             logLevelRanges.push(new vscode.Range(start, end));
                         }
                     }
@@ -196,7 +196,7 @@ export class CustomPatternDecorator {
 
         // Get end position of the match
         const newlineCountInMatch = (matchString.match(/\n/g) || []).length;
-        let end = this.getEndPosition(start, newlineCountInMatch, matchString);
+        const end = this.getEndPosition(start, newlineCountInMatch, matchString);
 
         return { start, end };
     }
@@ -215,11 +215,11 @@ export class CustomPatternDecorator {
         // The line number is the number of newlines before the match in the content string,
         // and the character position is the character index of the match within the last line.
         const newlineCountBeforeMatch = (content.slice(0, matches.index).match(/\n/g) || []).length;
-        let start = new vscode.Position(newlineCountBeforeMatch, indexWithinMatchLine);
+        const start = new vscode.Position(newlineCountBeforeMatch, indexWithinMatchLine);
 
         // Set the end position of the match within the content string.
         const newlineCountInMatch = (matchString.match(/\n/g) || []).length;
-        let end = this.getEndPosition(start, newlineCountInMatch, matchString);
+        const end = this.getEndPosition(start, newlineCountInMatch, matchString);
 
         return { start, end };
     }

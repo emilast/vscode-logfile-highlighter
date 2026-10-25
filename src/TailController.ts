@@ -1,5 +1,3 @@
-'use strict';
-
 import * as vscode from 'vscode';
 import { Constants } from './Constants';
 
@@ -31,15 +29,15 @@ export class TailController {
             // subscribe to selection change and editor activation events
             const subscriptions: vscode.Disposable[] = [];
 
-            vscode.workspace.onDidChangeTextDocument(event => {
+            vscode.workspace.onDidChangeTextDocument((event) => {
                 this.tailLogFile(event.document);
             }, this, subscriptions);
 
-            vscode.window.onDidChangeTextEditorVisibleRanges(event => {
+            vscode.window.onDidChangeTextEditorVisibleRanges((event) => {
                 this.checkEndOfFileVisibilityInActiveEditor();
             }, this, subscriptions);
 
-            vscode.window.onDidChangeActiveTextEditor(event => {
+            vscode.window.onDidChangeActiveTextEditor((event) => {
                 this.editorChanged();
             }, this, subscriptions);
 
@@ -47,8 +45,7 @@ export class TailController {
             this._disposable = vscode.Disposable.from(...subscriptions);
 
             this.checkEndOfFileVisibilityInActiveEditor();
-        }
-        else {
+        } else {
             this.dispose();
         }
 
@@ -119,7 +116,7 @@ export class TailController {
         }
     }
 
-    editorChanged() {
+    public editorChanged() {
         this.checkEndOfFileVisibilityInActiveEditor();
     }
 

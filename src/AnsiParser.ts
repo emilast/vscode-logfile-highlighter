@@ -1,5 +1,3 @@
-'use strict';
-
 // A color is either one of the 16 basic ANSI colors (0-15, rendered with the theme's terminal colors)
 // or an explicit hex color string (from the 256 color palette or 24-bit "truecolor").
 export type AnsiColor = number | string;
@@ -164,10 +162,10 @@ function applySgr(current: AnsiStyle, parameters: string): AnsiStyle {
         // Colon separated sub parameters, e.g. "38:2::255:0:0" or "38:5:208".
         if (param.indexOf(':') !== -1) {
             const subParams = param.split(':');
-            const code = toNumber(subParams[0]);
-            if (code === 38 || code === 48) {
+            const colorCode = toNumber(subParams[0]);
+            if (colorCode === 38 || colorCode === 48) {
                 const color = parseExtendedColor(subParams.slice(1).map(toNumber), true);
-                setExtendedColor(style, code, color);
+                setExtendedColor(style, colorCode, color);
             }
             continue;
         }

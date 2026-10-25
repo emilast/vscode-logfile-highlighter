@@ -1,11 +1,11 @@
 export class TimeWithMicroseconds {
-    time: moment.Moment;
-    microseconds: number;
+    public time: moment.Moment | undefined;
+    public microseconds: number;
 
     /** Time of day, used when the timestamp has no date part (e.g. `10:21:33.456`). */
-    timeOfDay: moment.Duration | undefined;
+    public timeOfDay: moment.Duration | undefined;
 
-    constructor(time: moment.Moment, microseconds: number | undefined, timeOfDay?: moment.Duration) {
+    constructor(time: moment.Moment | undefined, microseconds: number | undefined, timeOfDay?: moment.Duration) {
         this.time = time;
         this.microseconds = microseconds || 0;
         this.timeOfDay = timeOfDay;

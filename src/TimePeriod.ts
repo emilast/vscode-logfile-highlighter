@@ -1,15 +1,16 @@
-'use strict';
 import * as moment from 'moment';
-import { TimeWithMicroseconds } from './TimeWithMicroseconds';
 import { ParsedTimestamp } from './TimestampParsers/TimestampParser';
+import { TimeWithMicroseconds } from './TimeWithMicroseconds';
 
 export class TimePeriod {
-    startTime: TimeWithMicroseconds;
-    endTime: TimeWithMicroseconds;
-    duration: moment.Duration;
+    public startTime!: TimeWithMicroseconds;
+    public endTime!: TimeWithMicroseconds;
+
+    // Undefined when the start and end timestamps are of different kinds (one with a date, one without)
+    public duration: moment.Duration | undefined;
 
     // The microsecond part of the duration
-    durationPartMicroseconds: number;
+    public durationPartMicroseconds = 0;
 
     constructor(
         startTimeMatch: ParsedTimestamp,
@@ -23,25 +24,21 @@ export class TimePeriod {
         startTimeMatch: ParsedTimestamp,
         endTimeMatch: ParsedTimestamp) {
 
-        // Full dates contain a year part, i.e. 4 digits in a row
-        var startIsFullDate = !!startTimeMatch.moment;
-        var endIsFullDate = !!endTimeMatch.moment;
-        
         // If not valid date times, clear startTime and endTime, in order to avoid strange bugs
-        if (startIsFullDate) {
+        if (startTimeMatch.moment) {
             this.startTime = new TimeWithMicroseconds(startTimeMatch.moment, startTimeMatch.microseconds);
         } else {
             this.startTime = new TimeWithMicroseconds(undefined, startTimeMatch.microseconds, startTimeMatch.duration);
         }
 
-        if (endIsFullDate) {
+        if (endTimeMatch.moment) {
             this.endTime = new TimeWithMicroseconds(endTimeMatch.moment, endTimeMatch.microseconds);
         } else {
             this.endTime = new TimeWithMicroseconds(undefined, endTimeMatch.microseconds, endTimeMatch.duration);
         }
 
         // Calculate the duration
-        if (startIsFullDate && endIsFullDate) {
+        if (startTimeMatch.moment && endTimeMatch.moment) {
             // used for ISO Dates like '2018-09-29' and '2018-09-29 13:12:11.001'
             this.duration = moment.duration(endTimeMatch.moment.diff(startTimeMatch.moment));
         } else {
@@ -56,9 +53,8 @@ export class TimePeriod {
     private adjustDurationWithMicroseconds() {
         if (this.endTime.microseconds >= this.startTime.microseconds) {
             this.durationPartMicroseconds = this.endTime.microseconds - this.startTime.microseconds;
-        }
-        else {
-            this.duration = this.duration.subtract(1, 'milliseconds');
+        } else {
+            this.duration = this.duration?.subtract(1, 'milliseconds');
             this.durationPartMicroseconds = 1000 + this.endTime.microseconds - this.startTime.microseconds;
         }
     }

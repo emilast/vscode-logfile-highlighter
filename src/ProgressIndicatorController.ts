@@ -1,5 +1,3 @@
-'use strict';
-
 import * as vscode from 'vscode';
 import { ProgressIndicator } from './ProgressIndicator';
 
@@ -68,8 +66,7 @@ export class ProgressIndicatorController {
             this.registerSelectionEventHandlers();
             this._progressIndicator.removeAllDecorations(); // Do this before the call to setUnderlineColor since the decoration object will be recreated
             this._progressIndicator.setUnderlineColor(config.progressIndicatorUnderlineColor);
-        }
-        else {
+        } else {
             // Remove all decorations in case they're disabled now or have changed settings
             this._progressIndicator.removeAllDecorations();
 
@@ -82,7 +79,7 @@ export class ProgressIndicatorController {
         this.unregisterSelectionEventHandlers();
 
         const subscriptions: vscode.Disposable[] = [];
-        vscode.window.onDidChangeTextEditorSelection(event => this.decorateLines(event), this, subscriptions);
+        vscode.window.onDidChangeTextEditorSelection((event) => this.decorateLines(event), this, subscriptions);
         this._disposableSubscriptions = vscode.Disposable.from(...subscriptions);
     }
 
@@ -107,7 +104,7 @@ export class ProgressIndicatorController {
             }
         } catch (error) {
             console.error('Error while decorating lines:', error);
-            vscode.window.showErrorMessage('An error occurred while decorating lines: ' + error.message);
+            vscode.window.showErrorMessage('An error occurred while decorating lines: ' + (error instanceof Error ? error.message : error));
         }
     }
 }

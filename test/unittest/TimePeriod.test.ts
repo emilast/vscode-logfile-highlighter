@@ -1,5 +1,3 @@
-'use strict';
-
 import moment = require('moment');
 import { TimePeriod } from '../../src/TimePeriod';
 import { ParsedTimestamp } from '../../src/TimestampParsers/TimestampParser';
@@ -8,8 +6,8 @@ describe('TimePeriod', () => {
     describe('duration', () => {
         it('gets the correct duration when full dates are present.', () => {
             // Arrange
-            const startTime: ParsedTimestamp = {moment: moment('2024-02-03 12:13:14'), microseconds: 0, matchIndex: 0, original: '2024-02-03 12:13:14'}; ;
-            const endTime: ParsedTimestamp = {moment: moment('2024-02-03 12:13:15'), microseconds: 0, matchIndex: 0, original: '2024-02-03 12:13:15'}; ;
+            const startTime: ParsedTimestamp = {moment: moment('2024-02-03 12:13:14'), microseconds: 0, matchIndex: 0, original: '2024-02-03 12:13:14'};
+            const endTime: ParsedTimestamp = {moment: moment('2024-02-03 12:13:15'), microseconds: 0, matchIndex: 0, original: '2024-02-03 12:13:15'};
 
             // Act
             const result = new TimePeriod(startTime, endTime);
@@ -21,8 +19,8 @@ describe('TimePeriod', () => {
 
         it('gets the correct duration when only times are (no dates).', () => {
             // Arrange
-            const startTime: ParsedTimestamp = {duration: moment.duration('12:13:14'), microseconds: 0, matchIndex: 0, original: '12:13:14'}; ;
-            const endTime: ParsedTimestamp = {duration: moment.duration('12:13:15'), microseconds: 0, matchIndex: 0, original: '12:13:15'}; ;
+            const startTime: ParsedTimestamp = {duration: moment.duration('12:13:14'), microseconds: 0, matchIndex: 0, original: '12:13:14'};
+            const endTime: ParsedTimestamp = {duration: moment.duration('12:13:15'), microseconds: 0, matchIndex: 0, original: '12:13:15'};
 
             // Act
             const result = new TimePeriod(startTime, endTime);

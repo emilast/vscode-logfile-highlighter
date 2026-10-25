@@ -1,14 +1,12 @@
-'use strict';
-
 import moment = require('moment');
-import { TimePeriodCalculator } from '../../src/TimePeriodCalculator';
 import { TimePeriod } from '../../src/TimePeriod';
+import { TimePeriodCalculator } from '../../src/TimePeriodCalculator';
 import { TimestampParser } from '../../src/TimestampParsers/TimestampParser';
 
 describe('TimePeriodCalculator', () => {
     let testObject: TimePeriodCalculator;
     beforeEach(() => {
-        var timestampParser = new TimestampParser()
+        const timestampParser = new TimestampParser();
         testObject = new TimePeriodCalculator(timestampParser);
     });
 
@@ -20,25 +18,24 @@ describe('TimePeriodCalculator', () => {
             const expected = moment.duration({ days: 1, months: 1, years: 2 });
 
             // Act
-            const result = testObject.getTimePeriod(firstLine, lastLine);
+            const result = testObject.getTimePeriod(firstLine, lastLine)!;
 
             // Assert
-            expect(result.duration.asMilliseconds()).toBe(expected.asMilliseconds());
+            expect(result.duration!.asMilliseconds()).toBe(expected.asMilliseconds());
         });
 
         it('gets the correct timePeriod from two dates with time zones.', () => {
             // Arrange
-            
 
             const firstLine = '2015-09-21 09:29:02.258+02:00 first line';
             const lastLine = '2015-09-21 09:29:02.259+01:00 last line';
 
             // Act
-            const result = testObject.getTimePeriod(firstLine, lastLine);
+            const result = testObject.getTimePeriod(firstLine, lastLine)!;
 
             // Assert
             const expected = moment.duration({ hours: 1, milliseconds: 1 });
-            expect(result.duration.asMilliseconds()).toBe(expected.asMilliseconds());
+            expect(result.duration!.asMilliseconds()).toBe(expected.asMilliseconds());
         });
 
         it('gets the correct timePeriod from two differently formatted dates.', () => {
@@ -48,10 +45,10 @@ describe('TimePeriodCalculator', () => {
             const expected = moment.duration({ days: 1, months: 1, years: 2 });
 
             // Act
-            const result = testObject.getTimePeriod(firstLine, lastLine);
+            const result = testObject.getTimePeriod(firstLine, lastLine)!;
 
             // Assert
-            expect(result.duration.asMilliseconds()).toBe(expected.asMilliseconds());
+            expect(result.duration!.asMilliseconds()).toBe(expected.asMilliseconds());
         });
 
         it('gets the correct timePeriod from two times (with milliseconds) with dates.', () => {
@@ -61,10 +58,10 @@ describe('TimePeriodCalculator', () => {
             const expected = moment.duration({ years: 2, months: 1, days: 1, hours: 6, minutes: 13, seconds: 0, milliseconds: 66 });
 
             // Act
-            const result = testObject.getTimePeriod(firstLine, lastLine);
+            const result = testObject.getTimePeriod(firstLine, lastLine)!;
 
             // Assert
-            expect(result.duration.asMilliseconds()).toBe(expected.asMilliseconds());
+            expect(result.duration!.asMilliseconds()).toBe(expected.asMilliseconds());
         });
 
         it('gets the correct timePeriod from two times (with milliseconds) without dates.', () => {
@@ -74,36 +71,36 @@ describe('TimePeriodCalculator', () => {
             const expected = moment.duration({ hours: 6, minutes: 13, seconds: 0, milliseconds: 66 });
 
             // Act
-            const result = testObject.getTimePeriod(firstLine, lastLine);
+            const result = testObject.getTimePeriod(firstLine, lastLine)!;
 
             // Assert
-            expect(result.duration.asMilliseconds()).toBe(expected.asMilliseconds());
+            expect(result.duration!.asMilliseconds()).toBe(expected.asMilliseconds());
             expect(result.durationPartMicroseconds).toBe(0);
         });
 
         it('gets the correct timePeriod from with microseconds with dates.', () => {
             // Arrange
             const firstLine = '2023-01-02 10:11:12.100000 first line';
-            const lastLine = '2023-01-02 10:11:12.100123 last line';;
+            const lastLine = '2023-01-02 10:11:12.100123 last line';
 
             // Act
-            const result = testObject.getTimePeriod(firstLine, lastLine);
+            const result = testObject.getTimePeriod(firstLine, lastLine)!;
 
             // Assert
-            expect(result.duration.asMilliseconds()).toBe(0);
+            expect(result.duration!.asMilliseconds()).toBe(0);
             expect(result.durationPartMicroseconds).toBe(123);
         });
 
         it('gets the correct timePeriod from with microseconds without dates.', () => {
             // Arrange
             const firstLine = '10:11:12.100000 first line';
-            const lastLine = '10:11:12.100123 last line';;
+            const lastLine = '10:11:12.100123 last line';
 
             // Act
-            const result = testObject.getTimePeriod(firstLine, lastLine);
+            const result = testObject.getTimePeriod(firstLine, lastLine)!;
 
             // Assert
-            expect(result.duration.asMilliseconds()).toBe(0);
+            expect(result.duration!.asMilliseconds()).toBe(0);
             expect(result.durationPartMicroseconds).toBe(123);
         });
 
@@ -114,10 +111,10 @@ describe('TimePeriodCalculator', () => {
             const expected = moment.duration({ years: 2, months: 1, days: 1 });
 
             // Act
-            const result = testObject.getTimePeriod(firstLine, lastLine);
+            const result = testObject.getTimePeriod(firstLine, lastLine)!;
 
             // Assert
-            expect(result.duration.asMilliseconds()).toBe(expected.asMilliseconds());
+            expect(result.duration!.asMilliseconds()).toBe(expected.asMilliseconds());
         });
     });
 
@@ -183,7 +180,7 @@ describe('TimePeriodCalculator', () => {
             const result = testObject.convertToDisplayString(
                 new TimePeriod(
                     { moment: moment('2024-02-03 12:13:14.000'), microseconds: 0, matchIndex: 0, original: '2024-02-03 12:13:14.000' },
-                    { moment: moment('2024-02-03 12:16:20.123'), microseconds: 0, matchIndex: 0, original: '2024-02-03 12:16:20.123' },));
+                    { moment: moment('2024-02-03 12:16:20.123'), microseconds: 0, matchIndex: 0, original: '2024-02-03 12:16:20.123' }, ));
 
             // Assert
             expect(result).toBe(PREFIX + '3min, 6s, 123ms');

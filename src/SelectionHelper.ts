@@ -1,8 +1,7 @@
-'use strict';
 import * as vscode from 'vscode';
 
 export class SelectionHelper {
-    getFirstAndLastLines(editor: vscode.TextEditor, doc: vscode.TextDocument) {
+    public getFirstAndLastLines(editor: vscode.TextEditor, doc: vscode.TextDocument) {
         const startLineNumber = editor.selection.start.line;
         const endLineNumber = editor.selection.end.line;
 

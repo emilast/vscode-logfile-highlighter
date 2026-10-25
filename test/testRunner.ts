@@ -1,5 +1,3 @@
-'use strict';
-
 import Jasmine = require('jasmine');
 import JasmineConsoleReporter = require('jasmine-console-reporter');
 
@@ -7,16 +5,16 @@ import * as path from 'path';
 import * as util from 'util';
 
 class TestRunner {
-    
+
     public run(configPath: string, clb: (error: Error) => void): void {
         const jasmine = new Jasmine();
         jasmine.loadConfigFile(configPath);
 
         const reporter = new JasmineConsoleReporter({
-            colors: 1,           // (0|false)|(1|true)|2 
-            cleanStack: 1,       // (0|false)|(1|true)|2|3 
-            verbosity: 4,        // (0|false)|1|2|(3|true)|4|Object 
-            listStyle: 'indent', // "flat"|"indent" 
+            colors: 1,           // (0|false)|(1|true)|2
+            cleanStack: 1,       // (0|false)|(1|true)|2|3
+            verbosity: 4,        // (0|false)|1|2|(3|true)|4|Object
+            listStyle: 'indent', // "flat"|"indent"
             activity: false
         });
 
