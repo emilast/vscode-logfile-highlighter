@@ -1,9 +1,9 @@
 'use strict';
 
 import * as vscode from 'vscode';
-import { TimePeriodCalculator } from './TimePeriodCalculator';
-import { SelectionHelper } from './SelectionHelper';
 import { Constants } from './Constants';
+import { SelectionHelper } from './SelectionHelper';
+import { TimePeriodCalculator } from './TimePeriodCalculator';
 
 export class TimePeriodController {
 
@@ -51,10 +51,10 @@ export class TimePeriodController {
 
             this._statusBarItem.text = '';
 
-            let texts = this._selectionHelper.getFirstAndLastLines(editor, doc);
+            const texts = this._selectionHelper.getFirstAndLastLines(editor, doc);
 
             if (texts !== undefined) {
-                let timePeriod = this._timeCalculator.getTimePeriod(texts.startLine, texts.endLine);
+                const timePeriod = this._timeCalculator.getTimePeriod(texts.startLine, texts.endLine);
                 if (timePeriod !== undefined) {
 
                     // Update the status bar

@@ -68,8 +68,7 @@ export class ProgressIndicatorController {
             this.registerSelectionEventHandlers();
             this._progressIndicator.removeAllDecorations(); // Do this before the call to setUnderlineColor since the decoration object will be recreated
             this._progressIndicator.setUnderlineColor(config.progressIndicatorUnderlineColor);
-        }
-        else {
+        } else {
             // Remove all decorations in case they're disabled now or have changed settings
             this._progressIndicator.removeAllDecorations();
 
@@ -82,7 +81,7 @@ export class ProgressIndicatorController {
         this.unregisterSelectionEventHandlers();
 
         const subscriptions: vscode.Disposable[] = [];
-        vscode.window.onDidChangeTextEditorSelection(event => this.decorateLines(event), this, subscriptions);
+        vscode.window.onDidChangeTextEditorSelection((event) => this.decorateLines(event), this, subscriptions);
         this._disposableSubscriptions = vscode.Disposable.from(...subscriptions);
     }
 

@@ -164,10 +164,10 @@ function applySgr(current: AnsiStyle, parameters: string): AnsiStyle {
         // Colon separated sub parameters, e.g. "38:2::255:0:0" or "38:5:208".
         if (param.indexOf(':') !== -1) {
             const subParams = param.split(':');
-            const code = toNumber(subParams[0]);
-            if (code === 38 || code === 48) {
+            const colorCode = toNumber(subParams[0]);
+            if (colorCode === 38 || colorCode === 48) {
                 const color = parseExtendedColor(subParams.slice(1).map(toNumber), true);
-                setExtendedColor(style, code, color);
+                setExtendedColor(style, colorCode, color);
             }
             continue;
         }

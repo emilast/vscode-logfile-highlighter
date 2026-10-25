@@ -1,8 +1,8 @@
 'use strict';
 
 import * as vscode from 'vscode';
-import { CustomPatternDecorator } from './CustomPatternDecorator';
 import { Constants } from './Constants';
+import { CustomPatternDecorator } from './CustomPatternDecorator';
 
 export class CustomPatternController {
 

@@ -13,8 +13,7 @@ export class CustomPattern {
         pattern: string, patternFlags: string, highlightEntireLine: boolean, foreground: string | undefined, background: string | undefined,
         fontWeight: string | undefined, fontStyle: string | undefined, border: string | undefined, borderRadius: string | undefined,
         borderSpacing: string | undefined, letterSpacing: string | undefined, overviewRulerColor: string | undefined,
-        overviewRulerLane: vscode.OverviewRulerLane | undefined, textDecoration: string | undefined)
-    {
+        overviewRulerLane: vscode.OverviewRulerLane | undefined, textDecoration: string | undefined) {
         this.pattern = pattern;
         this.foreground = foreground;
         this.background = background;
@@ -22,15 +21,15 @@ export class CustomPattern {
         this.decoration = vscode.window.createTextEditorDecorationType({
             backgroundColor: this.background,
             color: this.foreground,
-            fontWeight: fontWeight,
-            fontStyle: fontStyle,
-            border: border,
-            borderRadius: borderRadius,
-            borderSpacing: borderSpacing,
-            letterSpacing: letterSpacing,
-            overviewRulerColor: overviewRulerColor,
-            overviewRulerLane: overviewRulerLane,
-            textDecoration: textDecoration,
+            fontWeight,
+            fontStyle,
+            border,
+            borderRadius,
+            borderSpacing,
+            letterSpacing,
+            overviewRulerColor,
+            overviewRulerLane,
+            textDecoration,
             rangeBehavior: vscode.DecorationRangeBehavior.ClosedClosed
         });
     }

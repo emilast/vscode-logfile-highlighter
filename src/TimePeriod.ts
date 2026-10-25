@@ -1,17 +1,17 @@
 'use strict';
 import * as moment from 'moment';
-import { TimeWithMicroseconds } from './TimeWithMicroseconds';
 import { ParsedTimestamp } from './TimestampParsers/TimestampParser';
+import { TimeWithMicroseconds } from './TimeWithMicroseconds';
 
 export class TimePeriod {
-    startTime!: TimeWithMicroseconds;
-    endTime!: TimeWithMicroseconds;
+    public startTime!: TimeWithMicroseconds;
+    public endTime!: TimeWithMicroseconds;
 
     // Undefined when the start and end timestamps are of different kinds (one with a date, one without)
-    duration: moment.Duration | undefined;
+    public duration: moment.Duration | undefined;
 
     // The microsecond part of the duration
-    durationPartMicroseconds = 0;
+    public durationPartMicroseconds = 0;
 
     constructor(
         startTimeMatch: ParsedTimestamp,
@@ -54,8 +54,7 @@ export class TimePeriod {
     private adjustDurationWithMicroseconds() {
         if (this.endTime.microseconds >= this.startTime.microseconds) {
             this.durationPartMicroseconds = this.endTime.microseconds - this.startTime.microseconds;
-        }
-        else {
+        } else {
             this.duration = this.duration?.subtract(1, 'milliseconds');
             this.durationPartMicroseconds = 1000 + this.endTime.microseconds - this.startTime.microseconds;
         }

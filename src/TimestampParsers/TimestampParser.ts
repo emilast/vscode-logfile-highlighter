@@ -1,16 +1,16 @@
 'use strict';
 
-import moment = require("moment");
-import { TimeFormatParser } from "./TimeFormatParser";
-import { DanishDateFormatParser } from "./DanishDateFormatParser";
-import { IsoDateFormatParser } from "./IsoDateFormatParser";
-import { USDateFormatParser } from "./USDateFormatParser";
-import { DanishDateTimeFormatParser } from "./DanishDateTimeFormatParser";
-import { IsoDateTimeFormatParser } from "./IsoDateTimeFormatParser";
-import { USDateTimeFormatParser } from "./USDateTimeFormatParser";
-import { LittleEndianDateFormatParser } from "./LittleEndianDateFormatParser";
-import { LittleEndianDateTimeFormatParser } from "./LittleEndianDateTimeFormatParser";
-import { IsoSlimDateTimeFormatParser } from "./IsoSlimDateTimeFormatParser";
+import moment = require('moment');
+import { DanishDateFormatParser } from './DanishDateFormatParser';
+import { DanishDateTimeFormatParser } from './DanishDateTimeFormatParser';
+import { IsoDateFormatParser } from './IsoDateFormatParser';
+import { IsoDateTimeFormatParser } from './IsoDateTimeFormatParser';
+import { IsoSlimDateTimeFormatParser } from './IsoSlimDateTimeFormatParser';
+import { LittleEndianDateFormatParser } from './LittleEndianDateFormatParser';
+import { LittleEndianDateTimeFormatParser } from './LittleEndianDateTimeFormatParser';
+import { TimeFormatParser } from './TimeFormatParser';
+import { USDateFormatParser } from './USDateFormatParser';
+import { USDateTimeFormatParser } from './USDateTimeFormatParser';
 
 export class TimestampParser {
     private parsers: TimestampFormatParser[];
@@ -46,7 +46,7 @@ export class TimestampParser {
         let microseconds = 0;
 
         if (microsecondsMatch) {
-            microseconds = parseInt(microsecondsMatch);
+            microseconds = parseInt(microsecondsMatch, 10);
         }
         const matchedString = match.match[0];
         const normalizedTimestamp = match.normalizedTimestamp;
@@ -56,7 +56,7 @@ export class TimestampParser {
             matchIndex: match.match.index,
             moment: match.containsDate ? moment(normalizedTimestamp, moment.ISO_8601) : undefined,
             duration: !match.containsDate ? moment.duration(normalizedTimestamp) : undefined,
-            microseconds: microseconds
+            microseconds
         } as ParsedTimestamp;
     }
 }

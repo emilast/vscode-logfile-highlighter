@@ -12,7 +12,7 @@ export class TimePeriodCalculator {
     // Converts a given moment.Duration to a string that can be displayed.
     public convertToDisplayString(selectedDuration: TimePeriod): string {
         let text = '';
-        
+
         if (!selectedDuration || !selectedDuration.duration) {
             return 'No duration selected';
         }
@@ -20,25 +20,25 @@ export class TimePeriodCalculator {
         if (selectedDuration.duration.asDays() >= 1) {
             text += Math.floor(selectedDuration.duration.asDays()) + 'd';
         }
-        
+
         if (text !== '') {
             text += ', ' + selectedDuration.duration.hours() + 'h';
         } else if (selectedDuration.duration.hours() !== 0) {
             text += selectedDuration.duration.hours() + 'h';
         }
-        
+
         if (text !== '') {
             text += ', ' + selectedDuration.duration.minutes() + 'min';
         } else if (selectedDuration.duration.minutes() !== 0) {
             text += selectedDuration.duration.minutes() + 'min';
         }
-        
+
         if (text !== '') {
             text += ', ' + selectedDuration.duration.seconds() + 's';
         } else if (selectedDuration.duration.seconds() !== 0) {
             text += selectedDuration.duration.seconds() + 's';
         }
-        
+
         if (text !== '') {
             text += ', ' + selectedDuration.duration.milliseconds() + 'ms';
         } else if (selectedDuration.duration.milliseconds() !== 0) {
@@ -59,8 +59,8 @@ export class TimePeriodCalculator {
     }
 
     public getTimePeriod(firstLine: string, lastLine: string): TimePeriod | undefined {
-        let firstLineMatch = this._timestampParser.getTimestampFromText(firstLine);
-        let lastLineMatch = this._timestampParser.getTimestampFromText(lastLine);
+        const firstLineMatch = this._timestampParser.getTimestampFromText(firstLine);
+        const lastLineMatch = this._timestampParser.getTimestampFromText(lastLine);
 
         if (firstLineMatch && lastLineMatch) {
             return new TimePeriod(firstLineMatch, lastLineMatch);

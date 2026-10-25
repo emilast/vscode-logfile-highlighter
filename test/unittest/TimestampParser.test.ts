@@ -145,8 +145,6 @@ describe('TimestampParser', () => {
             expect(result.microseconds).toBe(0);
         });
 
-
-        
         it('gets the correct timestamp from "YYYY-MM-DD hh:mm:ss +02:00".', () => {
             // Arrange
             const text = '2024-11-13 09:10:00 +02:00 first line';

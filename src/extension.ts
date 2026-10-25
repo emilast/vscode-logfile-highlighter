@@ -8,9 +8,9 @@ import { CustomPatternDecorator } from './CustomPatternDecorator';
 import { ProgressIndicator } from './ProgressIndicator';
 import { ProgressIndicatorController } from './ProgressIndicatorController';
 import { SelectionHelper } from './SelectionHelper';
+import { TailController } from './TailController';
 import { TimePeriodCalculator } from './TimePeriodCalculator';
 import { TimePeriodController } from './TimePeriodController';
-import { TailController } from './TailController';
 import { TimestampParser } from './TimestampParsers/TimestampParser';
 
 // this method is called when the extension is activated
@@ -18,7 +18,7 @@ export function activate(context: vscode.ExtensionContext) {
 
     const selectionHelper = new SelectionHelper();
 
-    var timestampParser = new TimestampParser()
+    const timestampParser = new TimestampParser();
 
     // create a new time calculator and controller
     const timeCalculator = new TimePeriodCalculator(timestampParser);
