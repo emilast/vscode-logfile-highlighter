@@ -1,5 +1,3 @@
-'use strict';
-
 import { TimePeriod } from './TimePeriod';
 import { TimestampParser } from './TimestampParsers/TimestampParser';
 

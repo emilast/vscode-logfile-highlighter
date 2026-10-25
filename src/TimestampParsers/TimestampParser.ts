@@ -1,5 +1,3 @@
-'use strict';
-
 import moment = require('moment');
 import { DanishDateFormatParser } from './DanishDateFormatParser';
 import { DanishDateTimeFormatParser } from './DanishDateTimeFormatParser';

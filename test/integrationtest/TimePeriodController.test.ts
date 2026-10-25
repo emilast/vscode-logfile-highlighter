@@ -1,5 +1,3 @@
-'use strict';
-
 import * as vscode from 'vscode';
 import { Position, Selection } from 'vscode';
 import { TimePeriodController } from '../../src/TimePeriodController';

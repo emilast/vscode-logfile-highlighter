@@ -1,5 +1,3 @@
-'use strict';
-
 import moment = require('moment');
 import { TimestampParser } from '../../src/TimestampParsers/TimestampParser';
 

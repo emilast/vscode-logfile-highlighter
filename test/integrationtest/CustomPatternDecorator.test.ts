@@ -1,5 +1,3 @@
-'use strict';
-
 import { Position, Range, Selection } from 'vscode';
 import * as vscode from 'vscode';
 import { CustomPatternDecorator } from '../../src/CustomPatternDecorator';

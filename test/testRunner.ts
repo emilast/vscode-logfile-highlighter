@@ -1,5 +1,3 @@
-'use strict';
-
 import Jasmine = require('jasmine');
 import JasmineConsoleReporter = require('jasmine-console-reporter');
 

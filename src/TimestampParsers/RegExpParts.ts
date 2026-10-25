@@ -1,4 +1,3 @@
-'use strict';
 export class RegExpParts {
     /** Separator between date and time parts, either 'T' or a space */
     public static readonly DateTimeSeparator: string = '((?:T|\\b) ?)';

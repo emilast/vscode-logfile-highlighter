@@ -1,5 +1,3 @@
-'use strict';
-
 import { convert256Color, parseAnsi } from '../../src/AnsiParser';
 
 describe('AnsiParser', () => {

@@ -1,4 +1,3 @@
-'use strict';
 import { RegExpParts } from './RegExpParts';
 import { TimestampFormatParser, TimestampMatch } from './TimestampParser';
 

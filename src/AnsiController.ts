@@ -1,5 +1,3 @@
-'use strict';
-
 import * as vscode from 'vscode';
 import { AnsiDecorator } from './AnsiDecorator';
 import { Constants } from './Constants';

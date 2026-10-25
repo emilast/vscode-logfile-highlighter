@@ -7,7 +7,6 @@
             "es6"
         ],
         "sourceMap": true,
-        "strict": true,
         "types": [
             "node",
             "vscode",

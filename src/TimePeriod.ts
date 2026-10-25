@@ -1,4 +1,3 @@
-'use strict';
 import * as moment from 'moment';
 import { ParsedTimestamp } from './TimestampParsers/TimestampParser';
 import { TimeWithMicroseconds } from './TimeWithMicroseconds';

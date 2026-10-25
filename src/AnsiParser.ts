@@ -1,5 +1,3 @@
-'use strict';
-
 // A color is either one of the 16 basic ANSI colors (0-15, rendered with the theme's terminal colors)
 // or an explicit hex color string (from the 256 color palette or 24-bit "truecolor").
 export type AnsiColor = number | string;
