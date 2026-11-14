@@ -34,11 +34,14 @@ npm run unittest
 3. Press <kbd>Enter</kbd>
 
 #### Command Prompt
-Set the following environment variables on your system:
-* `CODE_TESTS_PATH`: **Absolute path** to `out/test/integrationtest`
-* `CODE_TESTS_WORKSPACE`: **Absolute path** to `test/integrationtest/testLogs`
-
-Start the integration tests after compiling the project via running:
+Run:
 ```
 npm run integrationtest
+```
+
+This builds the extension and the tests, downloads VS Code to `.vscode-test/` (the first time) and runs the tests in it with `test/integrationtest/testLogs` as the workspace. Set `VSCODE_TEST_VERSION` to test against another VS Code version than the latest stable one, e.g. `insiders` or `1.140.0`.
+
+On Linux without a display, such as in a container or a CI job, run it with a virtual display:
+```
+xvfb-run -a npm run integrationtest
 ```
