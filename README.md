@@ -283,6 +283,17 @@ Instead of a fixed color, `foreground`, `background` and `overviewColor` can ref
 ]
 ```
 
+Some theme colors that work well for log files:
+
+| Theme color id                                                                                                                                         | Suitable for                                                                                     |
+| ------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------ |
+| `terminal.ansiRed`, `terminal.ansiYellow`, `terminal.ansiGreen`, `terminal.ansiBlue`, `terminal.ansiCyan`, `terminal.ansiMagenta`, and the `terminal.ansiBright...` variants | Log levels. All themes define them, and they're made to be readable on the editor background. |
+| `editorError.foreground`, `editorWarning.foreground`, `editorInfo.foreground`                                                                         | Errors, warnings and information, in the same colors as the squiggles in the editor.             |
+| `editor.findMatchHighlightBackground`, `editor.wordHighlightBackground`                                                                                | Backgrounds that make text stand out while keeping it readable.                                  |
+| `descriptionForeground`, `disabledForeground`                                                                                                          | Text that should be toned down, such as noise in the log.                                        |
+
+The complete list is in the [Theme Color reference](https://code.visualstudio.com/api/references/theme-color). To see the values of the current theme, run the command **Developer: Generate Color Theme From Current Settings**.
+
 VS Code's settings editor may show a warning for theme color ids, since it expects hex colors there. The warning can be ignored.
 
 ### Syntax highlighting of large files
