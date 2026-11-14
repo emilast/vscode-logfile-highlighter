@@ -6,7 +6,7 @@
 
 * Errors from the progress indicator are now logged instead of being shown in a message box on every selection change. Related to #744.
 
-* Tail mode no longer registers its event handlers again on every settings change, and no longer recreates its file watcher on every scroll while the end of the file is visible. It now also detects changes to log files outside the workspace. Related to #744.
+* Tail mode no longer registers its event handlers again on every settings change, and no longer recreates its file watcher on every scroll while the end of the file is visible. Related to #744.
 
 * The progress indicator no longer leaks a decoration on every settings change. Related to #744.
 

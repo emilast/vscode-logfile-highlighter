@@ -166,8 +166,8 @@ export class TailController {
         }
 
         // Watch the folder of the current file and only react to changes of the file itself. A RelativePattern
-        // is used, rather than a glob of the full path, so that files outside the workspace can be watched,
-        // and characters with a special meaning in globs, like [ ] { }, in the path don't matter.
+        // with a base folder is used rather than a glob of the full path, so that characters with a special
+        // meaning in globs, like [ ] { }, in the path are never interpreted as a pattern.
         const folder = vscode.Uri.joinPath(uri, '..');
         this._fileSystemWatcher = vscode.workspace.createFileSystemWatcher(
             new vscode.RelativePattern(folder, '*'), false, false, true);

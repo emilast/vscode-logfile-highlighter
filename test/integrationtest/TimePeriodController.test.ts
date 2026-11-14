@@ -1,149 +1,74 @@
 'use strict';
 
 import * as vscode from 'vscode';
-import { Position, Selection } from 'vscode';
+import { Selection } from 'vscode';
+import { SelectionHelper } from '../../src/SelectionHelper';
+import { TimePeriodCalculator } from '../../src/TimePeriodCalculator';
 import { TimePeriodController } from '../../src/TimePeriodController';
+import { TimestampParser } from '../../src/TimestampParsers/TimestampParser';
+import { closeAllEditors, openTestLog, openUntitledLog, waitFor } from './helpers';
 
 describe('TimePeriodController', () => {
 
-    // Initial situation for all tests:
-    // folder 'testLogs' is opened and first file is selected in editor.
-    beforeEach((done) => {
-        if (vscode.workspace.workspaceFolders !== undefined) {
-            const workspaceRootPath = vscode.workspace.workspaceFolders[0].uri.path;
-            vscode.workspace.findFiles('*.log').then(
-                (uris) => {
-                    vscode.workspace.openTextDocument(uris[0]).then(
-                        (file) => {
-                            vscode.window.showTextDocument(file).then(
-                                (editor) => {
-                                    editor.selection = new Selection(new Position(0, 0), new Position(0, 0));
-                                    done();
-                                },
-                                (reason) => {
-                                    done.fail(reason);
-                                });
-                        },
-                        (reason) => {
-                            done.fail(reason);
-                        });
-                },
-                (reason) => {
-                    done.fail(reason);
-                });
-        } else {
-            done.fail('No folder was opened!');
-        }
+    let testObject: TimePeriodController;
+
+    function statusBarText(): string {
+        return (testObject as any)._statusBarItem.text;
+    }
+
+    beforeEach(() => {
+        testObject = new TimePeriodController(new TimePeriodCalculator(new TimestampParser()), new SelectionHelper());
     });
 
-    it('should show a status bar item when a range of valid log statements is selcted.', (done) => {
+    afterEach(async () => {
+        testObject.dispose();
+        await closeAllEditors();
+    });
 
-        // Arrange
-        const editor = vscode.window.activeTextEditor;
-        let controllerSpy = spyOn(TimePeriodController.prototype, 'updateTimePeriod').and.callThrough();
-
-        // Assert
-        vscode.window.onDidChangeTextEditorSelection((selectionChangedEvent) => {
-            // Only assert once
-            if (controllerSpy !== undefined && controllerSpy.calls.count() === 1) {
-                expect(controllerSpy.calls.count()).toBe(1);
-                // expect(typeof (controllerSpy.calls.argsFor(0)[0])).toBe('object');
-                // expect(controllerSpy.calls.argsFor(0)[0].text).toBe('Selected: 1ms');
-                controllerSpy = undefined;
-                done();
-            }
-        });
+    it('shows the duration of the selected log lines.', async () => {
+        // Arrange: 2018-01-27 10:38:20.442 to 2018-01-27 10:38:25.459
+        const editor = await openTestLog('firstLog.log');
 
         // Act
-        if (editor) {
-            editor.selection = new Selection(new Position(0, 0), new Position(2, 0));
-        } else {
-            done.fail('No text editor is active!');
-        }
-    });
-
-    it('should not show a status bar item when a range of invalid log statements is selcted.', (done) => {
-
-        // Arrange
-        const editor = vscode.window.activeTextEditor;
-        let controllerSpy = spyOn(TimePeriodController.prototype, 'updateTimePeriod').and.callThrough();
+        editor.selection = new Selection(0, 0, 2, 10);
+        testObject.updateTimePeriod();
 
         // Assert
-        vscode.window.onDidChangeTextEditorSelection((selectionChangedEvent) => {
+        expect(statusBarText()).toBe('Selected: 5s, 17ms');
+    });
 
-            // Only check on second call once.
-            if (controllerSpy !== undefined && controllerSpy.calls.count() === 2) {
-                // expect(typeof (controllerSpy.calls.argsFor(1)[0])).toBe('object');
-                // expect(controllerSpy.calls.argsFor(1)[0].text).toBe('');
-                controllerSpy = undefined;
-                done();
-            }
-        });
+    it('updates the duration when the selection changes.', async () => {
+        // Arrange
+        const editor = await openTestLog('firstLog.log');
 
         // Act
-        if (editor) {
-            editor.selection = new Selection(new Position(0, 1), new Position(1, 12));
-        } else {
-            done.fail('No text editor is active!');
-        }
-    });
-
-    it('should update the status bar item when the active editor switches to another file.', (done) => {
-
-        // Arrange
-        let controllerSpy = spyOn(TimePeriodController.prototype, 'updateTimePeriod').and.callThrough();
+        editor.selection = new Selection(0, 0, 1, 10);
 
         // Assert
-        vscode.window.onDidChangeActiveTextEditor((selectionChangedEvent) => {
+        await waitFor(() => statusBarText() === 'Selected: 1ms', 'the status bar to show the selected duration');
+    });
 
-            // Only check on fourth call once.
-            if (controllerSpy !== undefined && controllerSpy.calls.count() === 4) {
+    it('shows no duration when the selected lines have no timestamps.', async () => {
+        // Arrange
+        const editor = await openUntitledLog('first line\nsecond line\n');
 
-                // Wait for the TimePeriodController to update the status bar.
-                setTimeout(() => {
-                    // expect(typeof (controllerSpy.calls.argsFor(3)[0])).toBe('object');
-                    // expect(controllerSpy.calls.argsFor(3)[0].text).toBe('Selected: 1ms');
-                    controllerSpy = undefined;
-                    done();
-                }, 200);
-            }
-        });
+        // Act
+        editor.selection = new Selection(0, 0, 1, 5);
+        testObject.updateTimePeriod();
 
-        // Open both files and select some lines then change back to the first file.
-        vscode.workspace.findFiles('*.log').then(
-            (uris) => {
-                // Open and show second file with default selection
-                vscode.workspace.openTextDocument(uris[1]).then(
-                    (secondFile) => {
-                        vscode.window.showTextDocument(secondFile, {
-                            preview: false,
-                            selection: new Selection(new Position(0, 0), new Position(2, 0))
-                        }).then(
-                            (editor) => {
-                                // Switch back to the first file with default selection.
-                                vscode.workspace.openTextDocument(uris[0]).then(
-                                    (firstFile) => {
-                                        vscode.window.showTextDocument(firstFile, {
-                                            preserveFocus: false,
-                                            preview: false,
-                                            selection: new Selection(new Position(0, 0), new Position(2, 0))
-                                        });
-                                        done();
-                                    },
-                                    (reason) => {
-                                        done.fail(reason);
-                                    });
-                            },
-                            (reason) => {
-                                done.fail(reason);
-                            });
-                    },
-                    (reason) => {
-                        done.fail(reason);
-                    });
-            },
-            (reason) => {
-                done.fail(reason);
-            });
+        // Assert
+        expect(statusBarText()).toBe('');
+    });
+
+    it('shows no duration, and does not throw, when only one of the lines has a date (#744).', async () => {
+        // Arrange
+        const editor = await openUntitledLog('2025-08-15 12:24:16.047123 first line\n    took 00:00:05\n');
+
+        // Act
+        editor.selection = new Selection(0, 0, 1, 5);
+
+        // Assert
+        expect(() => testObject.updateTimePeriod()).not.toThrow();
+        expect(statusBarText()).toBe('');
     });
 });
