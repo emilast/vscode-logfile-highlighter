@@ -168,14 +168,14 @@ The patterns are defined in the user settings like in this example:
 | `pattern`             | Mandatory | The matching expression.This can be either a string constant or a JavaScript regular expression (remember to **escape special characters**).                                                     | `foobar`, `(TODO)`                                                                |
 | `patternFlags`        | Optional  | Flags to use with the regular expression, in addition to the `gm` flags that are set by default.                                                                                                 | `i` (case insensitive)<br>`is` (case insensitive + '.' matches newline characters |
 | `highlightEntireLine` | Optional  | If true, then the entire line where match is found is highlighted.                                                                                                                               | `false` (default), `true`                                                         |
-| `foreground`          | Optional  | The color to use as foreground color for the matched pattern. Hex colors are preferred since they can be selected with the VS Code color picker but predefined VS Code color names work as well. | `yellow`, `#ff5588`                                                               |
-| `background`          | Optional  | The color to use as background color for the matched pattern.                                                                                                                                    | `yellow`, `#ff5588`                                                               |
+| `foreground`          | Optional  | The color to use as foreground color for the matched pattern. Hex colors are preferred since they can be selected with the VS Code color picker but predefined VS Code color names work as well. A [theme color](#using-theme-colors) id uses that color of the current theme. | `yellow`, `#ff5588`, `terminal.ansiGreen`                                         |
+| `background`          | Optional  | The color to use as background color for the matched pattern.                                                                                                                                    | `yellow`, `#ff5588`, `editor.findMatchHighlightBackground`                        |
 | `fontWeight`          | Optional  | Used to change the weight of the font.                                                                                                                                                           | `bold`                                                                            |
 | `fontStyle`           | Optional  | Used to change the style of the font.                                                                                                                                                            | `italic`                                                                          |
 | `border`              | Optional  | Can be used for adding a border around matched text.                                                                                                                                             | `2px solid yellow`                                                                |
 | `borderRadius`        | Optional  | Can be used together with the `border` setting to make the border corners rounded.                                                                                                               | `3px`                                                                             |
 | `letterSpacing`       | Optional  | Can be used to increase or decrease the horizontsl spacing between characters in the matched text.                                                                                               | `5px` <br> `-1px`                                                                 |
-| `overviewColor`       | Optional  | If set, this enables matched text to be indicated in the overview ruler to the right of the text editor window in Code.                                                                          | `yellow`, `#ff5588`                                                               |
+| `overviewColor`       | Optional  | If set, this enables matched text to be indicated in the overview ruler to the right of the text editor window in Code.                                                                          | `yellow`, `#ff5588`, `editorError.foreground`                                     |
 | `overviewRulerLane`   | Optional  | If `overviewColor` is set, then this setting controls the placement of the marker in the ruler.                                                                                                  | `Left`, `Right`, `Center`, `Full`                                                 |
 | `textDecoration`      | Optional  | Used for adding additional CSS text decorations.                                                                                                                                                 | `red underline overline dotted`, `red wavy underline`                             |
 
@@ -269,6 +269,21 @@ Notes:
 Result:
 
 ![alt text](content/MultilinePattern.png)
+
+### Using theme colors
+
+Instead of a fixed color, `foreground`, `background` and `overviewColor` can refer to a color of the current color theme, using its [theme color id](https://code.visualstudio.com/api/references/theme-color). The custom patterns then match the theme, and change with it. The terminal colors work well for log levels:
+
+```json
+"logFileHighlighter.customPatterns": [
+    { "pattern": "^E [()0-9.:]+", "foreground": "terminal.ansiRed" },
+    { "pattern": "^W [()0-9.:]+", "foreground": "terminal.ansiYellow" },
+    { "pattern": "^I [()0-9.:]+", "foreground": "terminal.ansiGreen" },
+    { "pattern": "FATAL", "foreground": "editorError.foreground", "overviewColor": "editorError.foreground" }
+]
+```
+
+VS Code's settings editor may show a warning for theme color ids, since it expects hex colors there. The warning can be ignored.
 
 ### Syntax highlighting of large files
 
