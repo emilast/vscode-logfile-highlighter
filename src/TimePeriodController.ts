@@ -75,6 +75,11 @@ export class TimePeriodController {
     }
 
     private _onEvent() {
-        this.updateTimePeriod();
+        try {
+            this.updateTimePeriod();
+        } catch (error) {
+            console.error('Log File Highlighter: Error while calculating the selected time period:', error);
+            this._statusBarItem.hide();
+        }
     }
-}
+}

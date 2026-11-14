@@ -3,8 +3,11 @@ import * as vscode from 'vscode';
 
 export class SelectionHelper {
     getFirstAndLastLines(editor: vscode.TextEditor, doc: vscode.TextDocument) {
-        const startLineNumber = editor.selection.start.line;
-        const endLineNumber = editor.selection.end.line;
+        // The selection can briefly refer to lines past the end of the document, e.g. when a
+        // tailed log file is truncated, so keep the line numbers within the document.
+        const lastLineNumber = doc.lineCount - 1;
+        const startLineNumber = Math.min(editor.selection.start.line, lastLineNumber);
+        const endLineNumber = Math.min(editor.selection.end.line, lastLineNumber);
 
         if (startLineNumber !== endLineNumber) {
             let startLine: vscode.TextLine | undefined;

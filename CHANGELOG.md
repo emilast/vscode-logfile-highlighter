@@ -1,5 +1,15 @@
 # Change Log
 
+### Unreleased
+
+* Selecting lines where only one of the first and last lines has a date in its timestamp (e.g. `2025-08-15 12:24:16.047123` and `00:00:05`) no longer throws errors on every selection change. No duration is shown in that case. Related to #744.
+
+* Errors from the progress indicator are now logged instead of being shown in a message box on every selection change. Related to #744.
+
+* Tail mode no longer registers its event handlers again on every settings change, and no longer recreates its file watcher on every scroll while the end of the file is visible. It now also detects changes to log files outside the workspace. Related to #744.
+
+* The progress indicator no longer leaks a decoration on every settings change. Related to #744.
+
 ### 3.8.0 - 24 October 2026
 
 * Escaped `<` characters in the regular expressions in `log.tmLanguage` so the grammar file is well-formed XML. Fixes #432.

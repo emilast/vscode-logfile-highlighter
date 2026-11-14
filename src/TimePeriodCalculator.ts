@@ -63,7 +63,12 @@ export class TimePeriodCalculator {
         let lastLineMatch = this._timestampParser.getTimestampFromText(lastLine);
 
         if (firstLineMatch && lastLineMatch) {
-            return new TimePeriod(firstLineMatch, lastLineMatch);
+            const timePeriod = new TimePeriod(firstLineMatch, lastLineMatch);
+
+            // A timestamp with a date can't be compared with one without, so there's no time period
+            if (timePeriod.duration) {
+                return timePeriod;
+            }
         }
 
         return undefined;
