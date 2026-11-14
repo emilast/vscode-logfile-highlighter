@@ -19,3 +19,4 @@ tslint.json
 **/*.ts
 **/*.map
 .eslintrc.json
+scripts/**
