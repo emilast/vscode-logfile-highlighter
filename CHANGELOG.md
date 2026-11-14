@@ -1,5 +1,9 @@
 # Change Log
 
+### Unreleased
+
+* The readme now explains how to keep using Log File Highlighter when another extension, such as Gemini Code Assist, also adds a language for `.log` files. Fixes #740.
+
 ### 3.8.0 - 24 October 2026
 
 * Escaped `<` characters in the regular expressions in `log.tmLanguage` so the grammar file is well-formed XML. Fixes #432.
