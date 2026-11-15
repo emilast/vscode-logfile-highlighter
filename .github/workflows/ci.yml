@@ -19,10 +19,10 @@ jobs:
     timeout-minutes: 20
 
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v7
 
       # Same major version as the Node.js in the VS Code extension host
-      - uses: actions/setup-node@v5
+      - uses: actions/setup-node@v7
         with:
           node-version: 24
           cache: npm
@@ -36,6 +36,11 @@ jobs:
       - name: Unit tests
         run: npm run unittest
 
+      # Catches problems that only show up when packaging, e.g. @types/vscode being
+      # newer than engines.vscode, which makes the release workflow fail.
+      - name: Package extension
+        run: npx --yes @vscode/vsce@3 package --out LogFileHighlighter.vsix
+
       # Runs the tests in a downloaded VS Code, with a virtual display.
       # Skipped until the command line test launcher exists on the branch.
       - name: Integration tests
@@ -46,7 +51,7 @@ jobs:
       # extension host, and screenshots of failed integration tests (see screenshotReporter.ts).
       - name: Upload test logs and screenshots
         if: failure()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: test-results
           path: |
