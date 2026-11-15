@@ -14,7 +14,6 @@ content/*.gif
 content/sample.png
 jasmine.*.json
 tslint.json
-.travis.yml
 *.vsix
 **/*.ts
 **/*.map
