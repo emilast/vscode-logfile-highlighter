@@ -201,7 +201,6 @@
 		"compile-tests": "tsc -p . --outDir out",
 		"watch-tests": "tsc -p . -w --outDir out",
 		"preinstall": "npx npm-force-resolutions",
-		"tslint": "tslint --project ./",
 		"unittest": "npm run compile-tests && node out/test/testRunner.js -c jasmine.unittest.json",
 		"integrationtest": "npm run compile && npm run compile-tests && node out/test/runIntegrationTests.js"
 	},
@@ -215,7 +214,6 @@
 		"jasmine-core": "^7.0.2",
 		"minimist": "^1.2.8",
 		"ts-loader": "^9.6.2",
-		"tslint": "^5.8.0",
 		"typescript": "^6.0.3",
 		"webpack": "^5.112.0",
 		"webpack-cli": "^7.2.3"
