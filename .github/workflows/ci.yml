@@ -41,3 +41,16 @@ jobs:
       - name: Integration tests
         if: hashFiles('test/runIntegrationTests.ts') != ''
         run: xvfb-run -a npm run integrationtest
+
+      # On failure, keep what helps to find the cause: VS Code's own logs, e.g. errors in the
+      # extension host, and screenshots of failed integration tests (see screenshotReporter.ts).
+      - name: Upload test logs and screenshots
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-results
+          path: |
+            .vscode-test/user-data/logs/
+            test-results/
+          if-no-files-found: ignore
+          retention-days: 14
