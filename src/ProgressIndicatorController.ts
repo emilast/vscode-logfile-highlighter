@@ -15,7 +15,11 @@ export class ProgressIndicatorController {
 
         this.init();
 
-        this._configurationListener = vscode.workspace.onDidChangeConfiguration(() => { this.onDidChangeConfiguration(); }, this);
+        this._configurationListener = vscode.workspace.onDidChangeConfiguration((event) => {
+            if (event.affectsConfiguration('logFileHighlighter')) {
+                this.onDidChangeConfiguration();
+            }
+        }, this);
     }
 
     public removeDecorations() {
@@ -55,6 +59,7 @@ export class ProgressIndicatorController {
             this._statusBarItem = undefined;
         }
         this.unregisterSelectionEventHandlers();
+        this._progressIndicator.dispose();
     }
 
     private onDidChangeConfiguration(): void {
@@ -106,8 +111,9 @@ export class ProgressIndicatorController {
                 }
             }
         } catch (error) {
-            console.error('Error while decorating lines:', error);
-            vscode.window.showErrorMessage('An error occurred while decorating lines: ' + error.message);
+            // Only log the error, since this runs on every selection change and a message
+            // box would be shown over and over again.
+            console.error('Log File Highlighter: Error while decorating lines:', error);
         }
     }
 }

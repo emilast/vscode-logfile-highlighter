@@ -1,0 +1,56 @@
+name: CI
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    steps:
+      - uses: actions/checkout@v5
+
+      # Same major version as the Node.js in the VS Code extension host
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 24
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build
+        run: npm run compile
+
+      - name: Unit tests
+        run: npm run unittest
+
+      # Runs the tests in a downloaded VS Code, with a virtual display.
+      # Skipped until the command line test launcher exists on the branch.
+      - name: Integration tests
+        if: hashFiles('test/runIntegrationTests.ts') != ''
+        run: xvfb-run -a npm run integrationtest
+
+      # On failure, keep what helps to find the cause: VS Code's own logs, e.g. errors in the
+      # extension host, and screenshots of failed integration tests (see screenshotReporter.ts).
+      - name: Upload test logs and screenshots
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-results
+          path: |
+            .vscode-test/user-data/logs/
+            test-results/
+          if-no-files-found: ignore
+          retention-days: 14

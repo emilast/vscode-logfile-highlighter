@@ -1,31 +1,19 @@
-//
-// PLEASE DO NOT MODIFY / DELETE UNLESS YOU KNOW WHAT YOU ARE DOING
-//
-// This file is providing the test runner to use when running extension tests.
-// By default the test runner in use is Mocha based.
-//
-// You can provide your own test runner if you want to override it by exporting
-// a function run(testRoot: string, clb: (error:Error) => void) that the extension
-// host can call to run the tests. The test runner is expected to use console.log
-// to report the results back to the caller. When the tests are finished, return
-// a possible error to the callback or null if none.
-
-// import * as testRunner from 'vscode/lib/testrunner';
-
-// // You can directly control Mocha options by uncommenting the following lines
-// // See https://github.com/mochajs/mocha/wiki/Using-mocha-programmatically#set-options for more info
-// testRunner.configure({
-//     ui: 'tdd', 		// the TDD UI is being used in extension.test.ts (suite, test, etc.)
-//     useColors: true, // colored output from test results
-// });
-
-// module.exports = testRunner;
-
 import * as path from 'path';
 import TestRunner = require('../testRunner');
+import { ScreenshotReporter } from './screenshotReporter';
 
-// The custom jasmine test runner for integration tests.
-export function run(testRoot: string, clb: (error: Error) => void) {
+// Entry point that VS Code calls to run the integration tests inside the extension host.
+// See test/runIntegrationTests.ts for how VS Code is started.
+export async function run(): Promise<void> {
     const runner = new TestRunner();
-    runner.run(path.resolve(testRoot, '../../../jasmine.integrationtest.json'), clb);
+    const repositoryRoot = path.resolve(__dirname, '../../../');
+
+    // Screenshots of failed tests, which CI uploads as an artifact
+    const screenshots = new ScreenshotReporter(path.join(repositoryRoot, 'test-results', 'screenshots'));
+
+    const passed = await runner.run(path.join(repositoryRoot, 'jasmine.integrationtest.json'), undefined, [screenshots]);
+
+    if (!passed) {
+        throw new Error('Integration tests failed.');
+    }
 }

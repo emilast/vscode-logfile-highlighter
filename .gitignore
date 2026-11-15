@@ -8,3 +8,9 @@ node_modules
 dist/
 
 *.vsix
+
+# Settings written by the integration tests
+test/integrationtest/testLogs/.vscode/
+
+# Screenshots of failed integration tests
+test-results/
