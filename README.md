@@ -199,6 +199,21 @@ To make VS Code treat other file extensions than the default `.log` as log files
 ```
 The example above associates extensions such as `.log.1` and `.log.2` with the Log File highlighter extension.
 
+### Conflicts with other extensions
+
+Other extensions can also add a language for `.log` files, for example [Gemini Code Assist](https://marketplace.visualstudio.com/items?itemName=Google.geminicodeassist), which adds the language "Log". VS Code then uses that language instead of Log File Highlighter's, and the log files are no longer highlighted.
+
+To switch the current file to Log File Highlighter, press <kbd>Ctrl</kbd>+<kbd>K</kbd> <kbd>M</kbd> (<kbd>Cmd</kbd>+<kbd>K</kbd> <kbd>M</kbd> on macOS), or click the language name in the status bar, and select **Log File (log)**.
+
+To always use Log File Highlighter for log files, associate them with its language id, `log`, in the user settings:
+
+```json
+"files.associations": {
+    "*.log": "log",
+    "*.log.*": "log"
+},
+```
+
 ### Custom pattern tips
 
 #### Multiple styles for the same pattern
