@@ -19,7 +19,7 @@ jobs:
     timeout-minutes: 20
 
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v7
 
       # Same major version as the Node.js in the VS Code extension host
       - uses: actions/setup-node@v5
