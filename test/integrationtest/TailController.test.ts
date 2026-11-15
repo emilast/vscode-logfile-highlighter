@@ -5,7 +5,7 @@ import * as os from 'os';
 import * as path from 'path';
 import * as vscode from 'vscode';
 import { TailController } from '../../src/TailController';
-import { closeAllEditors, waitFor } from './helpers';
+import { closeAllEditors, openUntitledLog, waitFor } from './helpers';
 
 describe('TailController', () => {
 
@@ -28,7 +28,11 @@ describe('TailController', () => {
             && visibleRanges[visibleRanges.length - 1].end.line >= editor.document.lineCount - 1;
     }
 
+    // Editors are closed before each test rather than after it, so that the screenshot of a failed
+    // test (see screenshotReporter.ts) shows the editors as they were when it failed.
     beforeEach(async () => {
+        await closeAllEditors();
+
         // The file is outside the workspace, and has glob characters in its name, which the file watcher must handle
         tempFolder = fs.mkdtempSync(path.join(os.tmpdir(), 'lfh-tail-'));
         logFile = path.join(tempFolder, 'tail[1].log');
@@ -43,7 +47,6 @@ describe('TailController', () => {
 
     afterEach(async () => {
         testObject.dispose();
-        await closeAllEditors();
         fs.rmSync(tempFolder, { recursive: true, force: true });
     });
 
@@ -103,29 +106,22 @@ describe('TailController', () => {
         await waitFor(() => tailLogFileSpy.calls.count() > 0, 'the file watcher to report the change');
     });
 
-    it('scrolls to the end when lines are appended to the file.', async () => {
-        // Arrange: VS Code only reloads changed files inside the workspace in the test instance,
-        // so use a file there for this test.
-        const workspaceFolder = fs.mkdtempSync(path.join(vscode.workspace.workspaceFolders[0].uri.fsPath, 'tmp-'));
-        const workspaceLogFile = path.join(workspaceFolder, 'tail.log');
-        fs.writeFileSync(workspaceLogFile, logLines(5));
+    it('scrolls to the end when lines are added to the end of the log.', async () => {
+        // Arrange: lines are added with an edit rather than by changing the file on disk, which would also
+        // test that VS Code reloads the file. Detecting changes on disk is tested above.
+        editor = await openUntitledLog(logLines(5));
+        await waitFor(() => isLastLineVisible() && (testObject as any)._tailModeActive === true,
+            'tail mode to be active for the log');
 
-        try {
-            editor = await vscode.window.showTextDocument(await vscode.workspace.openTextDocument(vscode.Uri.file(workspaceLogFile)));
-            await waitFor(() => isLastLineVisible() && (testObject as any)._watchedUri === editor.document.uri.toString(),
-                'tail mode to be active for the file');
+        // Act
+        const edit = new vscode.WorkspaceEdit();
+        edit.insert(editor.document.uri, new vscode.Position(editor.document.lineCount, 0), logLines(300, 5));
+        await vscode.workspace.applyEdit(edit);
 
-            // Act
-            fs.appendFileSync(workspaceLogFile, logLines(300, 5));
-
-            // Assert
-            await waitFor(() => editor.document.lineCount > 300, 'the appended lines to be loaded');
-            await waitFor(() => isLastLineVisible(), 'the editor to scroll to the end of the file');
-        } finally {
-            await closeAllEditors();
-            fs.rmSync(workspaceFolder, { recursive: true, force: true });
-        }
-    }, 10000);
+        // Assert
+        expect(editor.document.lineCount).toBeGreaterThan(300);
+        await waitFor(() => isLastLineVisible(), 'the editor to scroll to the end of the log');
+    });
 
     it('is inactive when the tail mode setting is disabled.', async () => {
         const config = vscode.workspace.getConfiguration('logFileHighlighter');

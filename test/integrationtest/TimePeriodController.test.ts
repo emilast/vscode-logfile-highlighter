@@ -16,13 +16,15 @@ describe('TimePeriodController', () => {
         return (testObject as any)._statusBarItem.text;
     }
 
-    beforeEach(() => {
+    // Editors are closed before each test rather than after it, so that the screenshot of a failed
+    // test (see screenshotReporter.ts) shows the editors as they were when it failed.
+    beforeEach(async () => {
+        await closeAllEditors();
         testObject = new TimePeriodController(new TimePeriodCalculator(new TimestampParser()), new SelectionHelper());
     });
 
     afterEach(async () => {
         testObject.dispose();
-        await closeAllEditors();
     });
 
     it('shows the duration of the selected log lines.', async () => {

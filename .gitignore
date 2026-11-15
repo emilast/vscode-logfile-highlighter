@@ -11,4 +11,6 @@ dist/
 
 # Settings written by the integration tests
 test/integrationtest/testLogs/.vscode/
-test/integrationtest/testLogs/tmp-*/
+
+# Screenshots of failed integration tests
+test-results/

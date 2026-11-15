@@ -9,7 +9,8 @@ import * as util from 'util';
 class TestRunner {
     
     /** Runs the tests and resolves to true if they all passed. */
-    public async run(configPath: string, clb?: (error: Error) => void): Promise<boolean> {
+    public async run(configPath: string, clb?: (error: Error) => void,
+                     extraReporters: jasmine.CustomReporter[] = []): Promise<boolean> {
         const jasmine = new Jasmine();
         jasmine.loadConfigFile(configPath);
 
@@ -26,6 +27,9 @@ class TestRunner {
         });
 
         jasmine.addReporter(reporter);
+        for (const extraReporter of extraReporters) {
+            jasmine.addReporter(extraReporter);
+        }
 
         const result = await jasmine.execute();
         const passed = result.overallStatus === 'passed';
