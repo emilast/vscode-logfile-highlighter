@@ -54,6 +54,12 @@ export class TimePeriod {
     }
 
     private adjustDurationWithMicroseconds() {
+        if (!this.duration) {
+            // Start and end are of different kinds (date vs. time only), so there is no duration
+            this.durationPartMicroseconds = 0;
+            return;
+        }
+
         if (this.endTime.microseconds >= this.startTime.microseconds) {
             this.durationPartMicroseconds = this.endTime.microseconds - this.startTime.microseconds;
         }

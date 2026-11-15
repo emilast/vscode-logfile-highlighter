@@ -8,18 +8,27 @@ export class TailController {
     private _disposable: vscode.Disposable | undefined;
     private _statusBarItem: vscode.StatusBarItem | undefined;
     private _fileSystemWatcher: vscode.FileSystemWatcher | undefined;
+    private _watchedUri: string | undefined;
+    private _configurationListener: vscode.Disposable;
 
     private _tailModeActive: boolean = false;
 
     constructor() {
 
-        vscode.workspace.onDidChangeConfiguration(() => { this.onDidChangeConfiguration(); }, this);
+        this._configurationListener = vscode.workspace.onDidChangeConfiguration((event) => {
+            if (event.affectsConfiguration('logFileHighlighter')) {
+                this.onDidChangeConfiguration();
+            }
+        }, this);
 
         this.init();
     }
 
     private init() {
         const config = this.getConfiguration();
+
+        // Remove the event handlers from any earlier call, so that they aren't registered more than once
+        this.stopTailing();
 
         if (config.enableTailMode) {
             // Create as needed
@@ -48,10 +57,6 @@ export class TailController {
 
             this.checkEndOfFileVisibilityInActiveEditor();
         }
-        else {
-            this.dispose();
-        }
-
     }
 
     private onDidChangeConfiguration(): void {
@@ -59,16 +64,29 @@ export class TailController {
     }
 
     public dispose() {
+        this._configurationListener.dispose();
+        this.stopTailing();
+    }
+
+    private stopTailing() {
+        this._tailModeActive = false;
         if (this._statusBarItem) {
             this._statusBarItem.dispose();
+            this._statusBarItem = undefined;
         }
         if (this._disposable) {
             this._disposable.dispose();
+            this._disposable = undefined;
         }
+        this.disposeFileWatcher();
+    }
+
+    private disposeFileWatcher() {
         if (this._fileSystemWatcher) {
             this._fileSystemWatcher.dispose();
             this._fileSystemWatcher = undefined;
         }
+        this._watchedUri = undefined;
     }
 
     private getConfiguration(): { enableTailMode: boolean } {
@@ -113,10 +131,7 @@ export class TailController {
         }
 
         // Clean up file watcher when exiting tail mode
-        if (this._fileSystemWatcher) {
-            this._fileSystemWatcher.dispose();
-            this._fileSystemWatcher = undefined;
-        }
+        this.disposeFileWatcher();
     }
 
     editorChanged() {
@@ -136,17 +151,34 @@ export class TailController {
     }
 
     private setupFileWatcher(uri: vscode.Uri) {
-        // Clean up any existing watcher
-        if (this._fileSystemWatcher) {
-            this._fileSystemWatcher.dispose();
+        // This is called on every scroll event while the end of the file is visible,
+        // so keep the existing watcher if it's already watching this file.
+        if (this._fileSystemWatcher && this._watchedUri === uri.toString()) {
+            return;
         }
 
-        // Create a watcher for only the current file
-        this._fileSystemWatcher = vscode.workspace.createFileSystemWatcher(uri.fsPath, false, false, true);
+        // Clean up any existing watcher
+        this.disposeFileWatcher();
 
-        this._fileSystemWatcher.onDidChange(() => {
+        // Documents such as the Output panel and unsaved files have no file to watch
+        if (uri.scheme === 'untitled' || uri.scheme === 'output') {
+            return;
+        }
+
+        // Watch the folder of the current file and only react to changes of the file itself. A RelativePattern
+        // with a base folder is used rather than a glob of the full path, so that characters with a special
+        // meaning in globs, like [ ] { }, in the path are never interpreted as a pattern.
+        const folder = vscode.Uri.joinPath(uri, '..');
+        this._fileSystemWatcher = vscode.workspace.createFileSystemWatcher(
+            new vscode.RelativePattern(folder, '*'), false, false, true);
+        this._watchedUri = uri.toString();
+
+        this._fileSystemWatcher.onDidChange((changedUri) => {
+            if (changedUri.toString() !== uri.toString()) {
+                return;
+            }
             const activeEditor = vscode.window.activeTextEditor;
-            if (activeEditor && activeEditor.document.uri.fsPath === uri.fsPath && this._tailModeActive) {
+            if (activeEditor && activeEditor.document.uri.toString() === uri.toString() && this._tailModeActive) {
                 this.tailLogFile(activeEditor.document);
             }
         });

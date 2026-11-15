@@ -72,5 +72,19 @@ describe('TimePeriod', () => {
             expect(result.duration).toEqual(moment.duration({ seconds: 0, milliseconds: 99 }));
             expect(result.durationPartMicroseconds).toBe(991);
         });
+
+        it('does not throw when only one of the timestamps has a date (#744).', () => {
+            // Arrange
+            const startTime: ParsedTimestamp = {moment: moment('2024-02-03 12:13:14.100'), microseconds: 10, matchIndex: 0, original: '2024-02-03 12:13:14.100'};
+            const endTime: ParsedTimestamp = {duration: moment.duration('12:13:15'), microseconds: 0, matchIndex: 0, original: '12:13:15'};
+
+            // Act
+            const result = new TimePeriod(startTime, endTime);
+
+            // Assert
+            expect(result.duration).toBeUndefined();
+            expect(result.durationPartMicroseconds).toBe(0);
+            expect(result.getDurationAsMicroseconds()).toBe(0);
+        });
     });
 });

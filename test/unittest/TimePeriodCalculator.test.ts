@@ -119,6 +119,30 @@ describe('TimePeriodCalculator', () => {
             // Assert
             expect(result.duration.asMilliseconds()).toBe(expected.asMilliseconds());
         });
+
+        it('gives no time period when only one of the lines has a date (#744).', () => {
+            // Arrange
+            const firstLine = '2025-08-15 12:24:16.047123 first line';
+            const lastLine = '    elapsed 00:00:05';
+
+            // Act
+            const result = testObject.getTimePeriod(firstLine, lastLine);
+
+            // Assert
+            expect(result).toBeUndefined();
+        });
+
+        it('gives no time period when only the last line has a date (#744).', () => {
+            // Arrange
+            const firstLine = '12:24:16.047123 first line';
+            const lastLine = '2025-08-15 12:24:17 last line';
+
+            // Act
+            const result = testObject.getTimePeriod(firstLine, lastLine);
+
+            // Assert
+            expect(result).toBeUndefined();
+        });
     });
 
     describe('convertToDisplayString', () => {

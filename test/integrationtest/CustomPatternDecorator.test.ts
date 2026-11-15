@@ -1,167 +1,166 @@
 'use strict';
 
-import { Position, Range, Selection } from 'vscode';
 import * as vscode from 'vscode';
 import { CustomPatternDecorator } from '../../src/CustomPatternDecorator';
+import { openTestLog } from './helpers';
+
+/** A text editor that records the decorations set on it, around a real document. */
+function createRecordingEditor(document: vscode.TextDocument) {
+    const calls: Array<{ type: vscode.TextEditorDecorationType, ranges: vscode.Range[] }> = [];
+    const editor = {
+        document,
+        setDecorations: (type: vscode.TextEditorDecorationType, ranges: vscode.Range[]) => {
+            calls.push({ type, ranges });
+        }
+    } as unknown as vscode.TextEditor;
+    return { editor, calls };
+}
+
+/** Returns the ranges of all occurrences of the text in the document, one per line at most. */
+function rangesOf(document: vscode.TextDocument, text: string, ignoreCase: boolean): vscode.Range[] {
+    const result: vscode.Range[] = [];
+    for (let line = 0; line < document.lineCount; line++) {
+        const lineText = document.lineAt(line).text;
+        const index = ignoreCase ? lineText.toLowerCase().indexOf(text.toLowerCase()) : lineText.indexOf(text);
+        if (index >= 0) {
+            result.push(new vscode.Range(line, index, line, index + text.length));
+        }
+    }
+    return result;
+}
+
+function expectRanges(actual: vscode.Range[], expected: vscode.Range[]) {
+    expect(actual.map((range) => rangeToString(range))).toEqual(expected.map((range) => rangeToString(range)));
+}
+
+function rangeToString(range: vscode.Range): string {
+    return `${range.start.line}:${range.start.character}-${range.end.line}:${range.end.character}`;
+}
 
 describe('CustomPatternDecorator', () => {
 
-    // Initial situation for all tests:
-    // Set config once to enable custom log level.
-    beforeAll((done) => {
-        const config = vscode.workspace.getConfiguration('logFileHighlighter');
-        config.update('customPatterns', [
+    let testObject: CustomPatternDecorator;
+    let document: vscode.TextDocument;
+
+    // Lines 8-10 of firstLog.log, e.g. 'E/Application'
+    const errorSources = ['E/Application', 'E/MyService', 'E/Subservice'];
+
+    beforeAll(async () => {
+        await vscode.workspace.getConfiguration('logFileHighlighter').update('customPatterns', [
             {
-                pattern: 'Verbose',
+                pattern: 'verbose',
+                patternFlags: 'i',
                 foreground: 'green'
             },
             {
                 pattern: 'E/\\w+',
                 foreground: 'red',
                 background: 'yellow'
+            },
+            {
+                // Ignored, since it has no style
+                pattern: 'Hello'
             }
-        ]).then(() => done());
-
+        ]);
+        document = (await openTestLog('firstLog.log')).document;
     });
 
-    let testObject: CustomPatternDecorator;
-    const verbRanges = [
-        new Range(4, 31, 4, 38),
-        new Range(5, 31, 5, 38),
-        new Range(6, 31, 6, 40),
-        new Range(7, 31, 7, 39)
-    ];
-    const eRanges = [
-        new Range(8, 31, 8, 44),
-        new Range(9, 31, 9, 42),
-        new Range(10, 31, 10, 43)
-    ];
+    afterAll(async () => {
+        await vscode.workspace.getConfiguration('logFileHighlighter').update('customPatterns', undefined);
+    });
 
-    // Initial situation for all tests:
-    // folder 'testLogs' is opened and first file is selected in editor.
-    beforeEach((done) => {
+    beforeEach(() => {
         testObject = new CustomPatternDecorator();
+        testObject.updateConfiguration();
+    });
 
-        if (vscode.workspace.workspaceFolders !== undefined) {
-            const workspaceRootPath = vscode.workspace.workspaceFolders[0].uri.path;
-            vscode.workspace.findFiles('*.log').then(
-                (uris) => {
-                    vscode.workspace.openTextDocument(uris[0]).then(
-                        (file) => {
-                            vscode.window.showTextDocument(file).then(
-                                (editor) => {
-                                    editor.selection = new Selection(new Position(0, 0), new Position(0, 0));
-                                    done();
-                                },
-                                (reason) => {
-                                    done.fail(reason);
-                                });
-                        },
-                        (reason) => {
-                            done.fail(reason);
-                        });
-                },
-                (reason) => {
-                    done.fail(reason);
-                });
-        } else {
-            done.fail('No folder was opened!');
-        }
+    afterEach(() => {
+        testObject.dispose();
+    });
+
+    describe('decorateEditors', () => {
+        it('decorates the matches of each configured pattern that has a style.', () => {
+            // Arrange
+            const { editor, calls } = createRecordingEditor(document);
+
+            // Act
+            testObject.decorateEditors([editor]);
+
+            // Assert
+            expect(calls.length).toBe(2);
+            expectRanges(calls[0].ranges, rangesOf(document, 'verbose', true));
+            expect(calls[0].ranges.length).toBe(4);
+            expectRanges(calls[1].ranges, errorSources.map((source) => rangesOf(document, source, false)[0]));
+        });
+
+        it('uses a separate decoration type for each pattern.', () => {
+            // Arrange
+            const { editor, calls } = createRecordingEditor(document);
+
+            // Act
+            testObject.decorateEditors([editor]);
+
+            // Assert
+            expect(calls[0].type).not.toBe(calls[1].type);
+        });
     });
 
     describe('updateConfiguration', () => {
-        it('should update the its log level.', (done) => {
-            const decoratorSpy = spyOn(CustomPatternDecorator.prototype, 'updateConfiguration').and.callThrough();
+        it('uses the patterns from the updated configuration.', async () => {
+            // Arrange
             const config = vscode.workspace.getConfiguration('logFileHighlighter');
-            config.update('customPatterns', [
-                {
-                    pattern: 'Verbose',
-                    foreground: 'yellow'
-                },
-                {
-                    pattern: 'E/\\w+',
-                    foreground: 'darkred',
-                    background: 'yellow'
-                }
-            ]).then(() => {
-                expect(decoratorSpy.calls.count()).toBe(1);
-                done();
-            });
+            const originalPatterns = config.get('customPatterns');
+            await config.update('customPatterns', [{ pattern: 'crashed', foreground: 'red' }]);
+            const { editor, calls } = createRecordingEditor(document);
+
+            try {
+                // Act
+                testObject.updateConfiguration();
+                testObject.decorateEditors([editor]);
+
+                // Assert
+                expect(calls.length).toBe(1);
+                expectRanges(calls[0].ranges, rangesOf(document, 'crashed', false));
+            } finally {
+                await config.update('customPatterns', originalPatterns);
+            }
         });
     });
 
     describe('decorateDocument', () => {
-        it('should decorate the document with the specified log levels of the config.', () => {
+        it('decorates text that is added to the document.', async () => {
             // Arrange
-            const mockEvent = {
-                contentChanges: [
-                    {
-                        length: 0,
-                        range: new Range(new Position(0, 0), new Position(0, 0)),
-                        rangeLength: 0,
-                        text: ''
+            const untitled = await vscode.workspace.openTextDocument({
+                language: 'log',
+                content: '27.01.2018 19:38:28,982 [8988] E/Application: It crashed!\n'
+            });
+            await vscode.window.showTextDocument(untitled);
+            testObject.decorateEditors(vscode.window.visibleTextEditors.filter((e) => e.document === untitled));
+
+            const changed = new Promise<vscode.TextDocumentChangeEvent>((resolve) => {
+                const listener = vscode.workspace.onDidChangeTextDocument((event) => {
+                    if (event.document === untitled) {
+                        listener.dispose();
+                        resolve(event);
                     }
-                ],
-                document: vscode.window.visibleTextEditors[0].document
-            };
-            testObject.updateConfiguration(); // Init log level of config
-            testObject.decorateEditors([vscode.window.activeTextEditor]); // Init Cache
-            const vscodeSpy = spyOn(vscode.window.activeTextEditor, 'setDecorations').and.callThrough();
+                });
+            });
+            const edit = new vscode.WorkspaceEdit();
+            edit.insert(untitled.uri, new vscode.Position(1, 0), '27.01.2018 19:38:29,000 [8988] E/NewService: It crashed!\n');
+            await vscode.workspace.applyEdit(edit);
 
             // Act
-            // testObject.decorateDocument(mockEvent);
+            testObject.decorateDocument(await changed);
 
-            // Assert
-            expect(vscodeSpy.calls.count()).toBe(2); // Two calls for two log level.
+            // Assert: the cache holds the ranges that were set as decorations
+            const docCache: Map<unknown, vscode.Range[]> = (testObject as any)._cache.get(untitled.uri);
+            const errorRanges = Array.from(docCache.values())[1];
+            expectRanges(errorRanges, [
+                rangesOf(untitled, 'E/Application', false)[0],
+                rangesOf(untitled, 'E/NewService', false)[0]
+            ]);
 
-            const actualVerbRanges = vscodeSpy.calls.argsFor(0)[1];
-            expect(typeof(verbRanges)).toBe('object');
-            expect(actualVerbRanges.length).toBe(4);
-            for (const verb of actualVerbRanges) {
-                // expect(verbRanges[i].isEqual(actualVerbRanges[i])).toBeTruthy();
-            }
-
-            const actualERanges = vscodeSpy.calls.argsFor(1)[1];
-            expect(typeof(actualERanges)).toBe('object');
-            expect(actualERanges.length).toBe(3);
-            for (const eRange of actualERanges) {
-                // expect(eRanges[i].isEqual(actualERanges[i])).toBeTruthy();
-            }
+            await vscode.commands.executeCommand('workbench.action.revertAndCloseActiveEditor');
         });
-    });
-
-    describe('decorateEditors', () => {
-        it('should decorate all visible editors with the specified log levels of the config.', () => {
-            // Arrange
-            testObject.updateConfiguration(); // Init log level of config
-            const vscodeSpy = spyOn(vscode.window.activeTextEditor, 'setDecorations').and.callThrough();
-
-            // Act
-            testObject.decorateEditors([vscode.window.activeTextEditor]);
-
-            // Assert
-            expect(vscodeSpy.calls.count()).toBe(2); // Two calls for two log level.
-
-            const actualVerbRanges = vscodeSpy.calls.argsFor(0)[1];
-            expect(typeof(verbRanges)).toBe('object');
-            expect(actualVerbRanges.length).toBe(4);
-            for (const verb of actualVerbRanges) {
-                // expect(verbRanges[i].isEqual(actualVerbRanges[i])).toBeTruthy();
-            }
-
-            const actualERanges = vscodeSpy.calls.argsFor(1)[1];
-            expect(typeof(actualERanges)).toBe('object');
-            expect(actualERanges.length).toBe(3);
-            for (const eRange of actualERanges) {
-                // expect(eRanges[i].isEqual(actualERanges[i])).toBeTruthy();
-            }
-        });
-    });
-
-    // Remove configuration again.
-    afterAll((done) => {
-        const config = vscode.workspace.getConfiguration('logFileHighlighter');
-        config.update('customPatterns', []).then(() => done());
-
     });
 });

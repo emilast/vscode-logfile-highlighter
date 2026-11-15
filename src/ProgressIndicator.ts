@@ -20,6 +20,9 @@ export class ProgressIndicator {
     }
 
     public setUnderlineColor(color: string) {
+        if (this._decoration) {
+            this._decoration.dispose();
+        }
         this._decoration = vscode.window.createTextEditorDecorationType({
             borderWidth: '0 0 2px 0',
             borderStyle: 'solid',
@@ -63,7 +66,8 @@ export class ProgressIndicator {
                 // Iterate over all lines in the selection and decorate them according to their progress
                 // (i.e. how far they are from the start time of the selection to the end time of the selection)
                 let ranges: vscode.Range[] = [];
-                for (let line = startLine; line <= endLine; line++) {
+                const lastLine = Math.min(endLine, doc.lineCount - 1);
+                for (let line = startLine; line <= lastLine; line++) {
                     var lineText = editor.document.lineAt(line).text;
 
                     var timestamp = this._timestampParser.getTimestampFromText(lineText);
@@ -88,6 +92,13 @@ export class ProgressIndicator {
 
                 vscode.commands.executeCommand('setContext', Constants.ContextNameIsShowingProgressIndicators, true);
             }
+        }
+    }
+
+    public dispose() {
+        if (this._decoration) {
+            this._decoration.dispose();
+            this._decoration = undefined;
         }
     }
 
