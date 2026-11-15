@@ -1,5 +1,8 @@
 # Agent instructions
 
+## Branches
+- Name branches `feature/<slug>`, where `<slug>` is a short, lowercase, hyphen-separated description of the change, e.g. `feature/release-workflow` or `feature/fix-tail-mode-crash`.
+
 ## Git commits
 - Commits must be authored by the human user, never by an AI or bot identity (e.g. "Claude", "Copilot", `noreply@anthropic.com`).
 - Pick the author identity in this order:
