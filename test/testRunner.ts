@@ -11,8 +11,10 @@ class TestRunner {
     /** Runs the tests and resolves to true if they all passed. */
     public async run(configPath: string, clb?: (error: Error) => void,
                      extraReporters: jasmine.CustomReporter[] = []): Promise<boolean> {
-        const jasmine = new Jasmine();
-        jasmine.loadConfigFile(configPath);
+        // Paths in the config file, such as spec_dir, are relative to the folder of the config file,
+        // not to the working directory, which differs e.g. in the VS Code extension host on Windows.
+        const jasmine = new Jasmine({ projectBaseDir: path.dirname(configPath) });
+        await jasmine.loadConfigFile(configPath);
 
         // Don't let Jasmine exit the process, which would also exit the VS Code extension host
         // when running the integration tests.
