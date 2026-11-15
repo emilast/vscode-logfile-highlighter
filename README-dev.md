@@ -53,7 +53,7 @@ Releases are made by the GitHub Actions workflow in `.github/workflows/release.y
 1. Make sure everything that should go out is on `master` and that `CHANGELOG.md` has an `### Unreleased` section describing the changes.
 2. On GitHub, go to **Actions** → **Release** → **Run workflow**, choose `patch`, `minor` or `major` and run it.
 
-The workflow bumps the version, renames `### Unreleased` to `### <version> - <date>`, runs the unit tests, packages the `.vsix`, commits and tags `<version>` on `master`, creates a GitHub release with the changelog section as release notes and the `.vsix` attached, and publishes to the VS Code Marketplace.
+The workflow bumps the version, renames `### Unreleased` to `### <version> - <date>`, runs the unit and integration tests, packages the `.vsix`, commits and tags `<version>` on `master`, creates a GitHub release with the changelog section as release notes and the `.vsix` attached, and publishes to the VS Code Marketplace.
 
 ### One-time setup
 
