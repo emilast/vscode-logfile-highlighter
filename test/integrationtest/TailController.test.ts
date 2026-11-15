@@ -14,6 +14,21 @@ describe('TailController', () => {
     let logFile: string;
     let editor: vscode.TextEditor;
 
+    // On Windows, a folder can't be deleted while a file in it is open or watched, so the temporary
+    // folders are deleted after all tests, once the editors are closed.
+    const tempFolders: string[] = [];
+
+    afterAll(async () => {
+        await closeAllEditors();
+        for (const folder of tempFolders) {
+            try {
+                fs.rmSync(folder, { recursive: true, force: true, maxRetries: 10, retryDelay: 100 });
+            } catch (error) {
+                console.log(`Could not delete the temporary folder ${folder}: ${error.message}`);
+            }
+        }
+    });
+
     function logLines(count: number, from = 0): string {
         let text = '';
         for (let i = from; i < from + count; i++) {
@@ -35,6 +50,7 @@ describe('TailController', () => {
 
         // The file is outside the workspace, and has glob characters in its name, which the file watcher must handle
         tempFolder = fs.mkdtempSync(path.join(os.tmpdir(), 'lfh-tail-'));
+        tempFolders.push(tempFolder);
         logFile = path.join(tempFolder, 'tail[1].log');
         fs.writeFileSync(logFile, logLines(5));
 
@@ -47,7 +63,6 @@ describe('TailController', () => {
 
     afterEach(async () => {
         testObject.dispose();
-        fs.rmSync(tempFolder, { recursive: true, force: true });
     });
 
     it('activates tail mode when the end of a log file is visible.', () => {
