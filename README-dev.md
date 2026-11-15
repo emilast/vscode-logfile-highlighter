@@ -45,3 +45,20 @@ On Linux without a display, such as in a container or a CI job, run it with a vi
 ```
 xvfb-run -a npm run integrationtest
 ```
+
+## Release a new version
+
+Releases are made by the GitHub Actions workflow in `.github/workflows/release.yml`.
+
+1. Make sure everything that should go out is on `master` and that `CHANGELOG.md` has an `### Unreleased` section describing the changes.
+2. On GitHub, go to **Actions** → **Release** → **Run workflow**, choose `patch`, `minor` or `major` and run it.
+
+The workflow bumps the version, renames `### Unreleased` to `### <version> - <date>`, runs the unit tests, packages the `.vsix`, commits and tags `<version>` on `master`, creates a GitHub release with the changelog section as release notes and the `.vsix` attached, and publishes to the VS Code Marketplace.
+
+### One-time setup
+
+* Create an Azure DevOps personal access token with the **Marketplace → Manage** scope and organization **All accessible organizations** (see [Publishing extensions](https://code.visualstudio.com/api/working-with-extensions/publishing-extension#get-a-personal-access-token)).
+* Add it as a repository secret named `VSCE_PAT` (**Settings** → **Secrets and variables** → **Actions**).
+* If `master` has branch protection that blocks direct pushes, allow GitHub Actions to bypass it, since the workflow pushes the version commit and tag.
+
+If only the Marketplace publish fails (for example because the token has expired), update the secret and use **Re-run failed jobs** on the workflow run. That re-publishes the same `.vsix` without bumping the version again.

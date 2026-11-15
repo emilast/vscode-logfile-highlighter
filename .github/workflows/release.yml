@@ -1,0 +1,110 @@
+name: Release
+
+# Start from GitHub: Actions -> Release -> Run workflow, and pick patch/minor/major.
+#
+# The workflow:
+#   1. Bumps the version in package.json/package-lock.json.
+#   2. Renames "### Unreleased" in CHANGELOG.md to "### <version> - <date>".
+#   3. Commits "Version <version>" and tags it "<version>".
+#   4. Builds, runs the unit tests and packages the .vsix, then pushes the commit and tag to master.
+#   5. Creates a GitHub release with the changelog section as notes and the .vsix attached.
+#   6. Publishes the .vsix to the VS Code Marketplace (needs the VSCE_PAT secret).
+#
+# If only the Marketplace step fails (e.g. an expired token), fix the secret and use
+# "Re-run failed jobs" - that re-runs just the publish job with the same .vsix.
+
+on:
+  workflow_dispatch:
+    inputs:
+      bump:
+        description: Version bump
+        type: choice
+        options:
+          - patch
+          - minor
+          - major
+        default: minor
+
+concurrency:
+  group: release
+  cancel-in-progress: false
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/master'
+    permissions:
+      contents: write
+    outputs:
+      version: ${{ steps.version.outputs.version }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Bump version
+        id: version
+        run: |
+          npm version ${{ inputs.bump }} --no-git-tag-version --ignore-scripts
+          version=$(node -p "require('./package.json').version")
+          echo "version=$version" >> "$GITHUB_OUTPUT"
+          echo "New version: $version"
+
+      - name: Update changelog
+        run: node scripts/release-changelog.js "${{ steps.version.outputs.version }}" "$RUNNER_TEMP/release-notes.md"
+
+      - name: Commit and tag
+        env:
+          VERSION: ${{ steps.version.outputs.version }}
+        run: |
+          git config user.name "${{ github.actor }}"
+          git config user.email "${{ github.actor_id }}+${{ github.actor }}@users.noreply.github.com"
+          git add package.json package-lock.json CHANGELOG.md
+          git commit -m "Version $VERSION"
+          git tag "$VERSION"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Unit tests
+        run: npm run unittest
+
+      - name: Package extension
+        run: npx --yes @vscode/vsce@3 package --out "LogFileHighlighter-${{ steps.version.outputs.version }}.vsix"
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: vsix
+          path: "*.vsix"
+
+      - name: Push commit and tag
+        run: git push --atomic origin HEAD:master "refs/tags/${{ steps.version.outputs.version }}"
+
+      - name: Create GitHub release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          VERSION: ${{ steps.version.outputs.version }}
+        run: |
+          gh release create "$VERSION" "LogFileHighlighter-$VERSION.vsix" \
+            --title "$VERSION" \
+            --notes-file "$RUNNER_TEMP/release-notes.md"
+
+  publish:
+    needs: release
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: vsix
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Publish to VS Code Marketplace
+        env:
+          VSCE_PAT: ${{ secrets.VSCE_PAT }}
+        run: npx --yes @vscode/vsce@3 publish --packagePath "LogFileHighlighter-${{ needs.release.outputs.version }}.vsix"
