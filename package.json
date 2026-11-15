@@ -90,13 +90,13 @@
 								"format": "color-hex",
 								"type": "string",
 								"title": "Foreground color",
-								"description": "The foreground color that will be used for highlighting."
+								"description": "The foreground color that will be used for highlighting. Either a color, such as '#ff5588' or 'yellow', or the id of a theme color, such as 'terminal.ansiGreen'."
 							},
 							"background": {
 								"format": "color-hex",
 								"type": "string",
 								"title": "Background color",
-								"description": "The background color that will be used for highlighting."
+								"description": "The background color that will be used for highlighting. Either a color, such as '#ff5588' or 'yellow', or the id of a theme color, such as 'editor.findMatchHighlightBackground'."
 							},
 							"highlightEntireLine": {
 								"type": "boolean",
@@ -131,7 +131,7 @@
 							"overviewColor": {
 								"type": "string",
 								"title": "Marker color in the ruler",
-								"description": "Marker color in the ruler to the right in the text editor window. Example: 'yellow'"
+								"description": "Marker color in the ruler to the right in the text editor window. Either a color, such as 'yellow', or the id of a theme color, such as 'editorError.foreground'."
 							},
 							"overviewRulerLane": {
 								"type": "string",

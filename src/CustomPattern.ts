@@ -1,6 +1,7 @@
 'use strict';
 
 import * as vscode from 'vscode';
+import { isThemeColorId } from './ThemeColorId';
 
 export class CustomPattern {
     public readonly pattern: string;
@@ -20,15 +21,15 @@ export class CustomPattern {
         this.background = background;
         this.regexes = this.createRegex(pattern, patternFlags, highlightEntireLine);
         this.decoration = vscode.window.createTextEditorDecorationType({
-            backgroundColor: this.background,
-            color: this.foreground,
+            backgroundColor: this.toColor(this.background),
+            color: this.toColor(this.foreground),
             fontWeight: fontWeight,
             fontStyle: fontStyle,
             border: border,
             borderRadius: borderRadius,
             borderSpacing: borderSpacing,
             letterSpacing: letterSpacing,
-            overviewRulerColor: overviewRulerColor,
+            overviewRulerColor: this.toColor(overviewRulerColor),
             overviewRulerLane: overviewRulerLane,
             textDecoration: textDecoration,
             rangeBehavior: vscode.DecorationRangeBehavior.ClosedClosed
@@ -37,6 +38,11 @@ export class CustomPattern {
 
     public dispose() {
         this.decoration.dispose();
+    }
+
+    /** Uses the color of the current theme if the setting is a theme color id, e.g. 'terminal.ansiGreen'. */
+    private toColor(color: string | undefined): string | vscode.ThemeColor | undefined {
+        return isThemeColorId(color) ? new vscode.ThemeColor(color.trim()) : color;
     }
 
     private createRegex(pattern: string, patternFlags: string, highlightEntireLine: boolean): RegExp[] {

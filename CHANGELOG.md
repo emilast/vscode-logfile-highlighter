@@ -2,6 +2,8 @@
 
 ### Unreleased
 
+* New feature: The `foreground`, `background` and `overviewColor` settings of custom patterns can refer to a color of the current color theme, e.g. `terminal.ansiGreen` or `editorError.foreground`, so that the highlighting matches the theme. Related to #168.
+
 * Selecting lines where only one of the first and last lines has a date in its timestamp (e.g. `2025-08-15 12:24:16.047123` and `00:00:05`) no longer throws errors on every selection change. No duration is shown in that case. Related to #744.
 
 * Errors from the progress indicator are now logged instead of being shown in a message box on every selection change. Related to #744.
