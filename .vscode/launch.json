@@ -29,17 +29,17 @@
             },
             "sourceMaps": true,
             "outFiles": [
-                "${workspaceRoot}/dist/**/*.js"
+                "${workspaceRoot}/out/**/*.js"
             ],
             "type": "node",
             "request": "launch",
-            "program": "${workspaceRoot}/dist/test/testRunner.js",
+            "program": "${workspaceRoot}/out/test/testRunner.js",
             "stopOnEntry": false,
             "args": [
                 "-c",
                 "${workspaceRoot}/jasmine.unittest.json"
             ],
-            "preLaunchTask": "npm: watch"
+            "preLaunchTask": "npm: compile-tests"
         },
         {
             "name": "Integration Tests",
@@ -49,14 +49,15 @@
             "args": [
                 "${workspaceRoot}/test/integrationtest/testLogs/",
                 "--extensionDevelopmentPath=${workspaceRoot}",
-                "--extensionTestsPath=${workspaceRoot}/dist/test/integrationtest/"
+                "--extensionTestsPath=${workspaceRoot}/out/test/integrationtest/index"
             ],
             "stopOnEntry": false,
             "sourceMaps": true,
             "outFiles": [
-                "${workspaceRoot}/dist/**/*.js"
+                "${workspaceRoot}/dist/**/*.js",
+                "${workspaceRoot}/out/**/*.js"
             ],
-            "preLaunchTask": "npm: watch"
+            "preLaunchTask": "build extension and tests"
         }
     ]
 }

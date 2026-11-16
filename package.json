@@ -195,9 +195,9 @@
 	],
 	"scripts": {
 		"vscode:prepublish": "npm run package",
-		"compile": "webpack",
-		"watch": "webpack --watch",
-		"package": "webpack --mode production --devtool hidden-source-map",
+		"compile": "tsc -p . --noEmit && node esbuild.js",
+		"watch": "node esbuild.js --watch",
+		"package": "tsc -p . --noEmit && node esbuild.js --production",
 		"compile-tests": "tsc -p . --outDir out",
 		"watch-tests": "tsc -p . -w --outDir out",
 		"preinstall": "npx npm-force-resolutions",
@@ -209,14 +209,12 @@
 		"@types/node": "^26.6.5",
 		"@types/vscode": "^1.140.0",
 		"@vscode/test-electron": "^3.1.0",
+		"esbuild": "^0.28.2",
 		"jasmine": "^7.0.0",
 		"jasmine-console-reporter": "^3.1.0",
 		"jasmine-core": "^7.0.2",
 		"minimist": "^1.2.8",
-		"ts-loader": "^9.6.2",
-		"typescript": "^6.0.3",
-		"webpack": "^5.112.0",
-		"webpack-cli": "^7.2.3"
+		"typescript": "^7.0.2"
 	},
 	"dependencies": {
 		"moment": "^2.31.0"
