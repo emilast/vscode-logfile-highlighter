@@ -46,6 +46,28 @@
                 "kind": "test",
                 "isDefault": true
             }
+        },
+        {
+            "type": "npm",
+            "script": "compile",
+            "problemMatcher": "$tsc",
+            "label": "npm: compile",
+            "detail": "Type check and bundle the extension into dist/"
+        },
+        {
+            "type": "npm",
+            "script": "compile-tests",
+            "problemMatcher": "$tsc",
+            "label": "npm: compile-tests",
+            "detail": "Compile the sources and tests into out/"
+        },
+        {
+            "label": "build extension and tests",
+            "dependsOn": [
+                "npm: compile",
+                "npm: compile-tests"
+            ],
+            "problemMatcher": []
         }
     ]
 }
