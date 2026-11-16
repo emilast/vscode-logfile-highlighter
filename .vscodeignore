@@ -9,7 +9,7 @@ node_modules/**
 .gitignore
 .github/**
 tsconfig.json
-webpack.config.js
+esbuild.js
 content/*.gif
 content/sample.png
 jasmine.*.json
