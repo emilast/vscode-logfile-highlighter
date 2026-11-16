@@ -13,7 +13,6 @@ webpack.config.js
 content/*.gif
 content/sample.png
 jasmine.*.json
-tslint.json
 *.vsix
 **/*.ts
 **/*.map

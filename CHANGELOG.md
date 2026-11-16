@@ -1,5 +1,11 @@
 # Change Log
 
+### Unreleased
+
+* The project now builds with TypeScript 6.0.3 (previously 5.9).
+
+* Removed the deprecated TSLint linter from the development tools.
+
 ### 3.9.0 - 15 November 2026
 
 * New feature: The `foreground`, `background` and `overviewColor` settings of custom patterns can refer to a color of the current color theme, e.g. `terminal.ansiGreen` or `editorError.foreground`, so that the highlighting matches the theme. Related to #168.
