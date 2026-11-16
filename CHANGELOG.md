@@ -2,7 +2,7 @@
 
 ### Unreleased
 
-* The project now builds with TypeScript 6.0.3 (previously 5.9).
+* The project now builds with TypeScript 7.0.2, the new native compiler (previously 5.9).
 
 * Removed the deprecated TSLint linter from the development tools.
 
