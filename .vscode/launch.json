@@ -8,8 +8,7 @@
             "request": "launch",
             "runtimeExecutable": "${execPath}",
             "args": [
-                "--extensionDevelopmentPath=${workspaceRoot}",
-                "--disable-extensions"
+                "--extensionDevelopmentPath=${workspaceRoot}"
             ],
             "stopOnEntry": false,
             "sourceMaps": true,
