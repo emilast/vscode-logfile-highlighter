@@ -26,6 +26,11 @@ on:
           - major
         default: minor
 
+# Read-only by default. The release job, which pushes the version commit and creates the GitHub release,
+# asks for write access itself. The publish jobs only download the .vsix artifact and use their own tokens.
+permissions:
+  contents: read
+
 concurrency:
   group: release
   cancel-in-progress: false
