@@ -186,7 +186,7 @@
 				"logFileHighlighter.enableTailMode": {
 					"type": "boolean",
 					"default": true,
-					"description": "Enable or disable the tail mode in log files. Scroll to the end of a file to activate it. The status bar will show 'Log File Tail Mode' when it is active."
+					"description": "Enable or disable the tail mode in log files. Scroll to the end of a file to activate it, in any visible editor. The status bar will show 'Log File Tail Mode' when it is active."
 				},
 				"logFileHighlighter.enableFileLinks": {
 					"type": "boolean",
