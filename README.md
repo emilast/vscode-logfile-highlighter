@@ -99,7 +99,7 @@ Instead of fixed colors, `foreground`, `background` and `overviewColor` can use 
 ![The same patterns with theme colors in a dark and a light theme](content/readme/theme-colors.png)
 
 <details>
-<summary>Theme colors that work well for log files</summary>
+<summary>Theme colors that work well for log files (expand)</summary>
 
 | Theme color id | Suitable for |
 | --- | --- |
@@ -126,7 +126,7 @@ The built-in highlighting uses the colors of your theme, which don't always fit 
 ```
 
 <details>
-<summary>All log item scopes</summary>
+<summary>All log item scopes (expand)</summary>
 
 `log.constant`, `log.date`, `log.debug`, `log.error`, `log.exception`, `log.exceptiontype`, `log.info`, `log.string`, `log.verbose`, `log.warning`
 
@@ -135,7 +135,7 @@ The built-in highlighting uses the colors of your theme, which don't always fit 
 ## Troubleshooting
 
 <details>
-<summary>A log file isn't highlighted</summary>
+<summary>A log file isn't highlighted (expand)</summary>
 
 Other extensions can also add a language for `.log` files, for example [Gemini Code Assist](https://marketplace.visualstudio.com/items?itemName=Google.geminicodeassist). VS Code then uses that language instead. To switch the current file back, press <kbd>Ctrl</kbd>+<kbd>K</kbd> <kbd>M</kbd> (<kbd>Cmd</kbd>+<kbd>K</kbd> <kbd>M</kbd> on macOS), or click the language name in the status bar, and select **Log File (log)**. To always use Log File Highlighter for log files, add this to your settings:
 
@@ -151,7 +151,7 @@ The `*.log.*` line also covers rotated logs like `app.log.1`. Files that start w
 </details>
 
 <details>
-<summary>Large log files aren't highlighted</summary>
+<summary>Large log files aren't highlighted (expand)</summary>
 
 VS Code turns off highlighting for large files. To turn it back on for log files only, add this to your settings:
 
@@ -166,7 +166,7 @@ VS Code turns off highlighting for large files. To turn it back on for log files
 ## Custom pattern reference
 
 <details>
-<summary>All options of a custom pattern</summary>
+<summary>All options of a custom pattern (expand)</summary>
 
 | Option | Description | Examples |
 | --- | --- | --- |
@@ -189,7 +189,7 @@ A pattern needs at least one of `foreground`, `background`, `fontWeight`, `fontS
 </details>
 
 <details>
-<summary>Several styles for the same text</summary>
+<summary>Several styles for the same text (expand)</summary>
 
 A pattern can be used more than once with different styles, for example to highlight both a word and its line:
 
@@ -203,7 +203,7 @@ A pattern can be used more than once with different styles, for example to highl
 </details>
 
 <details>
-<summary>Patterns that span several lines</summary>
+<summary>Patterns that span several lines (expand)</summary>
 
 With the `s` flag, `.` also matches line breaks, so a pattern can match text over several lines, such as an SQL statement. Use non-greedy quantifiers like `.*?`, so that a match doesn't run on to a later log entry:
 
