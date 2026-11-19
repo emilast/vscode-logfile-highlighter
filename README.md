@@ -1,7 +1,7 @@
 # Log File Highlighter
 
-[![Visual Studio Marketplace](https://img.shields.io/visual-studio-marketplace/v/emilast.LogFileHighlighter?label=Marketplace)](https://marketplace.visualstudio.com/items?itemName=emilast.LogFileHighlighter)
-[![Installs](https://img.shields.io/visual-studio-marketplace/i/emilast.LogFileHighlighter)](https://marketplace.visualstudio.com/items?itemName=emilast.LogFileHighlighter)
+[![Install from the VS Code Marketplace](https://img.shields.io/badge/VS%20Code%20Marketplace-install-007acc.svg)](https://marketplace.visualstudio.com/items?itemName=emilast.LogFileHighlighter)
+[![Install from Open VSX](https://img.shields.io/badge/Open%20VSX-install-a60ee5.svg)](https://open-vsx.org/extension/emilast/LogFileHighlighter)
 [![License: MIT](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 
 Log File Highlighter adds colors to log files in VS Code, so that errors, warnings, timestamps and stack traces stand out from the rest. It works with most log formats out of the box and uses the colors of your theme.
