@@ -2,6 +2,8 @@
 
 ### Unreleased
 
+* New feature: Files that VS Code doesn't otherwise recognize, such as files without an extension or with an unknown extension, are detected as log files if their first line starts with a date, e.g. `2025-08-15 12:24:16`, `[2025-08-15T12:24:16Z]` or `15/08/2025 12:24`.
+
 * The project now builds with TypeScript 7.0.2, the new native compiler (previously 5.9).
 
 * Removed the deprecated TSLint linter from the development tools.
