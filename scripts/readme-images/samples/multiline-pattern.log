@@ -1,0 +1,5 @@
+2026-11-19 12:15:30.441 DEBUG Executing query:
+    SELECT o.Id, o.Total, c.Name
+    FROM Orders o JOIN Customers c ON c.Id = o.CustomerId
+    WHERE o.CreatedAt > @since
+2026-11-19 12:15:30.502 DEBUG Query returned 18 rows in 61 ms

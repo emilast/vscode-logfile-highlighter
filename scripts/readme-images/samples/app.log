@@ -1,0 +1,14 @@
+2026-11-19 09:24:19.842 INFO  [main] Orders.Api.Startup: Application started on http://localhost:5000
+2026-11-19 09:24:19.852 DEBUG [worker-1] Orders.Jobs.SyncJob: Starting sync for tenant 'acme', batch size 250
+2026-11-19 09:24:20.114 INFO  [worker-1] Orders.Data.OrderRepository: Loaded 1248 orders, isStale = false
+2026-11-19 09:24:21.003 WARN  [worker-2] Orders.Payments.PaymentClient: Slow response (2875 ms)
+2026-11-19 09:24:21.016 INFO  [http-7] Orders.Api.OrdersController: GET /orders/7f3c2a9e-41d2-4b8a-9c1e-5a6b7d8e9f01
+2026-11-19 09:24:22.258 DEBUG [http-7] Orders.Api.Auth: Token validated for "jane.doe@example.com", roles = null
+2026-11-19 09:24:23.884 ERROR [worker-2] Orders.Payments.PaymentService: Charge failed for order 5000001
+System.InvalidOperationException: The payment provider returned the unexpected status 'DECLINED'.
+   at Orders.Payments.PaymentService.ChargeAsync(Order order) in PaymentService.cs:line 87
+   at Orders.Jobs.SyncJob.ProcessAsync(Batch batch) in SyncJob.cs:line 142
+2026-11-19 09:24:24.002 INFO  [worker-2] Orders.Payments.PaymentService: Retrying order 5000001 in 30 s
+2026-11-19 09:24:25.311 INFO  [http-9] Orders.Api.OrdersController: POST /orders returned 201, id = 5000002
+2026-11-19 09:24:26.640 WARN  [worker-1] Orders.Jobs.SyncJob: Device 43:A4:19:A5:AF:C0 reported clock skew
+2026-11-19 09:24:27.905 INFO  [worker-1] Orders.Jobs.SyncJob: Sync for tenant 'acme' finished, success = true

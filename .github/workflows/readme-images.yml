@@ -1,0 +1,46 @@
+name: README images
+
+# Start from GitHub: Actions -> README images -> Run workflow.
+#
+# Regenerates the images in content/readme/ with scripts/readme-images (see
+# .claude/skills/readme-images/SKILL.md) and uploads them as the "readme-images" artifact.
+# Download it, check the images and commit the ones that changed.
+
+on:
+  workflow_dispatch:
+    inputs:
+      scenes:
+        description: Scenes to generate, separated by spaces (empty for all)
+        type: string
+        default: ''
+
+permissions:
+  contents: read
+
+jobs:
+  readme-images:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+          cache: npm
+
+      - name: Install Xvfb, ImageMagick, ffmpeg and the JetBrains Mono font
+        run: sudo apt-get update && sudo apt-get install -y xvfb imagemagick ffmpeg fonts-jetbrains-mono
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Generate the images
+        env:
+          SCENES: ${{ inputs.scenes }}
+        run: npm run readme-images -- $SCENES
+
+      - uses: actions/upload-artifact@v7
+        with:
+          name: readme-images
+          path: content/readme/
