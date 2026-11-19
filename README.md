@@ -26,7 +26,9 @@ An earlier version of the syntax highlighting definition from this extension was
 
 ## Features
 ### Syntax Highlighting
-The extension associates with `.log` files and applies coloring to the different elements in the file, for example:
+The extension associates with `.log` files and applies coloring to the different elements in the file. Files that VS Code doesn't otherwise recognize, such as files without an extension or with an unknown extension, are also treated as log files if their first line starts with a date, such as `2015-12-09`, `[2015-12-09` or `12/09/2016`.
+
+Examples of highlighted elements:
 
 | Category                                         | Example                                                                                                                  |
 | ------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------ |
@@ -201,6 +203,8 @@ To make VS Code treat other file extensions than the default `.log` as log files
 },
 ```
 The example above associates extensions such as `.log.1` and `.log.2` with the Log File highlighter extension.
+
+Files whose first line starts with a date are detected as log files only when VS Code doesn't already associate their extension with another language. For example, a `.txt` file stays plain text, even if it starts with a date, unless you add `"*.txt": "log"` to `files.associations`.
 
 ### Conflicts with other extensions
 
