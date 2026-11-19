@@ -1,0 +1,7 @@
+I (1203) wifi: connected to access point 'office-5g', rssi -61
+I (1210) mqtt: connecting to broker mqtt://10.0.0.12:1883
+W (2741) mqtt: no answer from broker, retrying in 2 s
+I (4752) mqtt: connected, subscribed to 3 topics
+D (4760) sensor: temperature 21.4 C, humidity 38 %
+E (9310) sensor: read timeout on I2C address 0x44
+I (9322) sensor: sensor reset, resuming measurements

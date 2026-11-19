@@ -1,0 +1,10 @@
+2026-11-19 10:02:11.204 INFO  [checkout] Cart updated for customer C-10442, 3 items
+2026-11-19 10:02:11.877 INFO  [checkout] Order ORD-58120 created for customer C-10442
+2026-11-19 10:02:12.031 INFO  [payment] Authorizing card payment for ORD-58120
+2026-11-19 10:02:14.950 WARN  [payment] SLOW: payment provider answered after 2919 ms
+2026-11-19 10:02:15.002 INFO  [payment] Payment approved for ORD-58120
+2026-11-19 10:02:15.118 INFO  [shipping] TODO: replace the temporary carrier lookup
+2026-11-19 10:02:15.240 INFO  [shipping] Shipment SHP-7731 booked for ORD-58120
+2026-11-19 10:02:16.502 INFO  [checkout] Order ORD-58121 created for customer C-20871
+2026-11-19 10:02:19.689 WARN  [payment] SLOW: payment provider answered after 3187 ms
+2026-11-19 10:02:19.733 INFO  [payment] Payment approved for ORD-58121

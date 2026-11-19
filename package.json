@@ -203,7 +203,8 @@
 		"watch-tests": "tsc -p . -w --outDir out",
 		"preinstall": "npx npm-force-resolutions",
 		"unittest": "npm run compile-tests && node out/test/testRunner.js -c jasmine.unittest.json",
-		"integrationtest": "npm run compile && npm run compile-tests && node out/test/runIntegrationTests.js"
+		"integrationtest": "npm run compile && npm run compile-tests && node out/test/runIntegrationTests.js",
+		"readme-images": "npm run compile && node scripts/readme-images/run.js"
 	},
 	"devDependencies": {
 		"@types/jasmine": "^7.0.0",

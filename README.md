@@ -1,316 +1,225 @@
 # Log File Highlighter
 
-![License](https://img.shields.io/badge/license-MIT-green.svg?style=flat)
+[![Visual Studio Marketplace](https://img.shields.io/visual-studio-marketplace/v/emilast.LogFileHighlighter?label=Marketplace)](https://marketplace.visualstudio.com/items?itemName=emilast.LogFileHighlighter)
+[![Installs](https://img.shields.io/visual-studio-marketplace/i/emilast.LogFileHighlighter)](https://marketplace.visualstudio.com/items?itemName=emilast.LogFileHighlighter)
+[![License: MIT](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 
-![alt text][sample]
+Log File Highlighter adds colors to log files in VS Code, so that errors, warnings, timestamps and stack traces stand out from the rest. It works with most log formats out of the box and uses the colors of your theme.
 
-## Description
-A Visual Studio Code extension for adding color highlighting to log files. It is based on standard conventions for log4net log files but it's general enough to be useful for other variations of log files as well. The colors are customizable but by default the current color theme's colors are used.
-
-### Installation
-Install the extension from the [Visual Studio Marketplace](https://marketplace.visualstudio.com/items?itemName=emilast.LogFileHighlighter), or search for "Log File Highlighter" in the Extensions view in VS Code. For editors that use [Open VSX](https://open-vsx.org/extension/emilast/LogFileHighlighter) instead, such as VSCodium, Cursor and Windsurf, install it from there.
-
-### Open Source
-This extension is open source under the MIT License and completely free but if you like it and want to encourage further development, then you might want to consider supporting it using one of the links below:
-
-[![](https://img.shields.io/static/v1?label=Sponsor&message=%E2%9D%A4&logo=GitHub&color=%23fe8e86)](https://github.com/sponsors/emilast)
-
-<a href="https://www.buymeacoffee.com/emilast" target="_blank">
-  <img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" width="100" height="30">
-</a>
-
-But that's completely optional, of course 😊
-
-### Note
-An earlier version of the syntax highlighting definition from this extension was included into Visual Studio Code [version 1.20](https://code.visualstudio.com/updates/v1_20#_output-panel). If the default behavior of log files in VS Code is good enough for you, then you don't need this extension. However, if you want additional highlighting, customizable patterns and time duration calculation and visualization, then keep reading :-)
+![A log file highlighted by Log File Highlighter](content/readme/overview.png)
 
 ## Features
-### Syntax Highlighting
-The extension associates with `.log` files and applies coloring to the different elements in the file. Files that VS Code doesn't otherwise recognize, such as files without an extension or with an unknown extension, are also treated as log files if their first line starts with a date, such as `2015-12-09`, `[2015-12-09` or `12/09/2016`.
 
-Examples of highlighted elements:
+- **[Highlighting](#highlighting)** of dates, log levels, exceptions, stack traces, numbers, strings, GUIDs, URLs and more.
+- **[Time span of selected lines](#time-span-of-selected-lines)**: select some lines to see how much time they cover.
+- **[Tail mode](#tail-mode)**: keep the end of a growing log file in view.
+- **[ANSI colors](#ansi-color-codes)**: color codes from terminal programs are shown as colors.
+- **[Your own patterns](#highlight-your-own-patterns)**: highlight anything you like, in any style.
+- **[Theme colors](#use-the-colors-of-your-theme)**: your own patterns can follow your color theme.
 
-| Category                                         | Example                                                                                                                  |
-| ------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------ |
-| Dates and times in ISO format, such as           | `2015-12-09`, `2015-12-09 09:29`, `2015-12-09 09:29:02.258`                                                              |
-| Dates and times in some culture-specific formats | `12/09/2016`, `12.09.2016`, `12-09-2016`, `12-09-2015 09:29`, `12-09-2015 09:29:02,258`                                 |
-| Log level                                        | `TRACE`, `DEBUG`, `INFO`, `INFORMATION`, `WARN`, `WARNING`, `ERROR`, `FAIL`, `FAILURE`                                            |
-| Numeric constants                                | `1`, `234`                                                                                                               |
-| Standard .Net constants                          | `null`, `true`, `false`                                                                                                  |
-| String constants                                 | `"lorem ipsum"`, `'lorem ipsum'`                                                                                         |
-| GUIDs                                            | `859A4209-A82D-4CA1-8468-C2606A3501EE`                                                                                   |
-| MAC addresses                                    | `43:A4:19:A5:AF:C0`, `43-A4-19-A5-AF-C0`, `fde8:e767:269c:0:9425:3477:7c8f:7f1a`, `fde8-e767-269c-0-9425-3477-7c8f-7f1a` |
-| .Net exception type names                        | `ArgumentNullException`, `HttpException`                                                                                 |
-| .Net exception stack traces                      | Lines starting with whitespace characters, followed by `at`                                                              |
-| Urls                                             | `http://www.meadow.se/wordpress/`                                                                                        |
-| Namespaces                                       | `MyApp.MyNameSpace.MyClass`                                                                                              |
+## Getting started
 
-### Visualization of Time Duration and Progress
-If you select multiple lines of a `.log` file, some simple timestamp analysis is performed.
+Install the extension from the [Visual Studio Marketplace](https://marketplace.visualstudio.com/items?itemName=emilast.LogFileHighlighter), or search for "Log File Highlighter" in the Extensions view. For editors that use [Open VSX](https://open-vsx.org/extension/emilast/LogFileHighlighter) instead, such as VSCodium, Cursor and Windsurf, install it from there.
 
-* A status bar item is displayed that indicates how many days, hours, minutes, seconds and milliseconds that is selected.
-* A progress bar is also drawn under the timestamps in the selection to give a visual representation of each line's point in time within the selection.
-* Press <kbd>Escape</kbd> to clear the progress bars.
+Then open a log file. Files ending with `.log` are highlighted, and so are files that VS Code doesn't otherwise recognize if their first line starts with a date, such as `2026-11-19` or `[2026-11-19`.
 
-![Time Duration Sample](content/TimeAnalysis.gif)  
+If a log file isn't highlighted, see [Troubleshooting](#troubleshooting).
 
-Settings
+## Highlighting
 
-* **enableProgressIndicator** can be used to disable the progress indicator feature. The default value is `true`. Set it to `false` to disable the feature.
+The extension recognizes the common parts of log lines and colors them with the colors of your theme:
 
-* **progressIndicatorUnderlineColor** can be used to set the color of the progress indicator. The default value is `#00ff1f8f`. Note the alpha channel value at the end of the color value (`8f`). This can be used to make the color semi-transparent for mixing with the background color.
+- Dates and times, in ISO format (`2026-11-19 09:24:19.842`) and common local formats (`19.11.2026`, `11/19/2026 09:24`)
+- Log levels, such as `ERROR`, `WARN`, `INFO`, `DEBUG` and `TRACE`, also in brackets and short forms like `[err]` or `[w]`
+- Exceptions, exception type names and stack traces
+- Numbers, strings, `true`, `false` and `null`
+- GUIDs, MAC addresses, URLs and namespaces like `Orders.Api.Startup`
 
-Example:
-```JSON
-"logFileHighlighter.enableProgressIndicator": true,
-"logFileHighlighter.progressIndicatorUnderlineColor": "#ffee00",
+To change the colors, see [Change the colors](#change-the-colors).
+
+## Time span of selected lines
+
+Select some lines, and the status bar shows how much time passes between the first and the last of them. A bar under each timestamp shows where in that time span the line is. Press <kbd>Escape</kbd> to remove the bars.
+
+![Selecting log lines shows the time span in the status bar](content/readme/time-selection.gif)
+
+The bars can be turned off with `"logFileHighlighter.enableProgressIndicator": false`, and their color changed with `logFileHighlighter.progressIndicatorUnderlineColor`.
+
+## Tail mode
+
+Scroll to the end of a log file, and the editor follows the file as new lines are added, like `tail -f`. The status bar shows `Log File Tail Mode` while it's active. Scroll up to stop it.
+
+![The editor follows a log file as lines are added](content/readme/tail-mode.gif)
+
+Tail mode can be turned off with `"logFileHighlighter.enableTailMode": false`.
+
+## ANSI color codes
+
+Log files from build pipelines, scripts and other terminal programs often contain ANSI color codes. The text is shown in those colors, and the codes themselves are hidden.
+
+![Text colored by its ANSI color codes](content/readme/ansi-colors.png)
+
+The 16 basic colors use the terminal colors of your theme. 256-color and 24-bit colors, bold, dim, italic, underline, strikethrough and inverse are supported too. Turn the feature off with `"logFileHighlighter.enableAnsiColors": false`, or show the codes with `"logFileHighlighter.ansiEscapeCodeDisplay"` set to `"dim"` or `"show"`.
+
+## Highlight your own patterns
+
+Add your own patterns to the `logFileHighlighter.customPatterns` setting to highlight log levels of other logging frameworks, ids from your domain, or anything else. A pattern is a text or a regular expression, and each one can have its own style:
+
+```jsonc
+"logFileHighlighter.customPatterns": [
+    // Order numbers, with a rounded border
+    { "pattern": "ORD-\\d+", "foreground": "#4fc1ff", "border": "1px solid #4fc1ff80", "borderRadius": "3px" },
+    // Customer ids, in italics
+    { "pattern": "C-\\d+", "foreground": "#c586c0", "fontStyle": "italic" },
+    // Whole lines about slow responses
+    { "pattern": "SLOW", "highlightEntireLine": true, "background": "#f2cc6026" },
+    // TODO notes
+    { "pattern": "TODO", "foreground": "#1f1f1f", "background": "#f2cc60", "fontWeight": "bold" }
+]
 ```
 
-### Tail Mode
+![Order numbers, customer ids, slow lines and a TODO highlighted by custom patterns](content/readme/custom-patterns.png)
 
-The extension also supports a tail mode where the end of the log file is kept in view as new lines are added. To activate it, scroll to the end of the log file until a message is shown in the status bar: `Log File Tail Mode`
+All the options and more examples are in the [custom pattern reference](#custom-pattern-reference).
 
-To deactivate tail mode for the current file, scroll up again.
+### Use the colors of your theme
 
-This feature can be disabled by setting the `logFileHighlighter.enableTailMode` setting to `false`.
+Instead of fixed colors, `foreground`, `background` and `overviewColor` can use a [theme color](https://code.visualstudio.com/api/references/theme-color), such as `terminal.ansiRed`. Your patterns then match your theme and change with it. Here are the same patterns in a dark and a light theme:
 
-### ANSI Color Codes
-
-Log files written by terminal programs, such as build pipelines and PowerShell scripts, often contain ANSI escape codes for colors, e.g. `ESC[33;1mVERBOSE: ...ESC[0m`. The text is colored as specified by these codes and the escape codes themselves are hidden.
-
-![ANSI colors](content/ansi_colors.png)  
-
-Supported are the 16 basic colors (which use the terminal colors of the current color theme), 256 color and 24-bit color codes, as well as bold, dim, italic, underline, strikethrough and inverse.
-
-The following settings control this feature:
-
-```json
-"logFileHighlighter.enableAnsiColors": true,
-"logFileHighlighter.ansiEscapeCodeDisplay": "hide",
+```jsonc
+"logFileHighlighter.customPatterns": [
+    { "pattern": "^E \\(\\d+\\)", "foreground": "terminal.ansiRed" },
+    { "pattern": "^W \\(\\d+\\)", "foreground": "terminal.ansiYellow" },
+    { "pattern": "^I \\(\\d+\\)", "foreground": "terminal.ansiGreen" },
+    { "pattern": "^D \\(\\d+\\)", "foreground": "terminal.ansiBlue" },
+    { "pattern": "timeout", "background": "editor.findMatchHighlightBackground" }
+]
 ```
 
-`logFileHighlighter.ansiEscapeCodeDisplay` can be `hide`, `dim` or `show`.
+![The same patterns with theme colors in a dark and a light theme](content/readme/theme-colors.png)
 
-## Customization
+<details>
+<summary>Theme colors that work well for log files</summary>
 
-### Customizing the colors
+| Theme color id | Suitable for |
+| --- | --- |
+| `terminal.ansiRed`, `terminal.ansiYellow`, `terminal.ansiGreen`, `terminal.ansiBlue`, `terminal.ansiCyan`, `terminal.ansiMagenta`, and the `terminal.ansiBright...` variants | Log levels. All themes define them, and they're made to be readable on the editor background. |
+| `editorError.foreground`, `editorWarning.foreground`, `editorInfo.foreground` | Errors, warnings and information, in the same colors as the squiggles in the editor. |
+| `editor.findMatchHighlightBackground`, `editor.wordHighlightBackground` | Backgrounds that make text stand out while keeping it readable. |
+| `descriptionForeground`, `disabledForeground` | Text that should be toned down, such as noise in the log. |
 
-By default, this extension reuses existing theme colors in order to adapt to the user's preferences. Sometimes this will result in colors that may not make complete sense in the log file context (for example `ERROR` might be green and `DEBUG` red, when it would be more appropriate to have it the other way around).
+The complete list is in the [Theme Color reference](https://code.visualstudio.com/api/references/theme-color). To see the values of the current theme, run the command **Developer: Generate Color Theme From Current Settings**. VS Code's settings editor may warn about theme color ids, since it expects hex colors there. The warning can be ignored.
 
-For this reason, the extension defines a special set of grammar tokens that can be used to override the colors of the default log items:
+</details>
 
-```
-log.constant
-log.date
-log.debug
-log.error
-log.exception
-log.exceptiontype
-log.info
-log.string
-log.verbose
-log.warning
-```
+## Change the colors
 
-To override the color for one of these, use the `editor.tokenColorCustomizations` user setting, which was introduced in Visual Studio Code 1.15. Here's an example that forces errors to be red and bold and warnings to be orange, regardless of what color theme is used:
+The built-in highlighting uses the colors of your theme, which don't always fit log files. A theme might show `ERROR` in green, for example. You can set the colors of the log items yourself with the `editor.tokenColorCustomizations` setting:
 
-```JSON
+```jsonc
 "editor.tokenColorCustomizations": {
     "textMateRules": [
-        {
-            "scope": "log.error",
-            "settings": {
-                "foreground": "#af1f1f",
-                "fontStyle": "bold"
-            }
-        },
-        {
-            "scope": "log.warning",
-            "settings": {
-                "foreground": "#f4ad42",
-                "fontStyle": ""
-            }
-        }
+        { "scope": "log.error", "settings": { "foreground": "#f14c4c", "fontStyle": "bold" } },
+        { "scope": "log.warning", "settings": { "foreground": "#cca700" } }
     ]
 }
 ```
 
-### Defining custom highlighting patterns
+<details>
+<summary>All log item scopes</summary>
 
-The extension also supports defining custom patterns to be highlighted. This can be useful to make the extension compatible with the log levels of an otherwise unsupported logging framework or to highlight domain specific patterns, or just about anything else.
+`log.constant`, `log.date`, `log.debug`, `log.error`, `log.exception`, `log.exceptiontype`, `log.info`, `log.string`, `log.verbose`, `log.warning`
 
-The patterns are defined in the user settings like in this example:
+</details>
 
+## Troubleshooting
 
-```JSON
-"logFileHighlighter.customPatterns": [
-    // Highlight the text 'Verbose' with green color
-    {
-        "pattern": "Verbose",
-        "foreground": "#22aa22"
-    },
-    // Highlight the text 'E/' and any immediately following word constitient characters with red foreground and yellow background
-    {
-        "pattern": "E/\\w+",
-        "foreground": "#af1f1f",
-        "background": "#f3f38d"
-    },
-    // Highlight anything between square brackets with dark grey background
-    {
-        "pattern": "\\[(.*?)\\]",
-        "background": "#333333"
-    },
-    // Highlight ERROR if surrounded by double quotes using positive lookbehind and lookahead expressions
-    {
-        "pattern": "(?<=\")ERROR(?=\")",
-        "foreground": "#00FF00",
-    }
-]
-```
+<details>
+<summary>A log file isn't highlighted</summary>
 
-| Setting               | Optional  | Description                                                                                                                                                                                      | Examples                                                                          |
-| --------------------- | --------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | --------------------------------------------------------------------------------- |
-| `pattern`             | Mandatory | The matching expression.This can be either a string constant or a JavaScript regular expression (remember to **escape special characters**).                                                     | `foobar`, `(TODO)`                                                                |
-| `patternFlags`        | Optional  | Flags to use with the regular expression, in addition to the `gm` flags that are set by default.                                                                                                 | `i` (case insensitive)<br>`is` (case insensitive + '.' matches newline characters |
-| `highlightEntireLine` | Optional  | If true, then the entire line where match is found is highlighted.                                                                                                                               | `false` (default), `true`                                                         |
-| `foreground`          | Optional  | The color to use as foreground color for the matched pattern. Hex colors are preferred since they can be selected with the VS Code color picker but predefined VS Code color names work as well. A [theme color](#using-theme-colors) id uses that color of the current theme. | `yellow`, `#ff5588`, `terminal.ansiGreen`                                         |
-| `background`          | Optional  | The color to use as background color for the matched pattern.                                                                                                                                    | `yellow`, `#ff5588`, `editor.findMatchHighlightBackground`                        |
-| `fontWeight`          | Optional  | Used to change the weight of the font.                                                                                                                                                           | `bold`                                                                            |
-| `fontStyle`           | Optional  | Used to change the style of the font.                                                                                                                                                            | `italic`                                                                          |
-| `border`              | Optional  | Can be used for adding a border around matched text.                                                                                                                                             | `2px solid yellow`                                                                |
-| `borderRadius`        | Optional  | Can be used together with the `border` setting to make the border corners rounded.                                                                                                               | `3px`                                                                             |
-| `letterSpacing`       | Optional  | Can be used to increase or decrease the horizontsl spacing between characters in the matched text.                                                                                               | `5px` <br> `-1px`                                                                 |
-| `overviewColor`       | Optional  | If set, this enables matched text to be indicated in the overview ruler to the right of the text editor window in Code.                                                                          | `yellow`, `#ff5588`, `editorError.foreground`                                     |
-| `overviewRulerLane`   | Optional  | If `overviewColor` is set, then this setting controls the placement of the marker in the ruler.                                                                                                  | `Left`, `Right`, `Center`, `Full`                                                 |
-| `textDecoration`      | Optional  | Used for adding additional CSS text decorations.                                                                                                                                                 | `red underline overline dotted`, `red wavy underline`                             |
-
-
-
-**Note**: Both `foreground` and `background` are optional individually but *at least* one of them must be set for the custom pattern to be activated.
-
-![Custom Pattern Sample](content/CustomPattern-Sample.gif)  
-
-
-## Tips
-
-### File associations
-
-To make VS Code treat other file extensions than the default `.log` as log files, add the following to the user settings:
-
-```json
-"files.associations": {
-    "*.log.*": "log"
-},
-```
-The example above associates extensions such as `.log.1` and `.log.2` with the Log File highlighter extension.
-
-Files whose first line starts with a date are detected as log files only when VS Code doesn't already associate their extension with another language. For example, a `.txt` file stays plain text, even if it starts with a date, unless you add `"*.txt": "log"` to `files.associations`.
-
-### Conflicts with other extensions
-
-Other extensions can also add a language for `.log` files, for example [Gemini Code Assist](https://marketplace.visualstudio.com/items?itemName=Google.geminicodeassist), which adds the language "Log". VS Code then uses that language instead of Log File Highlighter's, and the log files are no longer highlighted.
-
-To switch the current file to Log File Highlighter, press <kbd>Ctrl</kbd>+<kbd>K</kbd> <kbd>M</kbd> (<kbd>Cmd</kbd>+<kbd>K</kbd> <kbd>M</kbd> on macOS), or click the language name in the status bar, and select **Log File (log)**.
-
-To always use Log File Highlighter for log files, associate them with its language id, `log`, in the user settings:
+Other extensions can also add a language for `.log` files, for example [Gemini Code Assist](https://marketplace.visualstudio.com/items?itemName=Google.geminicodeassist). VS Code then uses that language instead. To switch the current file back, press <kbd>Ctrl</kbd>+<kbd>K</kbd> <kbd>M</kbd> (<kbd>Cmd</kbd>+<kbd>K</kbd> <kbd>M</kbd> on macOS), or click the language name in the status bar, and select **Log File (log)**. To always use Log File Highlighter for log files, add this to your settings:
 
 ```json
 "files.associations": {
     "*.log": "log",
     "*.log.*": "log"
-},
-```
-
-### Custom pattern tips
-
-#### Multiple styles for the same pattern
-
-The same pattern can be used in multiple style configurations, which can be useful if you want to highlight the same pattern in different ways. Example:
-```json
-{
-    "pattern": "todo",
-    "patternFlags": "i",
-    "foreground": "#000000",
-    "background": "#7d8aff",
-},
-{
-    "pattern": "todo",
-    "patternFlags": "i",
-    "highlightEntireLine": true,
-    "background": "#7d8aff50",
-},
-```
-
-![Multiple Styles for the Same pattern](content/MultiplePatterns.png)  
-
-#### Case sensitivity
-
-The custom patterns are case sensitive by default. To make a pattern case-insensitive, set **patternFlags** to "i".
-
-Here's and example that matches both "todo" and "TODO":
-
-```json
-{
-    "pattern": "todo",
-    "patternFlags": "i",
-    "foreground": "#ff0000"
-},
-```
-
-#### Multiline custom patterns
-
-The custom patterns can be multiline patterns. This can be useful for example when you want to highlight SQL statements, stack traces, etc. To match multiple lines, use the `s` flag in the **patternFlags** setting. This flag makes the `.` character match newline characters as well. Here is an example that highlights SQL statements:
-
-```json
-{
-    "pattern": "SELECT.*?FROM.*?WHERE.*?$",
-    "patternFlags": "si",
-    "foreground": "#eeff05",
-},
-```
-
-Notes:
-* The **patternFlags** setting is used to set the `s` flag which makes the `.` character match newline characters (and `i` for case insensitivity).
-* The **pattern** uses `?` after the `*` quantifier to make the match **non-greedy**. This is important to make the pattern match only one SQL statement at a time and not extend to the next `WHERE` clause of a later log entry.
-
-Result:
-
-![alt text](content/MultilinePattern.png)
-
-### Using theme colors
-
-Instead of a fixed color, `foreground`, `background` and `overviewColor` can refer to a color of the current color theme, using its [theme color id](https://code.visualstudio.com/api/references/theme-color). The custom patterns then match the theme, and change with it. The terminal colors work well for log levels:
-
-```json
-"logFileHighlighter.customPatterns": [
-    { "pattern": "^E [()0-9.:]+", "foreground": "terminal.ansiRed" },
-    { "pattern": "^W [()0-9.:]+", "foreground": "terminal.ansiYellow" },
-    { "pattern": "^I [()0-9.:]+", "foreground": "terminal.ansiGreen" },
-    { "pattern": "FATAL", "foreground": "editorError.foreground", "overviewColor": "editorError.foreground" }
-]
-```
-
-Some theme colors that work well for log files:
-
-| Theme color id                                                                                                                                         | Suitable for                                                                                     |
-| ------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------ |
-| `terminal.ansiRed`, `terminal.ansiYellow`, `terminal.ansiGreen`, `terminal.ansiBlue`, `terminal.ansiCyan`, `terminal.ansiMagenta`, and the `terminal.ansiBright...` variants | Log levels. All themes define them, and they're made to be readable on the editor background. |
-| `editorError.foreground`, `editorWarning.foreground`, `editorInfo.foreground`                                                                         | Errors, warnings and information, in the same colors as the squiggles in the editor.             |
-| `editor.findMatchHighlightBackground`, `editor.wordHighlightBackground`                                                                                | Backgrounds that make text stand out while keeping it readable.                                  |
-| `descriptionForeground`, `disabledForeground`                                                                                                          | Text that should be toned down, such as noise in the log.                                        |
-
-The complete list is in the [Theme Color reference](https://code.visualstudio.com/api/references/theme-color). To see the values of the current theme, run the command **Developer: Generate Color Theme From Current Settings**.
-
-VS Code's settings editor may show a warning for theme color ids, since it expects hex colors there. The warning can be ignored.
-
-### Syntax highlighting of large files
-
-VS Code disables color highlighting for large files by default. This can be disabled with the **editor.largeFileOptimization** setting. To enable highlighting for large log files without changing the setting for other file types, place it in the `[log]` scope like this:
-
-```json
-"[log]": {
-    "editor.largeFileOptimizations": false,
 }
 ```
 
-[sample]: https://raw.githubusercontent.com/emilast/vscode-logfile-highlighter/master/content/sample.png
+The `*.log.*` line also covers rotated logs like `app.log.1`. Files that start with a date are only detected when VS Code doesn't already know their extension, so a `.txt` file stays plain text unless you add `"*.txt": "log"`.
+
+</details>
+
+<details>
+<summary>Large log files aren't highlighted</summary>
+
+VS Code turns off highlighting for large files. To turn it back on for log files only, add this to your settings:
+
+```json
+"[log]": {
+    "editor.largeFileOptimizations": false
+}
+```
+
+</details>
+
+## Custom pattern reference
+
+<details>
+<summary>All options of a custom pattern</summary>
+
+| Option | Description | Examples |
+| --- | --- | --- |
+| `pattern` | **Required.** The text to highlight, or a JavaScript regular expression. Remember to escape special characters, e.g. `\\d` in JSON. | `TODO`, `ORD-\\d+` |
+| `patternFlags` | Extra regular expression flags. The `g` and `m` flags are always used. | `i` (ignore case), `s` (`.` matches line breaks) |
+| `highlightEntireLine` | Highlight the whole line that contains a match. | `true` |
+| `foreground` | Text color: a CSS color, or a [theme color](#use-the-colors-of-your-theme) id. | `#ff5588`, `yellow`, `terminal.ansiGreen` |
+| `background` | Background color, like `foreground`. | `#f2cc6026`, `editor.findMatchHighlightBackground` |
+| `fontWeight` | CSS font weight. | `bold` |
+| `fontStyle` | CSS font style. | `italic` |
+| `border` | CSS border around the match. | `1px solid #4fc1ff` |
+| `borderRadius` | Rounded corners of the border. | `3px` |
+| `letterSpacing` | Space between the characters of the match. | `2px`, `-1px` |
+| `textDecoration` | Extra CSS text decorations. | `underline`, `red wavy underline` |
+| `overviewColor` | Show matches in the scroll bar (the overview ruler), in this color. | `yellow`, `editorError.foreground` |
+| `overviewRulerLane` | Where in the scroll bar to show them. | `Left`, `Center`, `Right`, `Full` |
+
+A pattern needs at least one of `foreground`, `background`, `fontWeight`, `fontStyle`, `border` or `borderRadius` to have any effect.
+
+</details>
+
+<details>
+<summary>Several styles for the same text</summary>
+
+A pattern can be used more than once with different styles, for example to highlight both a word and its line:
+
+```jsonc
+{ "pattern": "todo", "patternFlags": "i", "foreground": "#000000", "background": "#7d8aff" },
+{ "pattern": "todo", "patternFlags": "i", "highlightEntireLine": true, "background": "#7d8aff50" }
+```
+
+![A word and its line highlighted in different styles](content/readme/multiple-styles.png)
+
+</details>
+
+<details>
+<summary>Patterns that span several lines</summary>
+
+With the `s` flag, `.` also matches line breaks, so a pattern can match text over several lines, such as an SQL statement. Use non-greedy quantifiers like `.*?`, so that a match doesn't run on to a later log entry:
+
+```jsonc
+{ "pattern": "SELECT.*?FROM.*?WHERE.*?$", "patternFlags": "si", "foreground": "#eeff05" }
+```
+
+![An SQL statement over several lines highlighted by one pattern](content/readme/multiline-pattern.png)
+
+</details>
+
+## Support the project
+
+Log File Highlighter is free and open source under the MIT license. If you find it useful and want to support further development, you're welcome to sponsor it, but that's completely optional 😊
+
+[![Sponsor](https://img.shields.io/static/v1?label=Sponsor&message=%E2%9D%A4&logo=GitHub&color=%23fe8e86)](https://github.com/sponsors/emilast)
+<a href="https://www.buymeacoffee.com/emilast" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" width="100" height="30"></a>
+
+Bug reports and ideas are welcome in the [issues](https://github.com/emilast/vscode-logfile-highlighter/issues).
