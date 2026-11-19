@@ -53,12 +53,13 @@ Releases are made by the GitHub Actions workflow in `.github/workflows/release.y
 1. Make sure everything that should go out is on `master` and that `CHANGELOG.md` has an `### Unreleased` section describing the changes.
 2. On GitHub, go to **Actions** → **Release** → **Run workflow**, choose `patch`, `minor` or `major` and run it.
 
-The workflow bumps the version, renames `### Unreleased` to `### <version> - <date>`, runs the unit and integration tests, packages the `.vsix`, commits and tags `<version>` on `master`, creates a GitHub release with the changelog section as release notes and the `.vsix` attached, and publishes to the VS Code Marketplace.
+The workflow bumps the version, renames `### Unreleased` to `### <version> - <date>`, runs the unit and integration tests, packages the `.vsix`, commits and tags `<version>` on `master`, creates a GitHub release with the changelog section as release notes and the `.vsix` attached, and publishes it to the VS Code Marketplace and to [Open VSX](https://open-vsx.org/extension/emilast/LogFileHighlighter).
 
 ### One-time setup
 
 * Create an Azure DevOps personal access token with the **Marketplace → Manage** scope and organization **All accessible organizations** (see [Publishing extensions](https://code.visualstudio.com/api/working-with-extensions/publishing-extension#get-a-personal-access-token)).
 * Add it as a repository secret named `VSCE_PAT` (**Settings** → **Secrets and variables** → **Actions**).
+* Create an Open VSX access token on [open-vsx.org](https://open-vsx.org/user-settings/tokens), logged in with the GitHub account that owns the `emilast` namespace, and add it as a repository secret named `OVSX_PAT`.
 * If `master` has branch protection that blocks direct pushes, allow GitHub Actions to bypass it, since the workflow pushes the version commit and tag.
 
-If only the Marketplace publish fails (for example because the token has expired), update the secret and use **Re-run failed jobs** on the workflow run. That re-publishes the same `.vsix` without bumping the version again.
+The Marketplace and Open VSX are published by separate jobs that don't depend on each other. If one of them fails (for example because its token has expired), update that secret and use **Re-run failed jobs** on the workflow run. That re-publishes the same `.vsix` without bumping the version again.

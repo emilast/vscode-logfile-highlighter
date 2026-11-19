@@ -9,9 +9,10 @@ name: Release
 #   4. Builds, runs the unit and integration tests and packages the .vsix, then pushes the commit and tag to master.
 #   5. Creates a GitHub release with the changelog section as notes and the .vsix attached.
 #   6. Publishes the .vsix to the VS Code Marketplace (needs the VSCE_PAT secret).
+#   7. Publishes the same .vsix to Open VSX (needs the OVSX_PAT secret).
 #
-# If only the Marketplace step fails (e.g. an expired token), fix the secret and use
-# "Re-run failed jobs" - that re-runs just the publish job with the same .vsix.
+# The two publish jobs are independent of each other. If one of them fails (e.g. an expired token),
+# fix the secret and use "Re-run failed jobs" - that re-runs just that job with the same .vsix.
 
 on:
   workflow_dispatch:
@@ -24,6 +25,11 @@ on:
           - minor
           - major
         default: minor
+
+# Read-only by default. The release job, which pushes the version commit and creates the GitHub release,
+# asks for write access itself. The publish jobs only download the .vsix artifact and use their own tokens.
+permissions:
+  contents: read
 
 concurrency:
   group: release
@@ -112,3 +118,23 @@ jobs:
         env:
           VSCE_PAT: ${{ secrets.VSCE_PAT }}
         run: npx --yes @vscode/vsce@3 publish --packagePath "LogFileHighlighter-${{ needs.release.outputs.version }}.vsix"
+
+  # Open VSX is the registry used by editors that can't use the VS Code Marketplace,
+  # such as VSCodium, Cursor, Windsurf, Gitpod, Eclipse Theia and code-server.
+  publish-open-vsx:
+    needs: release
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@v8
+        with:
+          name: vsix
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+
+      # ovsx reads the token from the OVSX_PAT environment variable
+      - name: Publish to Open VSX
+        env:
+          OVSX_PAT: ${{ secrets.OVSX_PAT }}
+        run: npx --yes ovsx@1 publish "LogFileHighlighter-${{ needs.release.outputs.version }}.vsix"

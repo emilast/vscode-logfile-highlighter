@@ -7,6 +7,9 @@
 ## Description
 A Visual Studio Code extension for adding color highlighting to log files. It is based on standard conventions for log4net log files but it's general enough to be useful for other variations of log files as well. The colors are customizable but by default the current color theme's colors are used.
 
+### Installation
+Install the extension from the [Visual Studio Marketplace](https://marketplace.visualstudio.com/items?itemName=emilast.LogFileHighlighter), or search for "Log File Highlighter" in the Extensions view in VS Code. For editors that use [Open VSX](https://open-vsx.org/extension/emilast/LogFileHighlighter) instead, such as VSCodium, Cursor and Windsurf, install it from there.
+
 ### Open Source
 This extension is open source under the MIT License and completely free but if you like it and want to encourage further development, then you might want to consider supporting it using one of the links below:
 
