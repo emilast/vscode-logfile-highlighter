@@ -1,6 +1,6 @@
 # Change Log
 
-### Unreleased
+### 4.0.0 - 19 November 2026
 
 * The readme has been rewritten: it starts with an overview of the features, has new pictures in one color theme, and the details of custom patterns and troubleshooting are further down.
 
