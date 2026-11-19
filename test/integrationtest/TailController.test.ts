@@ -174,6 +174,28 @@ describe('TailController', () => {
         expect(vscode.window.activeTextEditor).toBe(otherEditor);
     });
 
+    it('scrolls a log in a floating window that is not the active editor (#688).', async () => {
+        // Arrange: move the log to a new window. VS Code creates a new editor object for it there.
+        const document = (await openFollowedLog(vscode.ViewColumn.Active)).document;
+        await vscode.commands.executeCommand('workbench.action.moveEditorToNewWindow');
+        const floatingEditor = () => vscode.window.visibleTextEditors.find((e) => e.document === document);
+        await waitFor(() => floatingEditor() !== undefined && isFollowing(document), 'the floating editor to be followed');
+
+        // Make another editor active, beside the log in the floating window. Focus can't be moved back to the
+        // main window in the tests, since they run without a window manager.
+        const otherEditor = await vscode.window.showTextDocument(
+            await vscode.workspace.openTextDocument({ language: 'log', content: 'other\n' }), vscode.ViewColumn.Beside);
+        await waitFor(() => vscode.window.activeTextEditor === otherEditor, 'the other editor to be active');
+        expect(floatingEditor()).toBeDefined();
+
+        // Act
+        await appendLines(floatingEditor()!, 300);
+
+        // Assert
+        await waitFor(() => isLastLineVisible(floatingEditor()!), 'the floating editor to scroll to the end of the log');
+        expect(vscode.window.activeTextEditor).toBe(otherEditor);
+    });
+
     it('follows several logs at the same time.', async () => {
         // Arrange
         const first = await openFollowedLog(vscode.ViewColumn.One);
