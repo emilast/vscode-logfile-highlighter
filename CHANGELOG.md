@@ -2,6 +2,8 @@
 
 ### Unreleased
 
+* File paths in log files are now clickable, and open the file at the line and column after the path, e.g. `D:\src\app\Program.cs:42`, `src/app.ts(12,5)` or the paths in .NET and Python stack traces. Only paths to files that exist become links. Turn it off with `"logFileHighlighter.enableFileLinks": false`. Fixes #502.
+
 * The extension's page on the VS Code Marketplace and Open VSX has a dark teal header that matches the icon, and the file in the icon is now centered.
 
 ### 4.0.2 - 20 November 2026

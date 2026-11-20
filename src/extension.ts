@@ -5,6 +5,7 @@ import { AnsiController } from './AnsiController';
 import { AnsiDecorator } from './AnsiDecorator';
 import { CustomPatternController } from './CustomPatternController';
 import { CustomPatternDecorator } from './CustomPatternDecorator';
+import { FilePathLinkProvider } from './FilePathLinkProvider';
 import { ProgressIndicator } from './ProgressIndicator';
 import { ProgressIndicatorController } from './ProgressIndicatorController';
 import { SelectionHelper } from './SelectionHelper';
@@ -40,6 +41,9 @@ export function activate(context: vscode.ExtensionContext) {
     // tail log files
     const tailController = new TailController();
 
+    // make file paths clickable
+    const filePathLinkProvider = new FilePathLinkProvider();
+
     // register commands
     context.subscriptions.push(
         vscode.commands.registerCommand(
@@ -49,7 +53,7 @@ export function activate(context: vscode.ExtensionContext) {
             }));
 
     // Add to a list of disposables which are disposed when this extension is deactivated.
-    context.subscriptions.push(timeController, customPatternController, ansiController, progressIndicatorController, tailController);
+    context.subscriptions.push(timeController, customPatternController, ansiController, progressIndicatorController, tailController, filePathLinkProvider);
 }
 
 // this method is called when your extension is deactivated

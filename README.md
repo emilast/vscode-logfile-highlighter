@@ -14,6 +14,7 @@ Log File Highlighter adds colors to log files in VS Code, so that errors, warnin
 - **[Time span of selected lines](#time-span-of-selected-lines)**: select some lines to see how much time they cover.
 - **[Tail mode](#tail-mode)**: keep the end of a growing log file in view.
 - **[ANSI colors](#ansi-color-codes)**: color codes from terminal programs are shown as colors.
+- **[Clickable file paths](#clickable-file-paths)**: open a file at the line a log message points to.
 - **[Your own patterns](#highlight-your-own-patterns)**: highlight anything you like, in any style.
 - **[Theme colors](#use-the-colors-of-your-theme)**: your own patterns can follow your color theme.
 
@@ -60,6 +61,19 @@ Log files from build pipelines, scripts and other terminal programs often contai
 ![Text colored by its ANSI color codes](content/readme/ansi-colors.png)
 
 The 16 basic colors use the terminal colors of your theme. 256-color and 24-bit colors, bold, dim, italic, underline, strikethrough and inverse are supported too. Turn the feature off with `"logFileHighlighter.enableAnsiColors": false`, or show the codes with `"logFileHighlighter.ansiEscapeCodeDisplay"` set to `"dim"` or `"show"`.
+
+## Clickable file paths
+
+File paths in log messages and stack traces are links. <kbd>Ctrl</kbd>+click (<kbd>Cmd</kbd>+click on macOS) a path to open the file at the line and column after it:
+
+| Format | Example |
+| --- | --- |
+| `path:line` and `path:line:column` | `D:\src\Orders\Program.cs:42`, `/home/me/app/src/server.ts:42:7` |
+| `path(line)` and `path(line,column)`, as from compilers | `src\Orders\Program.cs(42,7)` |
+| .NET stack traces | `in C:\src\Orders\PaymentService.cs:line 87` |
+| Python stack traces | `File "/app/orders/payments.py", line 42` |
+
+A path can be absolute, or relative to the folder of the log file or a workspace folder. It needs at least one folder, such as `src/app.ts`, and only paths to files that exist become links. Turn the feature off with `"logFileHighlighter.enableFileLinks": false`.
 
 ## Highlight your own patterns
 
