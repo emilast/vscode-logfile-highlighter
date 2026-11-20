@@ -23,8 +23,8 @@
 		"url": "https://github.com/sponsors/emilast"
 	},
 	"galleryBanner": {
-		"color": "#e7e0d7",
-		"theme": "light"
+		"color": "#24464d",
+		"theme": "dark"
 	},
 	"extensionKind": [
 		"ui",
