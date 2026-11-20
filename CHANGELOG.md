@@ -1,5 +1,9 @@
 # Change Log
 
+### Unreleased
+
+* The extension's page on the VS Code Marketplace and Open VSX has a dark teal header that matches the icon, and the file in the icon is now centered.
+
 ### 4.0.2 - 20 November 2026
 
 * The collapsible sections in the readme are now marked with "(expand)", so it's clearer that they can be opened.
