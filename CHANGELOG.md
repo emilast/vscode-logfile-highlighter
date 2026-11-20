@@ -1,5 +1,9 @@
 # Change Log
 
+### Unreleased
+
+* The collapsible sections in the readme are now marked with "(expand)", so it's clearer that they can be opened.
+
 ### 4.0.1 - 19 November 2026
 
 * Small fixes in the readme and changelog files.
