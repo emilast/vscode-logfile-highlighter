@@ -306,6 +306,26 @@
 			"[log]": {
 				"editor.foldingHighlight": false
 			}
+		},
+		"viewsContainers": {
+			"panel": [
+				{
+					"id": "logFileHighlighterPanel",
+					"title": "Log Overview",
+					"icon": "content/log-overview.svg"
+				}
+			]
+		},
+		"views": {
+			"logFileHighlighterPanel": [
+				{
+					"type": "webview",
+					"id": "logFileHighlighter.overviewPanel",
+					"name": "Log Overview",
+					"icon": "content/log-overview.svg",
+					"contextualTitle": "Log Overview"
+				}
+			]
 		}
 	},
 	"activationEvents": [
