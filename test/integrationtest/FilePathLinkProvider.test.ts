@@ -4,7 +4,7 @@ import * as fs from 'fs';
 import * as os from 'os';
 import * as path from 'path';
 import * as vscode from 'vscode';
-import { closeAllEditors, waitFor } from './helpers';
+import { activateExtension, closeAllEditors, waitFor } from './helpers';
 
 // Tests the links of the activated extension, through VS Code's link API.
 describe('FilePathLinkProvider', () => {
@@ -30,6 +30,9 @@ describe('FilePathLinkProvider', () => {
             '2026-11-20 10:00:06 INFO  Bare name app.ts:3',
         ].join('\n') + '\n');
         logDocument = await vscode.workspace.openTextDocument(vscode.Uri.file(logFile));
+
+        // The link provider is registered when the extension is activated, which opening the log only starts
+        await activateExtension();
     });
 
     afterAll(async () => {

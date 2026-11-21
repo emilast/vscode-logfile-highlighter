@@ -29,6 +29,19 @@ export async function waitFor(condition: () => boolean, description: string, tim
     }
 }
 
+/**
+ * Waits until the extension is activated. VS Code activates it when a log document is opened, but it does
+ * so in the background, so a test that runs first can otherwise call VS Code's APIs before the extension has
+ * registered its providers.
+ */
+export async function activateExtension(): Promise<void> {
+    const extension = vscode.extensions.getExtension('emilast.LogFileHighlighter');
+    if (!extension) {
+        throw new Error('The extension emilast.LogFileHighlighter is not installed.');
+    }
+    await extension.activate();
+}
+
 export async function closeAllEditors(): Promise<void> {
     await vscode.commands.executeCommand('workbench.action.closeAllEditors');
 }
