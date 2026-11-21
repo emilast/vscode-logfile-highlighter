@@ -187,6 +187,11 @@
 					"type": "boolean",
 					"default": true,
 					"description": "Enable or disable the tail mode in log files. Scroll to the end of a file to activate it. The status bar will show 'Log File Tail Mode' when it is active."
+				},
+				"logFileHighlighter.enableFileLinks": {
+					"type": "boolean",
+					"default": true,
+					"description": "Make file paths in log files clickable, e.g. 'C:\\src\\app\\Program.cs:42' or 'src/app.ts(12,5)'. A link opens the file at the line and column after the path. Only paths to files that exist get a link."
 				}
 			}
 		}
