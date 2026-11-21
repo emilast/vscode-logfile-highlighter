@@ -50,6 +50,8 @@ The bars can be turned off with `"logFileHighlighter.enableProgressIndicator": f
 
 Scroll to the end of a log file, and the editor follows the file as new lines are added, like `tail -f`. The status bar shows `Log File Tail Mode` while it's active. Scroll up to stop it.
 
+Tail mode works in every visible editor that shows the end of a log file, not just the active one, so you can follow a log in a split editor or a floating window while you work in another editor.
+
 ![The editor follows a log file as lines are added](content/readme/tail-mode.gif)
 
 Tail mode can be turned off with `"logFileHighlighter.enableTailMode": false`.
