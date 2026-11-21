@@ -56,6 +56,48 @@
 			{
 				"command": "logFileHighlighter.removeProgressIndicatorDecorations",
 				"title": "Log File Highlighter: Remove Progress Indicator Decorations"
+			},
+			{
+				"command": "logFileHighlighter.toggleLogLevel",
+				"title": "Show or Hide Log Levels…",
+				"category": "Log File Highlighter",
+				"icon": "$(filter)"
+			},
+			{
+				"command": "logFileHighlighter.addTextFilter",
+				"title": "Hide Log Entries Containing Text…",
+				"category": "Log File Highlighter"
+			},
+			{
+				"command": "logFileHighlighter.removeTextFilter",
+				"title": "Remove Text Filter",
+				"category": "Log File Highlighter"
+			},
+			{
+				"command": "logFileHighlighter.setFoldingMode",
+				"title": "Fold Log By…",
+				"category": "Log File Highlighter"
+			},
+			{
+				"command": "logFileHighlighter.showAllLines",
+				"title": "Show All Log Lines",
+				"category": "Log File Highlighter",
+				"icon": "$(eye)"
+			},
+			{
+				"command": "logFileHighlighter.goToNextError",
+				"title": "Go to Next Error",
+				"category": "Log File Highlighter"
+			},
+			{
+				"command": "logFileHighlighter.goToNextWarning",
+				"title": "Go to Next Warning",
+				"category": "Log File Highlighter"
+			},
+			{
+				"command": "logFileHighlighter.goToLine",
+				"title": "Go to Line",
+				"category": "Log File Highlighter"
 			}
 		],
 		"keybindings": [
@@ -192,7 +234,77 @@
 					"type": "boolean",
 					"default": true,
 					"description": "Make file paths in log files clickable, e.g. 'C:\\src\\app\\Program.cs:42' or 'src/app.ts(12,5)'. A link opens the file at the line and column after the path. Only paths to files that exist get a link."
+				},
+				"logFileHighlighter.logLevels": {
+					"type": "array",
+					"default": [],
+					"markdownDescription": "Extra rules for finding the level of log lines, for formats the built-in rules don't know. Used to count, find and hide log entries by level. The rules are tried before the built-in ones, and the match nearest the start of the line wins. Example: `[{ \"pattern\": \"\\\\bSEV=1\\\\b\", \"level\": \"error\" }]`.",
+					"items": {
+						"type": "object",
+						"required": [
+							"pattern",
+							"level"
+						],
+						"properties": {
+							"pattern": {
+								"type": "string",
+								"description": "A regular expression. A line where it matches gets the level."
+							},
+							"level": {
+								"type": "string",
+								"enum": [
+									"error",
+									"warning",
+									"info",
+									"debug",
+									"trace"
+								],
+								"description": "The level of the lines that match."
+							}
+						}
+					}
 				}
+			}
+		},
+		"menus": {
+			"commandPalette": [
+				{
+					"command": "logFileHighlighter.toggleLogLevel",
+					"when": "editorLangId == log"
+				},
+				{
+					"command": "logFileHighlighter.addTextFilter",
+					"when": "editorLangId == log"
+				},
+				{
+					"command": "logFileHighlighter.setFoldingMode",
+					"when": "editorLangId == log"
+				},
+				{
+					"command": "logFileHighlighter.showAllLines",
+					"when": "editorLangId == log"
+				},
+				{
+					"command": "logFileHighlighter.goToNextError",
+					"when": "editorLangId == log"
+				},
+				{
+					"command": "logFileHighlighter.goToNextWarning",
+					"when": "editorLangId == log"
+				},
+				{
+					"command": "logFileHighlighter.removeTextFilter",
+					"when": "false"
+				},
+				{
+					"command": "logFileHighlighter.goToLine",
+					"when": "false"
+				}
+			]
+		},
+		"configurationDefaults": {
+			"[log]": {
+				"editor.foldingHighlight": false
 			}
 		}
 	},
