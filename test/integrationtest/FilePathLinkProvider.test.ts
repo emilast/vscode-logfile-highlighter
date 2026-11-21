@@ -25,7 +25,7 @@ describe('FilePathLinkProvider', () => {
             `2026-11-20 10:00:01 ERROR Failed at ${target}:42:7`,
             '2026-11-20 10:00:02 ERROR Failed at src/app.ts:12',
             '2026-11-20 10:00:03 ERROR Failed at src/app.ts(30,5): error CS1002',
-            `2026-11-20 10:00:04 INFO  See file://${target}#L20`,
+            `2026-11-20 10:00:04 INFO  See ${fileUri('L20')}`,
             '2026-11-20 10:00:05 INFO  Missing src/missing.ts:3',
             '2026-11-20 10:00:06 INFO  Bare name app.ts:3',
         ].join('\n') + '\n');
@@ -72,7 +72,7 @@ describe('FilePathLinkProvider', () => {
     it('keeps the link of a file URL, with its line number.', async () => {
         const links = await linksByLine();
 
-        expect(links.get(5)).toEqual([`file://${target}#L20 -> ${fileUri('L20')}`]);
+        expect(links.get(5)).toEqual([`${fileUri('L20')} -> ${fileUri('L20')}`]);
     });
 
     it('does not link files that do not exist, or file names without a folder.', async () => {
@@ -88,7 +88,9 @@ describe('FilePathLinkProvider', () => {
         const logEditor = await vscode.window.showTextDocument(logDocument);
         const line = 3; // src/app.ts(30,5)
         logEditor.selection = new vscode.Selection(line, 40, line, 40);
-        const isTargetOpen = () => vscode.window.activeTextEditor?.document.uri.fsPath === target;
+        // Compared as URIs, since the path of the opened file can have another case of drive letter on Windows
+        const targetUri = vscode.Uri.file(target).toString();
+        const isTargetOpen = () => vscode.window.activeTextEditor?.document.uri.toString() === targetUri;
 
         // Act: the editor finds its links a moment after it's opened, so try until the link is there
         for (let attempt = 0; attempt < 20 && !isTargetOpen(); attempt++) {
@@ -97,10 +99,10 @@ describe('FilePathLinkProvider', () => {
         }
 
         // Assert
-        await waitFor(() => vscode.window.activeTextEditor?.document.uri.fsPath === target
-            && vscode.window.activeTextEditor.selection.active.line === 29, 'the file to open at line 30');
+        await waitFor(() => isTargetOpen() && vscode.window.activeTextEditor.selection.active.line === 29,
+            'the file to open at line 30');
         expect(vscode.window.activeTextEditor.selection.active.character).toBe(4);
-    });
+    }, 15000); // Longer than the tries and the wait above, so that a failure is reported for this test, not the next one
 
     it('has no links when the setting is turned off.', async () => {
         const config = vscode.workspace.getConfiguration('logFileHighlighter');
