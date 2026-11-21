@@ -41,6 +41,12 @@ jobs:
       - name: Package extension
         run: npx --yes @vscode/vsce@3 package --out LogFileHighlighter.vsix
 
+      # ImageMagick's `import` takes the screenshots of failed integration tests (see screenshotReporter.ts).
+      # It isn't on the GitHub runner image.
+      - name: Install ImageMagick
+        if: hashFiles('test/runIntegrationTests.ts') != ''
+        run: sudo apt-get update && sudo apt-get install -y --no-install-recommends imagemagick
+
       # Runs the tests in a downloaded VS Code, with a virtual display.
       # Skipped until the command line test launcher exists on the branch.
       - name: Integration tests
