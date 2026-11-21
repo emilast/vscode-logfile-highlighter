@@ -1,6 +1,6 @@
 # Change Log
 
-### Unreleased
+### 4.1.0 - 21 November 2026
 
 * Tail mode now follows every visible log editor that shows the end of its file, not just the active one, so a log in a split editor or a floating window keeps scrolling while you work in another editor. Fixes #688.
 
