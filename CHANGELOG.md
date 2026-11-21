@@ -1,5 +1,9 @@
 # Change Log
 
+### Unreleased
+
+* A summary line at the top of each log shows its lines, time span, and number of errors and warnings, with a way to go to the next one. Click it, or the new filter button in the editor's title bar, to show or hide log levels, e.g. to hide the DEBUG lines, or to hide entries that contain a text. The log can also be folded by entry, minute or hour. Levels are found however the log writes them, from `ERROR` and `[wrn]` to `"level":"error"`, and the new `logFileHighlighter.logLevels` setting adds your own. Turn the line off with `logFileHighlighter.showLogSummary`. Fixes #75, related to #99.
+
 ### 4.1.0 - 21 November 2026
 
 * Tail mode now follows every visible log editor that shows the end of its file, not just the active one, so a log in a split editor or a floating window keeps scrolling while you work in another editor. Fixes #688.

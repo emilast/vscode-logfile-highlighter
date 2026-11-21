@@ -98,6 +98,12 @@
 				"command": "logFileHighlighter.goToLine",
 				"title": "Go to Line",
 				"category": "Log File Highlighter"
+			},
+			{
+				"command": "logFileHighlighter.showLogFilters",
+				"title": "Show or Hide Log Levels and Text…",
+				"category": "Log File Highlighter",
+				"icon": "$(filter)"
 			}
 		],
 		"keybindings": [
@@ -263,6 +269,11 @@
 							}
 						}
 					}
+				},
+				"logFileHighlighter.showLogSummary": {
+					"type": "boolean",
+					"default": true,
+					"markdownDescription": "Show a summary line at the top of log files: the number of lines, the time span, the number of errors and warnings, and which levels are hidden. Needs `#editor.codeLens#`."
 				}
 			}
 		},
@@ -299,6 +310,17 @@
 				{
 					"command": "logFileHighlighter.goToLine",
 					"when": "false"
+				},
+				{
+					"command": "logFileHighlighter.showLogFilters",
+					"when": "editorLangId == log"
+				}
+			],
+			"editor/title": [
+				{
+					"command": "logFileHighlighter.showLogFilters",
+					"when": "editorLangId == log",
+					"group": "navigation"
 				}
 			]
 		},
