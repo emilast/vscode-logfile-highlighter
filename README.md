@@ -15,6 +15,7 @@ Log File Highlighter adds colors to log files in VS Code, so that errors, warnin
 - **[Tail mode](#tail-mode)**: keep the end of a growing log file in view.
 - **[ANSI colors](#ansi-color-codes)**: color codes from terminal programs are shown as colors.
 - **[Clickable file paths](#clickable-file-paths)**: open a file at the line a log message points to.
+- **[Log overview](#log-overview)**: see the errors and time span of a log, and hide levels or text you don't need.
 - **[Your own patterns](#highlight-your-own-patterns)**: highlight anything you like, in any style.
 - **[Theme colors](#use-the-colors-of-your-theme)**: your own patterns can follow your color theme.
 
@@ -76,6 +77,44 @@ File paths in log messages and stack traces are links. <kbd>Ctrl</kbd>+click (<k
 | Python stack traces | `File "/app/orders/payments.py", line 42` |
 
 A path can be absolute, or relative to the folder of the log file or a workspace folder. It needs at least one folder, such as `src/app.ts`, and only paths to files that exist become links. Turn the feature off with `"logFileHighlighter.enableFileLinks": false`.
+
+## Log overview
+
+See a summary of a log, and hide the lines you don't need, like DEBUG messages or health checks.
+
+Open the **Log Overview** view from its icon in the Activity Bar. It shows the log in the active editor, or the last log you looked at, and the number of errors as a badge on the icon:
+
+- **Summary**: the number of lines, the first and last timestamps, the time span, and the number of errors and warnings. Go to the next error or warning from there, or with the **Go to Next Error** and **Go to Next Warning** commands.
+- **Show or hide levels**: hide e.g. the DEBUG and TRACE entries. A multi-line entry, like a stack trace, is hidden or shown with its first line.
+- **Hide text**: hide the entries whose first line contains a text, such as `GET /health`.
+- **Folding**: fold multi-line entries, or all the entries of the same minute or hour.
+
+VS Code can't hide lines, so hidden lines are folded into the line before them. They come back if you unfold them, and **Show All Log Lines** shows them all again. What's hidden is kept per log while it's open, and stays hidden as the log grows in tail mode. VS Code folds at most 5,000 regions per file (`editor.foldingMaximumRegions`), so in a big log with hidden lines all over, some may stay visible.
+
+### Log levels
+
+The level of a line is found however the log writes it:
+
+| Format | Examples |
+| --- | --- |
+| Words | `ERROR`, `Warn`, `INFO`, `DEBUG`, `TRACE`, `FATAL`, `CRITICAL`, `SEVERE`, `FINE`, `FINEST` |
+| Abbreviations | `[ERR]`, `[wrn]`, `[I]`, `INF`, `DBG`, `VRB` |
+| A single letter after the timestamp, as in Android logcat | `11-21 09:14:02.118  4812  4830 E OrderService: ...` |
+| .NET console logging | `fail:`, `warn:`, `info:`, `dbug:` |
+| JSON and logfmt | `"level":"error"`, `level=warn`, `"severity":"INFO"`, `"@l":"Warning"`, `"level":50` |
+
+FATAL, CRITICAL and the like count as errors, and VERBOSE as trace. If a line has several, the one nearest the start of the line is used. Lines without a timestamp or a level, like a stack trace, get the level of the line before them.
+
+If your logs write the level another way, add a rule with `logFileHighlighter.logLevels`. The rules are tried before the built-in ones:
+
+```json
+"logFileHighlighter.logLevels": [
+    { "pattern": "\\bSEV=1\\b", "level": "error" },
+    { "pattern": "\\bSEV=2\\b", "level": "warning" }
+]
+```
+
+The level can be `error`, `warning`, `info`, `debug` or `trace`.
 
 ## Highlight your own patterns
 

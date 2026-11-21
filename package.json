@@ -66,12 +66,14 @@
 			{
 				"command": "logFileHighlighter.addTextFilter",
 				"title": "Hide Log Entries Containing Text…",
-				"category": "Log File Highlighter"
+				"category": "Log File Highlighter",
+				"icon": "$(add)"
 			},
 			{
 				"command": "logFileHighlighter.removeTextFilter",
 				"title": "Remove Text Filter",
-				"category": "Log File Highlighter"
+				"category": "Log File Highlighter",
+				"icon": "$(close)"
 			},
 			{
 				"command": "logFileHighlighter.setFoldingMode",
@@ -300,8 +302,52 @@
 					"command": "logFileHighlighter.goToLine",
 					"when": "false"
 				}
+			],
+			"view/title": [
+				{
+					"command": "logFileHighlighter.addTextFilter",
+					"when": "view == logFileHighlighter.overview",
+					"group": "navigation@1"
+				},
+				{
+					"command": "logFileHighlighter.showAllLines",
+					"when": "view == logFileHighlighter.overview",
+					"group": "navigation@2"
+				}
+			],
+			"view/item/context": [
+				{
+					"command": "logFileHighlighter.removeTextFilter",
+					"when": "view == logFileHighlighter.overview && viewItem == textFilter",
+					"group": "inline"
+				}
 			]
 		},
+		"viewsContainers": {
+			"activitybar": [
+				{
+					"id": "logFileHighlighter",
+					"title": "Log Overview",
+					"icon": "content/log-overview.svg"
+				}
+			]
+		},
+		"views": {
+			"logFileHighlighter": [
+				{
+					"id": "logFileHighlighter.overview",
+					"name": "Log Overview",
+					"icon": "content/log-overview.svg",
+					"contextualTitle": "Log Overview"
+				}
+			]
+		},
+		"viewsWelcome": [
+			{
+				"view": "logFileHighlighter.overview",
+				"contents": "Open a log file to see a summary of it, and to show or hide its log levels."
+			}
+		],
 		"configurationDefaults": {
 			"[log]": {
 				"editor.foldingHighlight": false

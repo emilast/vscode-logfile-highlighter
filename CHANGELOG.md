@@ -1,5 +1,9 @@
 # Change Log
 
+### Unreleased
+
+* A new **Log Overview** view in the Activity Bar shows a summary of the log: its lines, time span, and number of errors and warnings, with a way to go to the next one. Check boxes show or hide log levels, e.g. to hide the DEBUG lines, and you can hide entries that contain a text and fold the log by entry, minute or hour. Levels are found however the log writes them, from `ERROR` and `[wrn]` to `"level":"error"`, and the new `logFileHighlighter.logLevels` setting adds your own. Fixes #75, related to #99.
+
 ### 4.1.0 - 21 November 2026
 
 * Tail mode now follows every visible log editor that shows the end of its file, not just the active one, so a log in a split editor or a floating window keeps scrolling while you work in another editor. Fixes #688.
